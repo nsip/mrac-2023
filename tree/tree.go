@@ -3,9 +3,11 @@ package tree
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	dt "github.com/digisan/gotk/data-type"
 	fd "github.com/digisan/gotk/file-dir"
+	"github.com/digisan/gotk/strs"
 	jt "github.com/digisan/json-tool"
 	lk "github.com/digisan/logkit"
 	. "github.com/nsip/mrac-2023/tree/sub"
@@ -13,14 +15,14 @@ import (
 
 var (
 	mProcFlag = map[string]bool{
-		"la-English":                        true,
-		"la-Humanities and Social Sciences": true,
-		"la-Health and Physical Education":  true,
+		"la-English":                        false,
+		"la-Humanities and Social Sciences": false,
+		"la-Health and Physical Education":  false,
 		"la-Languages":                      true,
-		"la-Mathematics":                    true,
-		"la-Science":                        true,
-		"la-The Arts":                       true,
-		"la-Technologies":                   true,
+		"la-Mathematics":                    false,
+		"la-Science":                        false,
+		"la-The Arts":                       false,
+		"la-Technologies":                   false,
 	}
 
 	mUrlID = map[string]string{
@@ -75,200 +77,21 @@ func Partition(js, outDir string, mMeta map[string]string) {
 		if len(js) > 0 {
 			lk.FailOnErrWhen(!dt.IsJSON([]byte(js)), "%v", fmt.Errorf("invalid JSON from [ReStruct %s]", fName))
 			js = jt.FmtStr(js, "    ")
+
+			// remove unwanted line
+			js, err = strs.StrLineScan(js, func(line string) (bool, string) {
+				trimmed := strings.TrimSpace(line)
+				if strs.HasAnySuffix(trimmed, `: [],`, `: []`, `: "",`, `: ""`) {
+					return false, ""
+				}
+				return true, line
+			})
+			if err != nil {
+				return
+			}
+
 			out := fmt.Sprintf("./%s/restructure/%s.json", outDir, fName)
 			fd.MustWriteFile(out, []byte(js))
 		}
 	}
-
-	// func() {
-	// 	fName := "la-English"
-	// 	if !mFlag[fName] {
-	// 		return
-	// 	}
-
-	// 	in := fmt.Sprintf("./%s/%s.json", outDir, fName)
-	// 	lk.Log("Processing... %s", in)
-
-	// 	data, err := os.ReadFile(in)
-	// 	lk.WarnOnErr("%v", err)
-	// 	if err != nil {
-	// 		return
-	// 	}
-	// 	js := ReStruct(string(data))
-	// 	js = ConnFieldMapping(js, mUrlID[fName], mMeta)
-	// 	if len(js) > 0 {
-	// 		lk.FailOnErrWhen(!dt.IsJSON([]byte(js)), "%v", fmt.Errorf("invalid JSON from [ReStruct %s]", fName))
-	// 		js = jt.FmtStr(js, "    ")
-	// 		out := fmt.Sprintf("./%s/restructure/%s.json", outDir, fName)
-	// 		fd.MustWriteFile(out, []byte(js))
-	// 	}
-	// }()
-
-	// func() {
-	// 	fName := "la-Humanities and Social Sciences"
-	// 	if !mFlag[fName] {
-	// 		return
-	// 	}
-
-	// 	in := fmt.Sprintf("./%s/%s.json", outDir, fName) // Humanities and Social Sciences.json // HASS.json
-	// 	lk.Log("Processing... %s", in)
-
-	// 	data, err := os.ReadFile(in)
-	// 	lk.WarnOnErr("%v", err)
-	// 	if err != nil {
-	// 		return
-	// 	}
-	// 	js := ReStruct(string(data))
-	// 	js = ConnFieldMapping(js, mUrlID[fName], mMeta)
-	// 	if len(js) > 0 {
-	// 		lk.FailOnErrWhen(!dt.IsJSON([]byte(js)), "%v", fmt.Errorf("invalid JSON from [ReStruct %s]", fName))
-	// 		js = jt.FmtStr(js, "    ")
-	// 		out := fmt.Sprintf("./%s/restructure/%s.json", outDir, fName)
-	// 		fd.MustWriteFile(out, []byte(js))
-	// 	}
-	// }()
-
-	// func() {
-	// 	fName := "la-Health and Physical Education"
-	// 	if !mFlag[fName] {
-	// 		return
-	// 	}
-
-	// 	in := fmt.Sprintf("./%s/%s.json", outDir, fName) // Health and Physical Education.json // HPE.json
-	// 	lk.Log("Processing... %s", in)
-
-	// 	data, err := os.ReadFile(in)
-	// 	lk.WarnOnErr("%v", err)
-	// 	if err != nil {
-	// 		return
-	// 	}
-	// 	js := ReStruct(string(data))
-	// 	js = ConnFieldMapping(js, mUrlID[fName], mMeta)
-	// 	if len(js) > 0 {
-	// 		lk.FailOnErrWhen(!dt.IsJSON([]byte(js)), "%v", fmt.Errorf("invalid JSON from [ReStruct %s]", fName))
-	// 		js = jt.FmtStr(js, "    ")
-	// 		out := fmt.Sprintf("./%s/restructure/%s.json", outDir, fName)
-	// 		fd.MustWriteFile(out, []byte(js))
-	// 	}
-	// }()
-
-	// func() {
-	// 	fName := "la-Languages"
-	// 	if !mFlag[fName] {
-	// 		return
-	// 	}
-
-	// 	in := fmt.Sprintf("./%s/%s.json", outDir, fName)
-	// 	lk.Log("Processing... %s", in)
-
-	// 	data, err := os.ReadFile(in)
-	// 	lk.WarnOnErr("%v", err)
-	// 	if err != nil {
-	// 		return
-	// 	}
-	// 	js := ReStruct(string(data))
-	// 	js = ConnFieldMapping(js, mUrlID[fName], mMeta)
-	// 	if len(js) > 0 {
-	// 		lk.FailOnErrWhen(!dt.IsJSON([]byte(js)), "%v", fmt.Errorf("invalid JSON from [ReStruct %s]", fName))
-	// 		js = jt.FmtStr(js, "    ")
-	// 		out := fmt.Sprintf("./%s/restructure/%s.json", outDir, fName)
-	// 		fd.MustWriteFile(out, []byte(js))
-	// 	}
-	// }()
-
-	// func() {
-	// 	fName := "la-Mathematics"
-	// 	if !mFlag[fName] {
-	// 		return
-	// 	}
-
-	// 	in := fmt.Sprintf("./%s/%s.json", outDir, fName)
-	// 	lk.Log("Processing... %s", in)
-
-	// 	data, err := os.ReadFile(in)
-	// 	lk.WarnOnErr("%v", err)
-	// 	if err != nil {
-	// 		return
-	// 	}
-	// 	js := ReStruct(string(data))
-	// 	js = ConnFieldMapping(js, mUrlID[fName], mMeta)
-	// 	if len(js) > 0 {
-	// 		lk.FailOnErrWhen(!dt.IsJSON([]byte(js)), "%v", fmt.Errorf("invalid JSON from [ReStruct %s]", fName))
-	// 		js = jt.FmtStr(js, "    ")
-	// 		out := fmt.Sprintf("./%s/restructure/%s.json", outDir, fName)
-	// 		fd.MustWriteFile(out, []byte(js))
-	// 	}
-	// }()
-
-	// func() {
-	// 	fName := "la-Science"
-	// 	if !mFlag[fName] {
-	// 		return
-	// 	}
-
-	// 	in := fmt.Sprintf("./%s/%s.json", outDir, fName)
-	// 	lk.Log("Processing... %s", in)
-
-	// 	data, err := os.ReadFile(in)
-	// 	lk.WarnOnErr("%v", err)
-	// 	if err != nil {
-	// 		return
-	// 	}
-	// 	js := ReStruct(string(data))
-	// 	js = ConnFieldMapping(js, mUrlID[fName], mMeta)
-	// 	if len(js) > 0 {
-	// 		lk.FailOnErrWhen(!dt.IsJSON([]byte(js)), "%v", fmt.Errorf("invalid JSON from [ReStruct %s]", fName))
-	// 		js = jt.FmtStr(js, "    ")
-	// 		out := fmt.Sprintf("./%s/restructure/%s.json", outDir, fName)
-	// 		fd.MustWriteFile(out, []byte(js))
-	// 	}
-	// }()
-
-	// func() {
-	// 	fName := "la-The Arts"
-	// 	if !mFlag[fName] {
-	// 		return
-	// 	}
-
-	// 	in := fmt.Sprintf("./%s/%s.json", outDir, fName)
-	// 	lk.Log("Processing... %s", in)
-
-	// 	data, err := os.ReadFile(in)
-	// 	lk.WarnOnErr("%v", err)
-	// 	if err != nil {
-	// 		return
-	// 	}
-	// 	js := ReStruct(string(data))
-	// 	js = ConnFieldMapping(js, mUrlID[fName], mMeta)
-	// 	if len(js) > 0 {
-	// 		lk.FailOnErrWhen(!dt.IsJSON([]byte(js)), "%v", fmt.Errorf("invalid JSON from [ReStruct %s]", fName))
-	// 		js = jt.FmtStr(js, "    ")
-	// 		out := fmt.Sprintf("./%s/restructure/%s.json", outDir, fName)
-	// 		fd.MustWriteFile(out, []byte(js))
-	// 	}
-	// }()
-
-	// func() {
-	// 	fName := "la-Technologies"
-	// 	if !mFlag[fName] {
-	// 		return
-	// 	}
-
-	// 	in := fmt.Sprintf("./%s/%s.json", outDir, fName)
-	// 	lk.Log("Processing... %s", in)
-
-	// 	data, err := os.ReadFile(in)
-	// 	lk.WarnOnErr("%v", err)
-	// 	if err != nil {
-	// 		return
-	// 	}
-	// 	js := ReStruct(string(data))
-	// 	js = ConnFieldMapping(js, mUrlID[fName], mMeta)
-	// 	if len(js) > 0 {
-	// 		lk.FailOnErrWhen(!dt.IsJSON([]byte(js)), "%v", fmt.Errorf("invalid JSON from [ReStruct %s]", fName))
-	// 		js = jt.FmtStr(js, "    ")
-	// 		out := fmt.Sprintf("./%s/restructure/%s.json", outDir, fName)
-	// 		fd.MustWriteFile(out, []byte(js))
-	// 	}
-	// }()
 }
