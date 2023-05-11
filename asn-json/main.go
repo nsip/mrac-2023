@@ -4,13 +4,22 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 	"sync"
 	"time"
 
+	fd "github.com/digisan/gotk/file-dir"
 	"github.com/digisan/gotk/track"
 	jt "github.com/digisan/json-tool"
 	"github.com/nsip/mrac-2023/asn-json/tool"
+)
+
+const (
+	metaFile = "../data/Sofia-API-Meta-Data-23022023.json"
+	nodeFile = "../data/Sofia-API-Nodes-Data-23022023.json"
+	treeFile = "../data/Sofia-API-Tree-Data-23022023.json"
+	nmFile   = "../data-out/node-meta.json"
 )
 
 var mEscStr = map[string]string{
@@ -35,37 +44,39 @@ func restoreEsc(js string) string {
 func main() {
 	defer track.TrackTime(time.Now())
 
-	// {
-	// 	outDir := "./out/"
-	// 	outfile := "asn-node.json"
-	// 	os.MkdirAll(outDir, os.ModePerm)
-	// 	outpath := filepath.Join(outDir, outfile)
+	{
+		outDir := "./out/"
+		outfile := "asn-node.json"
+		os.MkdirAll(outDir, os.ModePerm)
+		outpath := filepath.Join(outDir, outfile)
 
-	// 	if !filedir.FileExists(outpath) {
-	// 		data, err := os.ReadFile("../partition/out/node-meta.json")
-	// 		if err != nil {
-	// 			panic(err)
-	// 		}
-	// 		nodeProc(data, outDir, outfile, "../data/Sofia-API-Tree-Data-09062022.json", uri4id)
-	// 	}
+		if !fd.FileExists(outpath) {
+			data, err := os.ReadFile(nmFile)
+			if err != nil {
+				panic(err)
+			}
+			nodeProc(data, outDir, outfile, treeFile, uri4id)
+		}
 
-	// 	// 	// 	/////
+		// 	// 	/////
 
-	// 	// 	data, err := os.ReadFile(outpath)
-	// 	// 	if err != nil {
-	// 	// 		log.Fatalln(err)
-	// 	// 	}
+		// 	data, err := os.ReadFile(outpath)
+		// 	if err != nil {
+		// 		log.Fatalln(err)
+		// 	}
 
-	// 	// 	mIdBlock, _ := getIdBlock(string(data))
+		// 	mIdBlock, _ := getIdBlock(string(data))
 
-	// 	// 	inpath4exp := outpath
-	// 	// 	outexp := childrenRepl(inpath4exp, mIdBlock)
-	// 	// 	// os.WriteFile("./out/asnexp.json", []byte(outexp), os.ModePerm)
+		// 	inpath4exp := outpath
+		// 	outexp := childrenRepl(inpath4exp, mIdBlock)
+		// 	// os.WriteFile("./out/asnexp.json", []byte(outexp), os.ModePerm)
 
-	// 	// 	rootWholeBlock := getRootWholeObject(outexp)
-	// 	// 	os.WriteFile("./out/asn-node-one.json", []byte(rootWholeBlock), os.ModePerm)
+		// 	rootWholeBlock := getRootWholeObject(outexp)
+		// 	os.WriteFile("./out/asn-node-one.json", []byte(rootWholeBlock), os.ModePerm)
 
-	// }
+	}
+
+	return
 
 	//////////////////////////////////////////////////////////////////////
 
@@ -115,9 +126,9 @@ func main() {
 
 			go func(file, la string) {
 
-				// if file != "la-English.json" {
-				// 	continue
-				// }
+				if file != "la-Languages.json" {
+					return
+				}
 
 				fmt.Printf("----- %s ----- %s\n", file, la)
 

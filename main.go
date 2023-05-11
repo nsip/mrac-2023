@@ -47,6 +47,7 @@ func main() {
 	bytesNode, err := os.ReadFile(nodeFile)
 	lk.FailOnErr("%v", err)
 	node.Process(bytesNode, uri4id, mMetaKeyName, out)
+	// node.GenCodeIdUrlTxt(bytesNode, out) // *** if 'code-url.txt' & 'id-url.txt' exist, DO NOT run this ***
 
 	///////////////////////////////////////////////////////////////////
 
