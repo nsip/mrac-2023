@@ -9,7 +9,6 @@ import (
 	"sync"
 	"time"
 
-	fd "github.com/digisan/gotk/file-dir"
 	"github.com/digisan/gotk/track"
 	jt "github.com/digisan/json-tool"
 	"github.com/nsip/mrac-2023/asn-json/tool"
@@ -44,39 +43,37 @@ func restoreEsc(js string) string {
 func main() {
 	defer track.TrackTime(time.Now())
 
-	{
-		outDir := "./out/"
-		outfile := "asn-node.json"
-		os.MkdirAll(outDir, os.ModePerm)
-		outpath := filepath.Join(outDir, outfile)
+	// {
+	// 	outDir := "../data-out/asn-json"
+	// 	outFile := "asn-node.json"
+	// 	os.MkdirAll(outDir, os.ModePerm)
+	// 	outPath := filepath.Join(outDir, outFile)
 
-		if !fd.FileExists(outpath) {
-			data, err := os.ReadFile(nmFile)
-			if err != nil {
-				panic(err)
-			}
-			nodeProc(data, outDir, outfile, treeFile, uri4id)
-		}
+	// 	if !fd.FileExists(outPath) {
+	// 		data, err := os.ReadFile(nmFile)
+	// 		if err != nil {
+	// 			panic(err)
+	// 		}
+	// 		nodeProc(data, outDir, outFile, treeFile, uri4id)
+	// 	}
 
-		// 	// 	/////
+	// 	// 	// 	/////
 
-		// 	data, err := os.ReadFile(outpath)
-		// 	if err != nil {
-		// 		log.Fatalln(err)
-		// 	}
+	// 	// 	data, err := os.ReadFile(outpath)
+	// 	// 	if err != nil {
+	// 	// 		log.Fatalln(err)
+	// 	// 	}
 
-		// 	mIdBlock, _ := getIdBlock(string(data))
+	// 	// 	mIdBlock, _ := getIdBlock(string(data))
 
-		// 	inpath4exp := outpath
-		// 	outexp := childrenRepl(inpath4exp, mIdBlock)
-		// 	// os.WriteFile("./out/asnexp.json", []byte(outexp), os.ModePerm)
+	// 	// 	inpath4exp := outpath
+	// 	// 	outexp := childrenRepl(inpath4exp, mIdBlock)
+	// 	// 	// os.WriteFile("./out/asnexp.json", []byte(outexp), os.ModePerm)
 
-		// 	rootWholeBlock := getRootWholeObject(outexp)
-		// 	os.WriteFile("./out/asn-node-one.json", []byte(rootWholeBlock), os.ModePerm)
+	// 	// 	rootWholeBlock := getRootWholeObject(outexp)
+	// 	// 	os.WriteFile("./out/asn-node-one.json", []byte(rootWholeBlock), os.ModePerm)
 
-	}
-
-	return
+	// }
 
 	//////////////////////////////////////////////////////////////////////
 
@@ -100,15 +97,13 @@ func main() {
 			"gc-Personal and Social capability.json": "GC-PSC",
 		}
 
-		os.MkdirAll("./out", os.ModePerm)
-
-		dataTree, err := os.ReadFile("../data/Sofia-API-Tree-Data-09062022.json")
+		dataTree, err := os.ReadFile(treeFile)
 		if err != nil {
 			log.Fatalln(err)
 		}
 		mCodeParent := tool.GetCodeParentMap(dataTree)
 
-		dataNode, err := os.ReadFile("../partition/out/node-meta.json")
+		dataNode, err := os.ReadFile(nmFile)
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -127,6 +122,7 @@ func main() {
 			go func(file, la string) {
 
 				if file != "la-Languages.json" {
+					wg.Done()
 					return
 				}
 
@@ -139,7 +135,7 @@ func main() {
 					progLvlABC      = "" // indicate Level 1a, 1b or 1c
 				)
 
-				data, err := os.ReadFile(`../partition/out/` + file)
+				data, err := os.ReadFile(filepath.Join(`../data-out/restructure`, file))
 				if err != nil {
 					log.Fatalln(err)
 				}
@@ -172,7 +168,7 @@ func main() {
 
 				js = restoreEsc(js)
 
-				os.WriteFile("./out/"+file, []byte(js), os.ModePerm)
+				os.WriteFile(filepath.Join(`../data-out/asn-json`, file), []byte(js), os.ModePerm)
 
 				wg.Done()
 

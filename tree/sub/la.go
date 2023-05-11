@@ -147,7 +147,7 @@ NEXT_LA:
 					out, _ = sjson.SetRaw(out, path, bLA)
 				}
 
-				out = jt.FmtStr(out, "    ")
+				out = jt.FmtStr(out, "  ")
 				lk.FailOnErrWhen(!dt.IsJSON([]byte(out)), "%v", errors.New("invalid JSON from [la]"))
 				mOut[la] = out
 				continue NEXT_LA

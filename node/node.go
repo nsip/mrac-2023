@@ -86,7 +86,7 @@ func Process(data []byte, uri string, meta map[string]string, outDir string) {
 	})
 
 	out = "{" + strings.Join(parts, ",") + "}"
-	out = jt.FmtStr(out, "    ")
+	out = jt.FmtStr(out, "  ")
 
 	lk.FailOnErrWhen(!dt.IsJSON([]byte(out)), "%v", errors.New("invalid JSON from node & meta"))
 

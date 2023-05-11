@@ -252,7 +252,7 @@ func GC(js string) map[string]string {
 		out, _ = sjson.Set(out, "children.0.children.0.doc.typeName", L2["doc.typeName"])
 		out, _ = sjson.SetRaw(out, "children.0.children.0.children", L2["children"].(string))
 
-		out = jt.FmtStr(out, "    ")
+		out = jt.FmtStr(out, "  ")
 		lk.FailOnErrWhen(!dt.IsJSON([]byte(out)), "%v", errors.New("invalid JSON from [gc]"))
 		mOut[fmt.Sprint(L2["title"])] = out
 	}

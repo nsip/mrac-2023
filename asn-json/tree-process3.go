@@ -239,6 +239,16 @@ func proc(
 			code = jt.GetStrVal(mNodeData[id+"."+"code"])
 			title := jt.GetStrVal(mNodeData[id+"."+"title"])
 			nodeType = tool.GetCodeAncestor(mCodeParent, code, 0)
+
+			if len(nodeType) == 0 {
+				switch {
+				case strings.HasPrefix(code, "AS"):
+					nodeType = "AS"
+				case strings.HasPrefix(code, "LA"):
+					nodeType = "LA"
+				}
+			}
+
 			switch nodeType {
 			case "GC", "CCP":
 				outArrs = append(outArrs, fSf(`{ "uri": "%s", "prefLabel": "%s" }`, item, code))

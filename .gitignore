@@ -20,8 +20,11 @@
 # Go workspace file
 go.work
 
+data/data
 data-out
 fatal
 mrac-2023
 asn-json/asn-json
 asn-json/fatal
+asn-json-ld/asn-json-ld
+asn-json-ld/fatal

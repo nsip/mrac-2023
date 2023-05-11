@@ -76,7 +76,7 @@ func Partition(js, outDir string, mMeta map[string]string) {
 		js = ConnFieldMapping(js, mUrlID[fName], mMeta)
 		if len(js) > 0 {
 			lk.FailOnErrWhen(!dt.IsJSON([]byte(js)), "%v", fmt.Errorf("invalid JSON from [ReStruct %s]", fName))
-			js = jt.FmtStr(js, "    ")
+			js = jt.FmtStr(js, "  ")
 
 			// remove unwanted line
 			js, err = strs.StrLineScan(js, func(line string) (bool, string) {
