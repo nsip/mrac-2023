@@ -15,14 +15,14 @@ import (
 
 var (
 	mProcFlag = map[string]bool{
-		"la-English":                        false,
-		"la-Humanities and Social Sciences": false,
-		"la-Health and Physical Education":  false,
+		"la-English":                        true,
+		"la-Humanities and Social Sciences": true,
+		"la-Health and Physical Education":  true,
 		"la-Languages":                      true,
-		"la-Mathematics":                    false,
-		"la-Science":                        false,
-		"la-The Arts":                       false,
-		"la-Technologies":                   false,
+		"la-Mathematics":                    true,
+		"la-Science":                        true,
+		"la-The Arts":                       true,
+		"la-Technologies":                   true,
 	}
 
 	mUrlID = map[string]string{

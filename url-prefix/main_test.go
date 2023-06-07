@@ -6,7 +6,7 @@ import (
 )
 
 func TestFetchTime(t *testing.T) {
-	fmt.Println(FetchTime("../data/Sofia-API-Tree-Data-23022023.json"))
+	fmt.Println(FetchTime("../data/Sofia-API-Tree-Data-06062023.json"))
 }
 
 func TestMain(t *testing.T) {

@@ -231,6 +231,14 @@ func IsChild(ms map[string]string, childId string) string {
 
 func HasChild(ms map[string]string, id, childId string) bool {
 	valstr := ms[id]
+
+	defer func() {
+		if err := recover(); err != nil {
+			lk.Log("[%v]: [%v]", id, valstr)
+			lk.FailOnErr("%v", err)
+		}
+	}()
+
 	if children := gjson.Get(valstr, "children").Array(); len(children) > 0 {
 		for _, child := range children {
 			// fmt.Println(child)
@@ -314,10 +322,12 @@ func GenCodeIdUrlTxt(data []byte, outDir string) {
 		// for i, code := range codes {
 		// 	fmt.Println(code, ids[i])
 		// }
+		fmt.Println("TrackCode Done!")
 
 		MarkUrl(ids, codes, mCodeUrl, mIdUrl)
+		fmt.Println("MarkUrl Done!")
 
-		fmt.Printf("processing... %d, %v\n", Idx, codes)
+		fmt.Printf("processed... %d, %v\n", Idx, codes)
 		Idx++
 
 		// if Idx == 1000 {

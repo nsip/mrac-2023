@@ -14,9 +14,9 @@ const (
 	uri4id = "http://vocabulary.curriculum.edu.au/" // "http://rdf.curriculum.edu.au/202110/"
 	out    = "data-out"
 
-	metaFile = "./data/Sofia-API-Meta-Data-23022023.json"
-	nodeFile = "./data/Sofia-API-Nodes-Data-23022023.json"
-	treeFile = "./data/Sofia-API-Tree-Data-23022023.json"
+	metaFile = "./data/Sofia-API-Meta-Data-06062023.json"
+	nodeFile = "./data/Sofia-API-Node-Data-06062023.json"
+	treeFile = "./data/Sofia-API-Tree-Data-06062023.json"
 )
 
 func main() {
@@ -47,7 +47,9 @@ func main() {
 	bytesNode, err := os.ReadFile(nodeFile)
 	lk.FailOnErr("%v", err)
 	node.Process(bytesNode, uri4id, mMetaKeyName, out)
-	// node.GenCodeIdUrlTxt(bytesNode, out) // *** if 'code-url.txt' & 'id-url.txt' exist, DO NOT run this ***
+
+	// *** if 'code-url.txt' & 'id-url.txt' exist, DO NOT run this (take a long time) ***
+	node.GenCodeIdUrlTxt(bytesNode, out)
 
 	///////////////////////////////////////////////////////////////////
 

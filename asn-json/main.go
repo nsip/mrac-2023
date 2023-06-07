@@ -9,15 +9,16 @@ import (
 	"sync"
 	"time"
 
+	fd "github.com/digisan/gotk/file-dir"
 	"github.com/digisan/gotk/track"
 	jt "github.com/digisan/json-tool"
 	"github.com/nsip/mrac-2023/asn-json/tool"
 )
 
 const (
-	metaFile = "../data/Sofia-API-Meta-Data-23022023.json"
-	nodeFile = "../data/Sofia-API-Nodes-Data-23022023.json"
-	treeFile = "../data/Sofia-API-Tree-Data-23022023.json"
+	metaFile = "../data/Sofia-API-Meta-Data-06062023.json"
+	nodeFile = "../data/Sofia-API-Node-Data-06062023.json"
+	treeFile = "../data/Sofia-API-Tree-Data-06062023.json"
 	nmFile   = "../data-out/node-meta.json"
 )
 
@@ -43,37 +44,39 @@ func restoreEsc(js string) string {
 func main() {
 	defer track.TrackTime(time.Now())
 
-	// {
-	// 	outDir := "../data-out/asn-json"
-	// 	outFile := "asn-node.json"
-	// 	os.MkdirAll(outDir, os.ModePerm)
-	// 	outPath := filepath.Join(outDir, outFile)
+	{
+		outDir := "../data-out/asn-json"
+		outFile := "asn-node.json"
+		os.MkdirAll(outDir, os.ModePerm)
+		outPath := filepath.Join(outDir, outFile)
 
-	// 	if !fd.FileExists(outPath) {
-	// 		data, err := os.ReadFile(nmFile)
-	// 		if err != nil {
-	// 			panic(err)
-	// 		}
-	// 		nodeProc(data, outDir, outFile, treeFile, uri4id)
-	// 	}
+		if !fd.FileExists(outPath) {
+			data, err := os.ReadFile(nmFile)
+			if err != nil {
+				panic(err)
+			}
+			nodeProc(data, outDir, outFile, treeFile, uri4id)
+		}
 
-	// 	// 	// 	/////
+		// 	// 	/////
 
-	// 	// 	data, err := os.ReadFile(outpath)
-	// 	// 	if err != nil {
-	// 	// 		log.Fatalln(err)
-	// 	// 	}
+		// 	data, err := os.ReadFile(outpath)
+		// 	if err != nil {
+		// 		log.Fatalln(err)
+		// 	}
 
-	// 	// 	mIdBlock, _ := getIdBlock(string(data))
+		// 	mIdBlock, _ := getIdBlock(string(data))
 
-	// 	// 	inpath4exp := outpath
-	// 	// 	outexp := childrenRepl(inpath4exp, mIdBlock)
-	// 	// 	// os.WriteFile("./out/asnexp.json", []byte(outexp), os.ModePerm)
+		// 	inpath4exp := outpath
+		// 	outexp := childrenRepl(inpath4exp, mIdBlock)
+		// 	// os.WriteFile("./out/asnexp.json", []byte(outexp), os.ModePerm)
 
-	// 	// 	rootWholeBlock := getRootWholeObject(outexp)
-	// 	// 	os.WriteFile("./out/asn-node-one.json", []byte(rootWholeBlock), os.ModePerm)
+		// 	rootWholeBlock := getRootWholeObject(outexp)
+		// 	os.WriteFile("./out/asn-node-one.json", []byte(rootWholeBlock), os.ModePerm)
 
-	// }
+	}
+
+	// return
 
 	//////////////////////////////////////////////////////////////////////
 

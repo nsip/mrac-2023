@@ -24,10 +24,9 @@ func GetCodeParentMap(data []byte) map[string]string {
 	js := string(data)
 
 	// check
-	if !strings.HasPrefix(js, "{\n  \"code\": \"root\",") &&
-		!strings.HasPrefix(js, "{\r\n  \"code\": \"root\",") {
-		panic("input json MUST be well formatted, indent is 2 spaces.")
-	}
+	// if !strings.HasPrefix(js, "{\n  \"code\": \"root\",") && !strings.HasPrefix(js, "{\r\n  \"code\": \"root\",") {
+	// 	panic("input json MUST be well formatted, indent is 2 spaces.")
+	// }
 
 	reCodes := []*regexp.Regexp{}
 	for i := 6; i <= 54; i += 4 {

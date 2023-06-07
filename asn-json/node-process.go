@@ -291,7 +291,7 @@ func nodeProc(data []byte, outDir, outName, sofiaTreeFile, pref4children string)
 			}
 
 		default:
-			log.Printf("'%v' is not one of [GC CCP LA AS]", nodeType)
+			log.Printf("NodeType: '%v' is not one of [GC CCP LA AS], Code is '%v'", nodeType, code)
 		}
 
 		////////////////////////////////////////////////////////////////
