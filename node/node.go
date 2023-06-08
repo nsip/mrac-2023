@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -231,19 +232,18 @@ func IsChild(ms map[string]string, childId string) string {
 
 func HasChild(ms map[string]string, id, childId string) bool {
 	valstr := ms[id]
-
 	defer func() {
 		if err := recover(); err != nil {
-			lk.Log("[%v]: [%v]", id, valstr)
-			lk.FailOnErr("%v", err)
+			log.Fatalf("err: [%v]\nid: [%v]\nvalstr: [%v]", err, id, valstr)
 		}
 	}()
-
-	if children := gjson.Get(valstr, "children").Array(); len(children) > 0 {
-		for _, child := range children {
-			// fmt.Println(child)
-			if childId == child.String() {
-				return true
+	if childrenRst := gjson.Get(valstr, "children"); childrenRst.Type != gjson.Null && childrenRst.IsArray() {
+		if children := childrenRst.Array(); len(children) > 0 {
+			for _, child := range children {
+				// fmt.Println(child)
+				if childId == child.String() {
+					return true
+				}
 			}
 		}
 	}

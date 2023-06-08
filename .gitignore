@@ -28,3 +28,4 @@ asn-json/asn-json
 asn-json/fatal
 asn-json-ld/asn-json-ld
 asn-json-ld/fatal
+*.log

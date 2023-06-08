@@ -13,6 +13,7 @@ import (
 
 func init() {
 	lk.WarnDetail(false)
+	lk.Log2F(true, "reStruct.log")
 }
 
 func ReStruct(js string) string {

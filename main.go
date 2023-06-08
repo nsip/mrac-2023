@@ -49,7 +49,7 @@ func main() {
 	node.Process(bytesNode, uri4id, mMetaKeyName, out)
 
 	// *** if 'code-url.txt' & 'id-url.txt' exist, DO NOT run this (take a long time) ***
-	node.GenCodeIdUrlTxt(bytesNode, out)
+	// node.GenCodeIdUrlTxt(bytesNode, out)
 
 	///////////////////////////////////////////////////////////////////
 
