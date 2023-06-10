@@ -23,9 +23,9 @@ func main() {
 
 	os.MkdirAll(fmt.Sprintf("./%s/", out), os.ModePerm)
 
-	bytesMeta, err := os.ReadFile(metaFile)
+	dataMeta, err := os.ReadFile(metaFile)
 	lk.FailOnErr("%v", err)
-	jsMeta := string(bytesMeta)
+	jsMeta := string(dataMeta)
 
 	mMetaKeyName, err := meta.Parse(jsMeta, "name")
 	lk.FailOnErr("%v", err)
@@ -44,18 +44,17 @@ func main() {
 
 	///////////////////////////////////////////////////////////////////
 
-	bytesNode, err := os.ReadFile(nodeFile)
+	dataNode, err := os.ReadFile(nodeFile)
 	lk.FailOnErr("%v", err)
-	node.Process(bytesNode, uri4id, mMetaKeyName, out)
+	node.Process(dataNode, uri4id, mMetaKeyName, out)
 
 	// *** if 'code-url.txt' & 'id-url.txt' exist, DO NOT run this (take a long time) ***
-	// node.GenCodeIdUrlTxt(bytesNode, out)
+	// node.GenCodeIdUrlTxt(dataNode, out)
 
 	///////////////////////////////////////////////////////////////////
 
-	bytesTree, err := os.ReadFile(treeFile) // tree.pretty.json
+	dataTree, err := os.ReadFile(treeFile) // tree.pretty.json
 	lk.FailOnErr("%v", err)
-	js := string(bytesTree)
+	js := string(dataTree)
 	tree.Partition(js, out, mMetaKeyName)
-
 }

@@ -153,24 +153,24 @@ func scanNodeIdTitle(data []byte) map[string]string {
 	return m
 }
 
-func nodeProc(data []byte, outDir, outName, sofiaTreeFile, pref4children string) {
+func nodeProc(nmData []byte, outDir, outName, treeFile, pref4children string) {
 
-	e := bytes.LastIndexAny(data, "}")
-	data = data[:e+1]
+	e := bytes.LastIndexAny(nmData, "}")
+	nmData = nmData[:e+1]
 
 	outDir = strings.Trim(outDir, `./\`)
 	parts := []string{}
 	out := ""
 
-	dataTree, err := os.ReadFile(sofiaTreeFile)
+	dataTree, err := os.ReadFile(treeFile)
 	if err != nil {
 		panic(err)
 	}
 	mCodeParent := tool.GetCodeParentMap(dataTree)
 
-	mUidTitle := scanNodeIdTitle(data)
+	mUidTitle := scanNodeIdTitle(nmData)
 
-	tool.ScanNode(data, func(i int, id, block string) bool {
+	tool.ScanNode(nmData, func(i int, id, block string) bool {
 
 		code := gjson.Get(block, "code").String()
 		// fmt.Println(i, id, code)

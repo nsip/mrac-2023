@@ -51,11 +51,11 @@ func main() {
 		outPath := filepath.Join(outDir, outFile)
 
 		if !fd.FileExists(outPath) {
-			data, err := os.ReadFile(nmFile)
+			nmData, err := os.ReadFile(nmFile)
 			if err != nil {
 				panic(err)
 			}
-			nodeProc(data, outDir, outFile, treeFile, uri4id)
+			nodeProc(nmData, outDir, outFile, treeFile, uri4id)
 		}
 
 		// 	// 	/////

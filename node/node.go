@@ -53,16 +53,16 @@ func Scan(data []byte, f func(i int, id, block string) bool) {
 	}
 }
 
-func Process(data []byte, uri string, meta map[string]string, outDir string) {
+func Process(dataNode []byte, uri string, meta map[string]string, outDir string) {
 
-	e := bytes.LastIndexAny(data, "}")
-	data = data[:e+1]
+	e := bytes.LastIndexAny(dataNode, "}")
+	dataNode = dataNode[:e+1]
 
 	outDir = strings.Trim(outDir, `./\`)
 	parts := []string{}
 	out := ""
 
-	Scan(data, func(i int, id, block string) bool {
+	Scan(dataNode, func(i int, id, block string) bool {
 
 		// "uuid": {id} => "id": "http://abc/def/{id}"
 		newIdVal := fmt.Sprintf("%s%s", uri, gjson.Get(block, "uuid").String())
@@ -288,9 +288,9 @@ func Scan2Flatmap(data []byte) map[string]map[string]any {
 	return ret
 }
 
-func GenCodeIdUrlTxt(data []byte, outDir string) {
+func GenCodeIdUrlTxt(dataNode []byte, outDir string) {
 
-	ms := Scan2MapStrval(data)
+	mNodeIdBlock := Scan2MapStrval(dataNode)
 
 	// str := ms["92b62493-c251-421f-b774-235cfd597852"]
 	// r := gjson.Get(str, "children.#").Int()
@@ -315,17 +315,15 @@ func GenCodeIdUrlTxt(data []byte, outDir string) {
 	mIdUrl := make(map[string]string)
 
 	Idx := 0
-	for _, valstr := range ms {
+	for _, block := range mNodeIdBlock {
 
-		code := gjson.Get(valstr, "code").String()
-		codes, ids := TrackCode(ms, code)
+		code := gjson.Get(block, "code").String()
+		codes, ids := TrackCode(mNodeIdBlock, code)
 		// for i, code := range codes {
 		// 	fmt.Println(code, ids[i])
 		// }
-		fmt.Println("TrackCode Done!")
 
 		MarkUrl(ids, codes, mCodeUrl, mIdUrl)
-		fmt.Println("MarkUrl Done!")
 
 		fmt.Printf("processed... %d, %v\n", Idx, codes)
 		Idx++

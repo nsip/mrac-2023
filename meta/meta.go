@@ -1,22 +1,29 @@
 package meta
 
 import (
+	"errors"
 	"fmt"
 
 	. "github.com/digisan/go-generics/v2"
+	lk "github.com/digisan/logkit"
 	"github.com/tidwall/gjson"
 )
 
 func Parse(js, field string) (map[string]string, error) {
 	if NotIn(field, "name", "plural") {
-		return nil, fmt.Errorf("[%s] is NOT a field in Sofia-API-Meta-Data.json or still NOT supported", field)
+		return nil, fmt.Errorf("[%s] is NOT a field in Sofia-API-Meta-Data.json or NOT supported", field)
 	}
 	mMeta := make(map[string]string)
-	r := gjson.Get(js, "fields")
-	if r.IsArray() {
+	if r := gjson.Get(js, "fields"); r.Type != gjson.Null && r.IsArray() {
 		for _, ra := range r.Array() {
 			if ra.IsObject() {
-				mMeta[ra.Get("key").String()] = ra.Get(field).String()
+				if rKey := ra.Get("key"); rKey.Type != gjson.Null {
+					if rField := ra.Get(field); rField.Type != gjson.Null {
+						mMeta[rKey.Str] = rField.Str
+					}
+				} else {
+					lk.FailOnErr("field 'key' is missing %v", errors.New(""))
+				}
 			}
 		}
 	}
