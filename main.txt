@@ -1,0 +1,68 @@
+package main
+
+import (
+	"fmt"
+	"os"
+
+	lk "github.com/digisan/logkit"
+	"github.com/nsip/mrac-2023/meta"
+
+	// "github.com/nsip/mrac-2023/node"
+	"github.com/nsip/mrac-2023/tree"
+)
+
+const (
+	uri4id = "http://vocabulary.curriculum.edu.au/" // "http://rdf.curriculum.edu.au/202110/"
+	out    = "data-out"
+
+	metaFile = "./data/Sofia-API-Meta-Data-13062023.json"
+	nodeFile = "./data/Sofia-API-Node-Data-13062023.json"
+	treeFile = "./data/Sofia-API-Tree-Data-13062023.json"
+)
+
+func main() {
+
+	os.MkdirAll(fmt.Sprintf("./%s/", out), os.ModePerm)
+
+	dataMeta, err := os.ReadFile(metaFile)
+	lk.FailOnErr("%v", err)
+	jsMeta := string(dataMeta)
+
+	mMetaKeyName, err := meta.Parse(jsMeta, "name")
+	lk.FailOnErr("%v", err)
+	mMetaKeyPlural, err := meta.Parse(jsMeta, "plural")
+	lk.FailOnErr("%v", err)
+
+	for k, v := range mMetaKeyName {
+		fmt.Printf("%v: %v\n", k, v)
+	}
+	fmt.Println("---------------------------------------------")
+	for k, v := range mMetaKeyPlural {
+		fmt.Printf("%v: %v\n", k, v)
+	}
+
+	// fmt.Printf("%d\n", len(mMeta))
+
+	///////////////////////////////////////////////////////////////////
+
+	// *** Update ***, use 'node2_test.go' to create node-meta.json
+	// ***
+	// dataNode, err := os.ReadFile(nodeFile)
+	// lk.FailOnErr("%v", err)
+	// node.Process(dataNode, uri4id, mMetaKeyName, out)
+
+	// *** Update ***, use 'node2_test.go' to create CodeUrl.txt & IdUrl.txt
+	// ***
+	// *** if 'code-url.txt' & 'id-url.txt' exist, DO NOT run this (take a long time) ***
+	// node.GenCodeIdUrlTxt(dataNode, out)
+
+	///////////////////////////////////////////////////////////////////
+
+	// *** Update ***, use 'tree_test.go' to create each partition.json
+	// ***
+
+	dataTree, err := os.ReadFile(treeFile) // tree.pretty.json
+	lk.FailOnErr("%v", err)
+	js := string(dataTree)
+	tree.Partition(js, out, mMetaKeyName)
+}

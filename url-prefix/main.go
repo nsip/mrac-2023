@@ -55,7 +55,7 @@ func main() {
 	r := regexp.MustCompile(`http://vocabulary.curriculum.edu.au/+[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}`)
 
 	base := "http://vocabulary.curriculum.edu.au/MRAC"
-	yyyy, mm := FetchTime("../data/Sofia-API-Tree-Data-06062023.json")
+	yyyy, mm := FetchTime("../data/Sofia-API-Tree-Data-13062023.json")
 	prefix := fmt.Sprintf("%s/%s/%s", base, yyyy, mm)
 	urlModify := func(url string) string {
 		return strings.Replace(url, base, prefix, 1)

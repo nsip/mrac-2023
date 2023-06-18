@@ -16,9 +16,9 @@ import (
 )
 
 const (
-	metaFile = "../data/Sofia-API-Meta-Data-06062023.json"
-	nodeFile = "../data/Sofia-API-Node-Data-06062023.json"
-	treeFile = "../data/Sofia-API-Tree-Data-06062023.json"
+	metaFile = "../data/Sofia-API-Meta-Data-13062023.json"
+	nodeFile = "../data/Sofia-API-Node-Data-13062023.json"
+	treeFile = "../data/Sofia-API-Tree-Data-13062023.json"
 	nmFile   = "../data-out/node-meta.json"
 )
 
