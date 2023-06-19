@@ -106,5 +106,3 @@ func TestFixDup_asn_hasLevel(t *testing.T) {
 		}
 	}()
 }
-
-// 3ef77f77-e0c4-4fb1-bfc5-496f2e4fe49b  4-18

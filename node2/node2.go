@@ -98,10 +98,10 @@ func GetIdByCode(code string, mCodeBlock map[string]string) string {
 }
 
 // not including map[root]***
-func GenChildParentMap(data []byte, mIdBlock map[string]string) (mIDChildParent map[string]string, mCodeChildParent map[string]string) {
+func GenChildParentMap(dataNode []byte, mIdBlock map[string]string) (mIDChildParent map[string]string, mCodeChildParent map[string]string) {
 	mIDChildParent = make(map[string]string)
 	mCodeChildParent = make(map[string]string)
-	Scan(data, func(i int, id, block string) bool {
+	Scan(dataNode, func(i int, id, block string) bool {
 		if r := gjson.Get(block, "children"); r.Type != gjson.Null && r.IsArray() {
 			for _, rChild := range r.Array() {
 
@@ -133,36 +133,52 @@ func GenChildParentMap(data []byte, mIdBlock map[string]string) (mIDChildParent 
 	return
 }
 
-func RetrieveAncestryID(id string, mIDChildParent map[string]string) []string {
-	Ancestry := []string{id}
+// func RetrieveAncestryID(id string, mIDChildParent map[string]string) []string {
+// 	Ancestry := []string{id}
+// AGAIN:
+// 	if pID, ok := mIDChildParent[id]; ok {
+// 		Ancestry = append(Ancestry, pID)
+// 		id = pID
+// 		goto AGAIN
+// 	}
+// 	return Reverse(Ancestry)
+// }
+
+// func RetrieveAncestryCode(code string, mCodeChildParent map[string]string) []string {
+// 	Ancestry := []string{code}
+// AGAIN:
+// 	if pCode, ok := mCodeChildParent[code]; ok {
+// 		Ancestry = append(Ancestry, pCode)
+// 		code = pCode
+// 		goto AGAIN
+// 	}
+// 	return Reverse(Ancestry)
+// }
+
+func RetrieveAncestry(IdOrCode string, mIdOrCodeChildParent map[string]string) []string {
+	Ancestry := []string{IdOrCode}
 AGAIN:
-	if pID, ok := mIDChildParent[id]; ok {
-		Ancestry = append(Ancestry, pID)
-		id = pID
+	if pIdOrCode, ok := mIdOrCodeChildParent[IdOrCode]; ok {
+		Ancestry = append(Ancestry, pIdOrCode)
+		IdOrCode = pIdOrCode
 		goto AGAIN
 	}
 	return Reverse(Ancestry)
 }
 
-func RetrieveAncestryCode(code string, mCodeChildParent map[string]string) []string {
-	Ancestry := []string{code}
-AGAIN:
-	if pCode, ok := mCodeChildParent[code]; ok {
-		Ancestry = append(Ancestry, pCode)
-		code = pCode
-		goto AGAIN
-	}
-	return Reverse(Ancestry)
-}
+// func IsAncestorID(id, ancestor string, mIDChildParent map[string]string) bool {
+// 	ancestry := RetrieveAncestryID(id, mIDChildParent)
+// 	return In(ancestor, ancestry...) && IdxOf(id, ancestry...) > IdxOf(ancestor, ancestry...)
+// }
 
-func IsAncestorID(id, ancestor string, mIDChildParent map[string]string) bool {
-	ancestry := RetrieveAncestryID(id, mIDChildParent)
-	return In(ancestor, ancestry...) && IdxOf(id, ancestry...) > IdxOf(ancestor, ancestry...)
-}
+// func IsAncestorCode(code, ancestor string, mCodeChildParent map[string]string) bool {
+// 	ancestry := RetrieveAncestryCode(code, mCodeChildParent)
+// 	return In(ancestor, ancestry...) && IdxOf(code, ancestry...) > IdxOf(ancestor, ancestry...)
+// }
 
-func IsAncestorCode(code, ancestor string, mCodeChildParent map[string]string) bool {
-	ancestry := RetrieveAncestryCode(code, mCodeChildParent)
-	return In(ancestor, ancestry...) && IdxOf(code, ancestry...) > IdxOf(ancestor, ancestry...)
+func IsAncestorCode(IdOrCode, ancestor string, mIdOrCodeChildParent map[string]string) bool {
+	ancestry := RetrieveAncestry(IdOrCode, mIdOrCodeChildParent)
+	return In(ancestor, ancestry...) && IdxOf(IdOrCode, ancestry...) > IdxOf(ancestor, ancestry...)
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -218,7 +234,7 @@ func MakeIdUrlText(mIdBlock, mCodeBlock, mIDChildParent, mCodeChildParent map[st
 	for code := range mCodeBlock {
 
 		url := ""
-		ancestors := RetrieveAncestryCode(code, mCodeChildParent)
+		ancestors := RetrieveAncestry(code, mCodeChildParent)
 
 		switch {
 		case len(ancestors) >= 3:

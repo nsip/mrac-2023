@@ -13,30 +13,6 @@ import (
 	. "github.com/nsip/mrac-2023/tree/sub"
 )
 
-var (
-	mProcFlag = map[string]bool{
-		"la-English":                        true,
-		"la-Humanities and Social Sciences": true,
-		"la-Health and Physical Education":  true,
-		"la-Languages":                      true,
-		"la-Mathematics":                    true,
-		"la-Science":                        true,
-		"la-The Arts":                       true,
-		"la-Technologies":                   true,
-	}
-
-	mUrlID = map[string]string{
-		"la-English":                        "http://vocabulary.curriculum.edu.au/MRAC/LA/ENG/",
-		"la-Humanities and Social Sciences": "http://vocabulary.curriculum.edu.au/MRAC/LA/HASS/",
-		"la-Health and Physical Education":  "http://vocabulary.curriculum.edu.au/MRAC/LA/HPE/",
-		"la-Languages":                      "http://vocabulary.curriculum.edu.au/MRAC/LA/LAN/",
-		"la-Mathematics":                    "http://vocabulary.curriculum.edu.au/MRAC/LA/MAT/",
-		"la-Science":                        "http://vocabulary.curriculum.edu.au/MRAC/LA/SCI/",
-		"la-The Arts":                       "http://vocabulary.curriculum.edu.au/MRAC/LA/ART/",
-		"la-Technologies":                   "http://vocabulary.curriculum.edu.au/MRAC/LA/TEC/",
-	}
-)
-
 func Partition(js, outDir string, mMeta map[string]string) {
 
 	fileContent := CCP(js, outDir)
@@ -58,6 +34,30 @@ func Partition(js, outDir string, mMeta map[string]string) {
 	}
 
 	//////////////////////////////////////////////////////////////
+
+	var (
+		mProcFlag = map[string]bool{
+			"la-English":                        true,
+			"la-Humanities and Social Sciences": true,
+			"la-Health and Physical Education":  true,
+			"la-Languages":                      true,
+			"la-Mathematics":                    true,
+			"la-Science":                        true,
+			"la-The Arts":                       true,
+			"la-Technologies":                   true,
+		}
+
+		mUrlID = map[string]string{
+			"la-English":                        "http://vocabulary.curriculum.edu.au/MRAC/LA/ENG/",
+			"la-Humanities and Social Sciences": "http://vocabulary.curriculum.edu.au/MRAC/LA/HASS/",
+			"la-Health and Physical Education":  "http://vocabulary.curriculum.edu.au/MRAC/LA/HPE/",
+			"la-Languages":                      "http://vocabulary.curriculum.edu.au/MRAC/LA/LAN/",
+			"la-Mathematics":                    "http://vocabulary.curriculum.edu.au/MRAC/LA/MAT/",
+			"la-Science":                        "http://vocabulary.curriculum.edu.au/MRAC/LA/SCI/",
+			"la-The Arts":                       "http://vocabulary.curriculum.edu.au/MRAC/LA/ART/",
+			"la-Technologies":                   "http://vocabulary.curriculum.edu.au/MRAC/LA/TEC/",
+		}
+	)
 
 	for fName, proc := range mProcFlag {
 		if !proc {

@@ -2,7 +2,9 @@ package main
 
 import (
 	"bytes"
-	"context"
+	"path/filepath"
+
+	// "context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -153,24 +155,18 @@ func scanNodeIdTitle(data []byte) map[string]string {
 	return m
 }
 
-func nodeProc(nmData []byte, outDir, outName, treeFile, pref4children string) {
+func nodeProc(dataNM []byte, mCodeChildParent map[string]string, outDir, outName, pref4children string) {
 
-	e := bytes.LastIndexAny(nmData, "}")
-	nmData = nmData[:e+1]
+	e := bytes.LastIndexAny(dataNM, "}")
+	dataNM = dataNM[:e+1]
 
-	outDir = strings.Trim(outDir, `./\`)
+	outDir = filepath.Clean(outDir)
 	parts := []string{}
 	out := ""
 
-	dataTree, err := os.ReadFile(treeFile)
-	if err != nil {
-		panic(err)
-	}
-	mCodeParent := tool.GetCodeParentMap(dataTree)
+	mUidTitle := scanNodeIdTitle(dataNM)
 
-	mUidTitle := scanNodeIdTitle(nmData)
-
-	tool.ScanNode(nmData, func(i int, id, block string) bool {
+	tool.ScanNode(dataNM, func(i int, id, block string) bool {
 
 		code := gjson.Get(block, "code").String()
 		// fmt.Println(i, id, code)
@@ -196,7 +192,7 @@ func nodeProc(nmData []byte, outDir, outName, treeFile, pref4children string) {
 		}
 
 		// Derived
-		laTitle := tool.GetAncestorTitle(mCodeParent, code, "")
+		laTitle := tool.GetAncestorTitle(code, "", mCodeChildParent)
 		if laTitle == "" {
 			// fmt.Println("Learning area missing:", code)
 		}
@@ -244,7 +240,7 @@ func nodeProc(nmData []byte, outDir, outName, treeFile, pref4children string) {
 			}
 		}
 
-		nodeType := tool.GetCodeAncestor(mCodeParent, code, 0)
+		nodeType := tool.GetCodeType(code, mCodeChildParent)
 		switch nodeType {
 		case "GC":
 			for uri, title := range mConnUri {
@@ -291,7 +287,9 @@ func nodeProc(nmData []byte, outDir, outName, treeFile, pref4children string) {
 			}
 
 		default:
-			log.Printf("NodeType: '%v' is not one of [GC CCP LA AS], Code is '%v'", nodeType, code)
+			if code != "root" {
+				log.Printf("NodeType: '%v' is not one of [GC CCP LA AS], Code is '%v'", nodeType, code)
+			}
 		}
 
 		////////////////////////////////////////////////////////////////
@@ -310,108 +308,113 @@ func nodeProc(nmData []byte, outDir, outName, treeFile, pref4children string) {
 	if !strings.HasSuffix(outName, ".json") {
 		outName += ".json"
 	}
-	os.WriteFile(fmt.Sprintf("./%s/%s", outDir, outName), []byte(out), os.ModePerm)
+
+	outPath := fmt.Sprintf("./%s/%s", outDir, outName)
+	fmt.Printf("save at [%s], data length: [%d]\n", outPath, len(out))
+	os.WriteFile(outPath, []byte(out), os.ModePerm)
 }
 
-func getIdBlock(js string) (mIdBlock, mIdBlockLeaf map[string]string) {
+/////////////////////////////////////////////////////////////////////////////
 
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+// func getIdBlock(js string) (mIdBlock, mIdBlockLeaf map[string]string) {
 
-	r := strings.NewReader(js)
-	result, ok := jt.ScanObject(ctx, r, true, true, jt.OUT_FMT)
-	if !ok {
-		log.Fatalln("node file is NOT JSON array")
-	}
+// 	ctx, cancel := context.WithCancel(context.Background())
+// 	defer cancel()
 
-	mIdBlock = make(map[string]string)
-	mIdBlockLeaf = make(map[string]string)
+// 	r := strings.NewReader(js)
+// 	result, ok := jt.ScanObject(ctx, r, true, true, jt.OUT_FMT)
+// 	if !ok {
+// 		log.Fatalln("node file is NOT JSON array")
+// 	}
 
-	for r := range result {
-		if r.Err != nil {
-			log.Fatalln(r.Err)
-		}
-		id := gjson.Get(r.Obj, "id").String()
-		mIdBlock[id] = r.Obj
+// 	mIdBlock = make(map[string]string)
+// 	mIdBlockLeaf = make(map[string]string)
 
-		hasChildren := gjson.Get(r.Obj, "children").IsArray()
-		if !hasChildren {
-			mIdBlockLeaf[id] = r.Obj
-		}
-	}
+// 	for r := range result {
+// 		if r.Err != nil {
+// 			log.Fatalln(r.Err)
+// 		}
+// 		id := gjson.Get(r.Obj, "id").String()
+// 		mIdBlock[id] = r.Obj
 
-	return
-}
+// 		hasChildren := gjson.Get(r.Obj, "children").IsArray()
+// 		if !hasChildren {
+// 			mIdBlockLeaf[id] = r.Obj
+// 		}
+// 	}
 
-func childrenId(cBlock string) (cid []string) {
-	s := strings.Index(cBlock, "[")
-	e := strings.LastIndex(cBlock, "]")
-	cBlock = cBlock[s+1 : e]
-	cBlock = strings.Trim(cBlock, " \n\t")
-	for _, id := range strings.Split(cBlock, ",") {
-		cid = append(cid, strings.Trim(id, " \n\t"))
-	}
-	return
-}
+// 	return
+// }
 
-func childrenRepl(inpath string, mIdBlock map[string]string) string {
+// func childrenId(cBlock string) (cid []string) {
+// 	s := strings.Index(cBlock, "[")
+// 	e := strings.LastIndex(cBlock, "]")
+// 	cBlock = cBlock[s+1 : e]
+// 	cBlock = strings.Trim(cBlock, " \n\t")
+// 	for _, id := range strings.Split(cBlock, ",") {
+// 		cid = append(cid, strings.Trim(id, " \n\t"))
+// 	}
+// 	return
+// }
 
-	data, err := os.ReadFile(inpath)
-	if err != nil {
-		log.Fatalln(err)
-	}
+// func childrenRepl(inpath string, mIdBlock map[string]string) string {
 
-	rChildren := regexp.MustCompile(`"children":\s*\[([\n\s]*"http[^"]+",?)+[\n\s]*\]`)
-	js := string(data)
-	repl := false
+// 	data, err := os.ReadFile(inpath)
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
 
-AGAIN:
-	repl = false
-	js = rChildren.ReplaceAllStringFunc(js, func(s string) string {
-		for _, id := range childrenId(s) {
-			id = id[1 : len(id)-1]
-			if block, ok := mIdBlock[id]; ok {
-				s = strings.ReplaceAll(s, "\""+id+"\"", block)
-				repl = true
-			}
-		}
-		return s
-	})
+// 	rChildren := regexp.MustCompile(`"children":\s*\[([\n\s]*"http[^"]+",?)+[\n\s]*\]`)
+// 	js := string(data)
+// 	repl := false
 
-	if repl {
-		goto AGAIN
-	}
+// AGAIN:
+// 	repl = false
+// 	js = rChildren.ReplaceAllStringFunc(js, func(s string) string {
+// 		for _, id := range childrenId(s) {
+// 			id = id[1 : len(id)-1]
+// 			if block, ok := mIdBlock[id]; ok {
+// 				s = strings.ReplaceAll(s, "\""+id+"\"", block)
+// 				repl = true
+// 			}
+// 		}
+// 		return s
+// 	})
 
-	return jt.FmtStr(js, "  ")
-}
+// 	if repl {
+// 		goto AGAIN
+// 	}
 
-func getRootWholeObject(allNestedSet string) string {
+// 	return jt.FmtStr(js, "  ")
+// }
 
-	rId := regexp.MustCompile(`"id": "http[^"]+"`)
+// func getRootWholeObject(allNestedSet string) string {
 
-	mIdCnt := make(map[string]int)
-	rId.ReplaceAllStringFunc(allNestedSet, func(s string) string {
-		mIdCnt[s]++
-		return s
-	})
+// 	rId := regexp.MustCompile(`"id": "http[^"]+"`)
 
-	// fmt.Println(len(mIdCnt))
+// 	mIdCnt := make(map[string]int)
+// 	rId.ReplaceAllStringFunc(allNestedSet, func(s string) string {
+// 		mIdCnt[s]++
+// 		return s
+// 	})
 
-	mIdRootCnt := make(map[string]int)
-	for idstr, cnt := range mIdCnt {
-		if cnt == 1 {
-			mIdRootCnt[idstr] = cnt
-		}
-	}
+// 	// fmt.Println(len(mIdCnt))
 
-	mIdBlock, _ := getIdBlock(allNestedSet)
+// 	mIdRootCnt := make(map[string]int)
+// 	for idstr, cnt := range mIdCnt {
+// 		if cnt == 1 {
+// 			mIdRootCnt[idstr] = cnt
+// 		}
+// 	}
 
-	for idstr := range mIdRootCnt {
-		s := strings.Index(idstr, "http:")
-		e := strings.LastIndex(idstr, "\"")
-		id := idstr[s:e]
-		return mIdBlock[id]
-	}
+// 	mIdBlock, _ := getIdBlock(allNestedSet)
 
-	return ""
-}
+// 	for idstr := range mIdRootCnt {
+// 		s := strings.Index(idstr, "http:")
+// 		e := strings.LastIndex(idstr, "\"")
+// 		id := idstr[s:e]
+// 		return mIdBlock[id]
+// 	}
+
+// 	return ""
+// }

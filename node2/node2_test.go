@@ -11,25 +11,25 @@ import (
 
 func TestNode2(t *testing.T) {
 
-	nodeData, err := os.ReadFile("../data/Sofia-API-Node-Data-13062023.json")
+	dataNode, err := os.ReadFile("../data/Sofia-API-Node-Data-13062023.json")
 	lk.FailOnErr("%v", err)
 
-	mIdBlock := GenNodeIdBlockMap(nodeData)
-	mCodeBlock := GenNodeCodeBlockMap(nodeData)
-	mIDChildParent, mCodeChildParent := GenChildParentMap(nodeData, mIdBlock)
+	mIdBlock := GenNodeIdBlockMap(dataNode)
+	mCodeBlock := GenNodeCodeBlockMap(dataNode)
+	mIDChildParent, mCodeChildParent := GenChildParentMap(dataNode, mIdBlock)
 
 	fmt.Printf("Total: %d - %d - %d - %d\n", len(mIdBlock), len(mCodeBlock), len(mIDChildParent), len(mCodeChildParent))
 
-	ancestryID := RetrieveAncestryID("ffdaf9d5-514b-4f0d-873c-130ffbde52f4", mIDChildParent)
+	ancestryID := RetrieveAncestry("ffdaf9d5-514b-4f0d-873c-130ffbde52f4", mIDChildParent)
 	fmt.Println(ancestryID)
 
-	ancestryCode := RetrieveAncestryID("AC9LIN10C03_E3", mCodeChildParent)
+	ancestryCode := RetrieveAncestry("LSLiS5.6", mCodeChildParent)
 	fmt.Println(ancestryCode)
 
-	fmt.Println(IsAncestorCode("AC9LIN10C03_E3", "Indicator", mCodeChildParent))
+	// fmt.Println(IsAncestorCode("AC9LIN10C03_E3", "Indicator", mCodeChildParent))
 
-	fmt.Println(GetIdByCode("AC9LIN10C03_E3", mCodeBlock))
-	fmt.Println(GetCodeById("ffdaf9d5-514b-4f0d-873c-130ffbde52f4", mIdBlock))
+	// fmt.Println(GetIdByCode("AC9LIN10C03_E3", mCodeBlock))
+	// fmt.Println(GetCodeById("ffdaf9d5-514b-4f0d-873c-130ffbde52f4", mIdBlock))
 }
 
 const (

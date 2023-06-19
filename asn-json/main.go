@@ -9,17 +9,17 @@ import (
 	"sync"
 	"time"
 
-	fd "github.com/digisan/gotk/file-dir"
 	"github.com/digisan/gotk/track"
 	jt "github.com/digisan/json-tool"
-	"github.com/nsip/mrac-2023/asn-json/tool"
+	lk "github.com/digisan/logkit"
+	"github.com/nsip/mrac-2023/node2"
 )
 
 const (
-	metaFile = "../data/Sofia-API-Meta-Data-13062023.json"
-	nodeFile = "../data/Sofia-API-Node-Data-13062023.json"
-	treeFile = "../data/Sofia-API-Tree-Data-13062023.json"
-	nmFile   = "../data-out/node-meta.json"
+	// fileMeta = "../data/Sofia-API-Meta-Data-13062023.json"
+	// fileTree = "../data/Sofia-API-Tree-Data-13062023.json"
+	fileNode = "../data/Sofia-API-Node-Data-13062023.json" // only for get mCodeChildParent
+	fileNM   = "../data/node-meta.json"                    // here, it is updated fileNode
 )
 
 var mEscStr = map[string]string{
@@ -44,39 +44,42 @@ func restoreEsc(js string) string {
 func main() {
 	defer track.TrackTime(time.Now())
 
-	{
-		outDir := "../data-out/asn-json"
-		outFile := "asn-node.json"
-		os.MkdirAll(outDir, os.ModePerm)
-		outPath := filepath.Join(outDir, outFile)
+	dataNode, err := os.ReadFile(fileNode)
+	lk.FailOnErr("%v", err)
+	mIdBlock := node2.GenNodeIdBlockMap(dataNode)
+	_, mCodeChildParent := node2.GenChildParentMap(dataNode, mIdBlock)
 
-		if !fd.FileExists(outPath) {
-			nmData, err := os.ReadFile(nmFile)
-			if err != nil {
-				panic(err)
-			}
-			nodeProc(nmData, outDir, outFile, treeFile, uri4id)
-		}
+	// {
+	// 	outDir := "../data-out/asn-json"
+	// 	outFile := "asn-node.json"
+	// 	os.MkdirAll(outDir, os.ModePerm)
+	// 	outPath := filepath.Join(outDir, outFile)
 
-		// 	// 	/////
+	// 	if !fd.FileExists(outPath) {
+	// 		nmData, err := os.ReadFile(fileNM)
+	// 		if err != nil {
+	// 			panic(err)
+	// 		}
+	// 		nodeProc(nmData, mCodeChildParent, outDir, outFile, uri4id)
+	// 	}
 
-		// 	data, err := os.ReadFile(outpath)
-		// 	if err != nil {
-		// 		log.Fatalln(err)
-		// 	}
+	// 	// 	// 	/////
 
-		// 	mIdBlock, _ := getIdBlock(string(data))
+	// 	// 	data, err := os.ReadFile(outpath)
+	// 	// 	if err != nil {
+	// 	// 		log.Fatalln(err)
+	// 	// 	}
 
-		// 	inpath4exp := outpath
-		// 	outexp := childrenRepl(inpath4exp, mIdBlock)
-		// 	// os.WriteFile("./out/asnexp.json", []byte(outexp), os.ModePerm)
+	// 	// 	mIdBlock, _ := getIdBlock(string(data))
 
-		// 	rootWholeBlock := getRootWholeObject(outexp)
-		// 	os.WriteFile("./out/asn-node-one.json", []byte(rootWholeBlock), os.ModePerm)
+	// 	// 	inpath4exp := outpath
+	// 	// 	outexp := childrenRepl(inpath4exp, mIdBlock)
+	// 	// 	// os.WriteFile("./out/asnexp.json", []byte(outexp), os.ModePerm)
 
-	}
+	// 	// 	rootWholeBlock := getRootWholeObject(outexp)
+	// 	// 	os.WriteFile("./out/asn-node-one.json", []byte(rootWholeBlock), os.ModePerm)
 
-	// return
+	// }
 
 	//////////////////////////////////////////////////////////////////////
 
@@ -100,13 +103,7 @@ func main() {
 			"gc-Personal and Social capability.json": "GC-PSC",
 		}
 
-		dataTree, err := os.ReadFile(treeFile)
-		if err != nil {
-			log.Fatalln(err)
-		}
-		mCodeParent := tool.GetCodeParentMap(dataTree)
-
-		dataNode, err := os.ReadFile(nmFile)
+		dataNode, err := os.ReadFile(fileNM)
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -124,7 +121,7 @@ func main() {
 
 			go func(file, la string) {
 
-				if file != "la-Languages.json" {
+				if file == "la-Languages.json" {
 					wg.Done()
 					return
 				}
@@ -160,7 +157,7 @@ func main() {
 				js = treeProc3(
 					[]byte(js),
 					la,
-					mCodeParent,
+					mCodeChildParent,
 					mNodeData,
 					paths,
 					&prevDocTypePath,

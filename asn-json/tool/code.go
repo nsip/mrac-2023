@@ -1,129 +1,102 @@
 package tool
 
 import (
-	"fmt"
-	"math"
-	"regexp"
-	"strings"
+	. "github.com/digisan/go-generics/v2"
+	"github.com/nsip/mrac-2023/node2"
 )
 
-func findCodeParent(code string, start int, mParent map[string]int) string {
-	pCode, pDis := "", math.MaxInt32
-	for code, pStart := range mParent {
-		if dis := start - pStart; dis > 0 && dis < pDis {
-			pCode = code
-			pDis = dis
-		}
-	}
-	return pCode
-}
+// func findCodeParent(code string, start int, mParent map[string]int) string {
+// 	pCode, pDis := "", math.MaxInt32
+// 	for code, pStart := range mParent {
+// 		if dis := start - pStart; dis > 0 && dis < pDis {
+// 			pCode = code
+// 			pDis = dis
+// 		}
+// 	}
+// 	return pCode
+// }
 
-// input json MUST be well formatted, indent is 2 spaces.
-func GetCodeParentMap(data []byte) map[string]string {
+// // input json MUST be well formatted, indent is 2 spaces.
+// func GetCodeParentMap(data []byte) map[string]string {
 
-	js := string(data)
+// 	js := string(data)
 
-	// check
-	// if !strings.HasPrefix(js, "{\n  \"code\": \"root\",") && !strings.HasPrefix(js, "{\r\n  \"code\": \"root\",") {
-	// 	panic("input json MUST be well formatted, indent is 2 spaces.")
-	// }
+// 	// check
+// 	// if !strings.HasPrefix(js, "{\n  \"code\": \"root\",") && !strings.HasPrefix(js, "{\r\n  \"code\": \"root\",") {
+// 	// 	panic("input json MUST be well formatted, indent is 2 spaces.")
+// 	// }
 
-	reCodes := []*regexp.Regexp{}
-	for i := 6; i <= 54; i += 4 {
-		reCodes = append(reCodes, regexp.MustCompile(fmt.Sprintf(`\n[ ]{%d}"code":(\s)*"[^"]+"`, i)))
-	}
+// 	reCodes := []*regexp.Regexp{}
+// 	for i := 6; i <= 54; i += 4 {
+// 		reCodes = append(reCodes, regexp.MustCompile(fmt.Sprintf(`\n[ ]{%d}"code":(\s)*"[^"]+"`, i)))
+// 	}
 
-	mCodeChildren := make(map[string][]string)
-	mCodeParent := make(map[string]string)
-	mLvlStartGrp := []map[string]int{}
+// 	mCodeChildren := make(map[string][]string)
+// 	mCodeParent := make(map[string]string)
+// 	mLvlStartGrp := []map[string]int{}
 
-	for _, r := range reCodes {
+// 	for _, r := range reCodes {
 
-		locGrp := r.FindAllStringIndex(js, -1)
+// 		locGrp := r.FindAllStringIndex(js, -1)
 
-		starts := []int{}
-		codes := []string{}
+// 		starts := []int{}
+// 		codes := []string{}
 
-		for _, loc := range locGrp {
-			s, e := loc[0], loc[1]
-			codeln := strings.Trim(js[s:e], "\n ")
-			codeln = codeln[:len(codeln)-1]
-			n := strings.LastIndex(codeln, "\"")
-			code := codeln[n+1:]
-			codes = append(codes, code)
-			starts = append(starts, s)
-		}
+// 		for _, loc := range locGrp {
+// 			s, e := loc[0], loc[1]
+// 			codeln := strings.Trim(js[s:e], "\n ")
+// 			codeln = codeln[:len(codeln)-1]
+// 			n := strings.LastIndex(codeln, "\"")
+// 			code := codeln[n+1:]
+// 			codes = append(codes, code)
+// 			starts = append(starts, s)
+// 		}
 
-		starts = append(starts, len(js))
+// 		starts = append(starts, len(js))
 
-		mLvlStart := make(map[string]int)
-		for i, code := range codes {
-			mLvlStart[code] = starts[i]
-		}
+// 		mLvlStart := make(map[string]int)
+// 		for i, code := range codes {
+// 			mLvlStart[code] = starts[i]
+// 		}
 
-		mLvlStartGrp = append(mLvlStartGrp, mLvlStart)
-	}
+// 		mLvlStartGrp = append(mLvlStartGrp, mLvlStart)
+// 	}
 
-	for i := len(mLvlStartGrp) - 2; i >= 0; i-- {
-		mThis, mParent := mLvlStartGrp[i+1], mLvlStartGrp[i]
-		if len(mThis) == 0 {
-			continue
-		}
-		for code, v := range mThis {
-			pCode := findCodeParent(code, v, mParent)
-			mCodeChildren[pCode] = append(mCodeChildren[pCode], code)
-			mCodeParent[code] = pCode
-		}
+// 	for i := len(mLvlStartGrp) - 2; i >= 0; i-- {
+// 		mThis, mParent := mLvlStartGrp[i+1], mLvlStartGrp[i]
+// 		if len(mThis) == 0 {
+// 			continue
+// 		}
+// 		for code, v := range mThis {
+// 			pCode := findCodeParent(code, v, mParent)
+// 			mCodeChildren[pCode] = append(mCodeChildren[pCode], code)
+// 			mCodeParent[code] = pCode
+// 		}
 
-		// dump top levels 'code' to find related 'title'
-		// if i == 0 || i == 1 {
-		// 	keys, _ := tsi.Map2KVs(mParent, func(i, j string) bool { return i < j }, nil)
-		// 	fmt.Println(keys)
-		// 	fmt.Println("------------------------------------------------------------")
-		// }
-	}
+// 		// dump top levels 'code' to find related 'title'
+// 		// if i == 0 || i == 1 {
+// 		// 	keys, _ := tsi.Map2KVs(mParent, func(i, j string) bool { return i < j }, nil)
+// 		// 	fmt.Println(keys)
+// 		// 	fmt.Println("------------------------------------------------------------")
+// 		// }
+// 	}
 
-	return mCodeParent
-}
+// 	return mCodeParent
+// }
 
-func GetCodeAncestors(mCodeParent map[string]string, code string) (ancestors []string) {
-	for pCode, ok := mCodeParent[code]; ok; pCode, ok = mCodeParent[pCode] {
-		ancestors = append(ancestors, pCode)
-	}
-	return
-}
+// func GetCodeAncestors(mCodeParent map[string]string, code string) (ancestors []string) {
+// 	for pCode, ok := mCodeParent[code]; ok; pCode, ok = mCodeParent[pCode] {
+// 		ancestors = append(ancestors, pCode)
+// 	}
+// 	return
+// }
 
-func GetCodeAncestor(mCodeParent map[string]string, code string, level int) string {
-	ancestors := GetCodeAncestors(mCodeParent, code)
-	ancestors = append([]string{code}, ancestors...)
-	index := len(ancestors) - level - 1
-	return ancestors[index]
-}
-
-func GetAncestorTitle(mCodeParent map[string]string, code, group string) string {
-
-	m := mCodeTitle1
-	switch group {
-	case "LA":
-		m = mLATitle
-	case "AS":
-		m = mASTitle
-	case "CCP":
-		m = mCCPTitle
-	case "GC":
-		m = mGCTitle
-	default:
-		// log.Fatalln("[group] can only be 'LA', 'AS', 'CCP', 'GC'")
-	}
-
-	ancestors := GetCodeAncestors(mCodeParent, code)
-	for _, a := range append(ancestors, code) {
-		if title, ok := m[a]; ok {
-			return title
-		}
-	}
-	return ""
-}
+// func GetCodeAncestor(mCodeParent map[string]string, code string, level int) string {
+// 	ancestors := GetCodeAncestors(mCodeParent, code)
+// 	ancestors = append([]string{code}, ancestors...)
+// 	index := len(ancestors) - level - 1
+// 	return ancestors[index]
+// }
 
 var (
 	mCodeTitle0 = map[string]string{
@@ -200,3 +173,43 @@ var (
 		"N":   mCodeTitle1["N"],
 	}
 )
+
+func GetAncestorTitle(code, group string, mCodeChildParent map[string]string) string {
+
+	m := mCodeTitle1
+	switch group {
+	case "LA":
+		m = mLATitle
+	case "AS":
+		m = mASTitle
+	case "CCP":
+		m = mCCPTitle
+	case "GC":
+		m = mGCTitle
+	default:
+		// log.Fatalln("[group] can only be 'LA', 'AS', 'CCP', 'GC'")
+	}
+
+	ancestors := node2.RetrieveAncestry(code, mCodeChildParent)
+	for _, a := range append(ancestors, code) {
+		if title, ok := m[a]; ok {
+			return title
+		}
+	}
+	return ""
+}
+
+func GetCodeType(code string, mCodeChildParent map[string]string) string {
+	ancestors := node2.RetrieveAncestry(code, mCodeChildParent)
+	for _, ancestor := range ancestors {
+		if In(ancestor, "LA", "AS", "GC", "CCP") {
+			return ancestor
+		}
+	}
+	return ""
+}
+
+func GetIdType(id string, mIdBlock, mCodeChildParent map[string]string) string {
+	code := node2.GetCodeById(id, mIdBlock)
+	return GetCodeType(code, mCodeChildParent)
+}

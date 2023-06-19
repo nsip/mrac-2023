@@ -80,7 +80,7 @@ func proc(
 	mLvlSiblings map[int][]string,
 	mData map[string]interface{},
 	la, uri4id string,
-	mCodeParent map[string]string,
+	mCodeChildParent map[string]string,
 	mNodeData map[string]interface{},
 	fnPathWithTitle func() string,
 	fnPathWithDocType func() string,
@@ -238,7 +238,7 @@ func proc(
 			id := item[sLastIndex(item, "/")+1:]
 			code = jt.GetStrVal(mNodeData[id+"."+"code"])
 			title := jt.GetStrVal(mNodeData[id+"."+"title"])
-			nodeType = tool.GetCodeAncestor(mCodeParent, code, 0)
+			nodeType = tool.GetCodeType(code, mCodeChildParent)
 
 			if len(nodeType) == 0 {
 				switch {
@@ -281,10 +281,9 @@ func proc(
 }
 
 func treeProc3(
-
 	data []byte,
 	la string,
-	mCodeParent map[string]string,
+	mCodeChildParent map[string]string,
 	mNodeData map[string]interface{},
 	paths []string,
 	// static for filling
@@ -346,7 +345,7 @@ func treeProc3(
 					mData,
 					la,
 					uri4id,
-					mCodeParent,
+					mCodeChildParent,
 					mNodeData,
 					getPathWithTitle,
 					getPathWithTypeName,

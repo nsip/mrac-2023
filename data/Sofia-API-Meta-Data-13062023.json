@@ -1,1 +1,158 @@
-{"type": "Schema", "key": "metadata", "name": "Metadata", "plural": "Metadata", "fields": [{"type": "Field", "key": "d3c618c8b8cdd42ccb448fc555ac9d60bd24c068", "name": "Levels", "plural": "Levels"}, {"type": "Field", "key": "d478de0898b56e04aca8cd8615a96aa28f0d1b69", "name": "General Capabilities", "plural": "General Capabilities"}, {"type": "Field", "key": "b674f9c4c6935e08a8718fb3476d049cc3e65f37", "name": "Indicator Groups", "plural": "Indicator Groups"}, {"type": "Field", "key": "43815cf42f6c422022750881de5c3d6c1ac03350", "name": "Content Descriptions", "plural": "Content Descriptions"}, {"type": "Field", "key": "5f697c939578d4ec7d730dcea15f2267897d3ed5", "name": "Achievement Standard Components", "plural": "Achievement Standard Components"}, {"type": "Field", "key": "4f23493b0194901d0524ea8088ca98c1daf84891", "name": "Organising Ideas", "plural": "Organising Ideas"}, {"type": "Field", "key": "47da1cbc75bc8257db7392f30949c58bb14eb63e", "name": "Levels", "plural": "Levels"}, {"type": "Field", "key": "70cb537d2cbf560149b0d31439cca78572ec2eef", "name": "Indicator Groups", "plural": "Indicator Groups"}, {"type": "Field", "key": "e9996564217874389130a4e8d9585e81c6c59a2f", "name": "Organising Ideas", "plural": "Organising Ideas"}, {"type": "Field", "key": "TEACHER_BACKGROUND_INFORMATION", "name": "Teacher Background Information", "plural": "Teacher Background Information", "options": [{"key": "SCIENCE_TEACHER_BACKGROUND_INFORMATION", "name": "Science Teacher Background Information "}]}, {"type": "Field", "key": "LA_RES", "name": "Learning area resource", "plural": "Learning area resources", "options": [{"key": "MEDIA_ARTS_EXAMPLES_OF_KNOWLEDGE_AND_SKILLS", "name": "Media Arts Examples of knowledge and skills"}, {"key": "SPANISH_LANGUAGE_RESOURCE", "name": "Spanish language resource"}, {"key": "MATHEMATICS_OPTIONAL_CONTENT_POST_YEAR_10", "name": "Optional content for post-Year 10 Mathematics pathways"}, {"key": "DRAMA_EXAMPLES_OF_KNOWLEDGE_AND_SKILLS", "name": "Drama Examples of knowledge and skills"}, {"key": "CHINESE_LANGUAGE_RESOURCE", "name": "Chinese language resource"}, {"key": "INDONESIAN_LANGUAGE_RESOURCE", "name": "Indonesian language resource"}, {"key": "JAPANESE_LANGUAGE_RESOURCE", "name": "Japanese language resource"}, {"key": "VISUAL_ARTS_EXAMPLES_OF_KNOWLEDGE_AND_SKILLS", "name": "Visual Arts Examples of knowledge and skills"}, {"key": "MODERN_GREEK_LANGUAGE_RESOURCE", "name": "Modern Greek language resources"}, {"key": "FRENCH_LANGUAGE_RESOURCE", "name": "French language resource"}, {"key": "DANCE_EXAMPLES_OF_KNOWLEDGE_AND_SKILLS", "name": "Dance Examples of knowledge and skills"}, {"key": "KOREAN_LANGUAGE_RESOURCE", "name": "Korean language resource"}, {"key": "GERMAN_LANGUAGE_RESOURCE", "name": "German language resource"}, {"key": "MUSIC_EXAMPLES_OF_KNOWLEDGE_AND_SKILLS", "name": "Music Examples of knowledge and skills"}, {"key": "ITALIAN_LANGUAGE_RESOURCE", "name": "Italian language resource"}, {"key": "HPE_FOCUS_AREAS", "name": "Health and Physical Education focus areas"}]}, {"type": "Field", "key": "AS_TAGS", "name": "Achievement Standard Tags", "plural": "Achievement Standard Tags", "options": [{"key": "SHOWLINEBREAKAFTER", "name": "ShowLineBreakAfter=true"}]}]}
+{
+  "fields": [
+    {
+      "key": "d3c618c8b8cdd42ccb448fc555ac9d60bd24c068",
+      "name": "Levels",
+      "plural": "Levels",
+      "type": "Field"
+    },
+    {
+      "key": "d478de0898b56e04aca8cd8615a96aa28f0d1b69",
+      "name": "General Capabilities",
+      "plural": "General Capabilities",
+      "type": "Field"
+    },
+    {
+      "key": "b674f9c4c6935e08a8718fb3476d049cc3e65f37",
+      "name": "Indicator Groups",
+      "plural": "Indicator Groups",
+      "type": "Field"
+    },
+    {
+      "key": "43815cf42f6c422022750881de5c3d6c1ac03350",
+      "name": "Content Descriptions",
+      "plural": "Content Descriptions",
+      "type": "Field"
+    },
+    {
+      "key": "5f697c939578d4ec7d730dcea15f2267897d3ed5",
+      "name": "Achievement Standard Components",
+      "plural": "Achievement Standard Components",
+      "type": "Field"
+    },
+    {
+      "key": "4f23493b0194901d0524ea8088ca98c1daf84891",
+      "name": "Organising Ideas",
+      "plural": "Organising Ideas",
+      "type": "Field"
+    },
+    {
+      "key": "47da1cbc75bc8257db7392f30949c58bb14eb63e",
+      "name": "Levels",
+      "plural": "Levels",
+      "type": "Field"
+    },
+    {
+      "key": "70cb537d2cbf560149b0d31439cca78572ec2eef",
+      "name": "Indicator Groups",
+      "plural": "Indicator Groups",
+      "type": "Field"
+    },
+    {
+      "key": "e9996564217874389130a4e8d9585e81c6c59a2f",
+      "name": "Organising Ideas",
+      "plural": "Organising Ideas",
+      "type": "Field"
+    },
+    {
+      "key": "TEACHER_BACKGROUND_INFORMATION",
+      "name": "Teacher Background Information",
+      "options": [
+        {
+          "key": "SCIENCE_TEACHER_BACKGROUND_INFORMATION",
+          "name": "Science Teacher Background Information "
+        }
+      ],
+      "plural": "Teacher Background Information",
+      "type": "Field"
+    },
+    {
+      "key": "LA_RES",
+      "name": "Learning area resource",
+      "options": [
+        {
+          "key": "MEDIA_ARTS_EXAMPLES_OF_KNOWLEDGE_AND_SKILLS",
+          "name": "Media Arts Examples of knowledge and skills"
+        },
+        {
+          "key": "SPANISH_LANGUAGE_RESOURCE",
+          "name": "Spanish language resource"
+        },
+        {
+          "key": "MATHEMATICS_OPTIONAL_CONTENT_POST_YEAR_10",
+          "name": "Optional content for post-Year 10 Mathematics pathways"
+        },
+        {
+          "key": "DRAMA_EXAMPLES_OF_KNOWLEDGE_AND_SKILLS",
+          "name": "Drama Examples of knowledge and skills"
+        },
+        {
+          "key": "CHINESE_LANGUAGE_RESOURCE",
+          "name": "Chinese language resource"
+        },
+        {
+          "key": "INDONESIAN_LANGUAGE_RESOURCE",
+          "name": "Indonesian language resource"
+        },
+        {
+          "key": "JAPANESE_LANGUAGE_RESOURCE",
+          "name": "Japanese language resource"
+        },
+        {
+          "key": "VISUAL_ARTS_EXAMPLES_OF_KNOWLEDGE_AND_SKILLS",
+          "name": "Visual Arts Examples of knowledge and skills"
+        },
+        {
+          "key": "MODERN_GREEK_LANGUAGE_RESOURCE",
+          "name": "Modern Greek language resources"
+        },
+        {
+          "key": "FRENCH_LANGUAGE_RESOURCE",
+          "name": "French language resource"
+        },
+        {
+          "key": "DANCE_EXAMPLES_OF_KNOWLEDGE_AND_SKILLS",
+          "name": "Dance Examples of knowledge and skills"
+        },
+        {
+          "key": "KOREAN_LANGUAGE_RESOURCE",
+          "name": "Korean language resource"
+        },
+        {
+          "key": "GERMAN_LANGUAGE_RESOURCE",
+          "name": "German language resource"
+        },
+        {
+          "key": "MUSIC_EXAMPLES_OF_KNOWLEDGE_AND_SKILLS",
+          "name": "Music Examples of knowledge and skills"
+        },
+        {
+          "key": "ITALIAN_LANGUAGE_RESOURCE",
+          "name": "Italian language resource"
+        },
+        {
+          "key": "HPE_FOCUS_AREAS",
+          "name": "Health and Physical Education focus areas"
+        }
+      ],
+      "plural": "Learning area resources",
+      "type": "Field"
+    },
+    {
+      "key": "AS_TAGS",
+      "name": "Achievement Standard Tags",
+      "options": [
+        {
+          "key": "SHOWLINEBREAKAFTER",
+          "name": "ShowLineBreakAfter=true"
+        }
+      ],
+      "plural": "Achievement Standard Tags",
+      "type": "Field"
+    }
+  ],
+  "key": "metadata",
+  "name": "Metadata",
+  "plural": "Metadata",
+  "type": "Schema"
+}

@@ -4,37 +4,18 @@ import (
 	"fmt"
 	"os"
 	"testing"
+
+	lk "github.com/digisan/logkit"
+	"github.com/nsip/mrac-2023/node2"
 )
 
 func TestGetAllCode(t *testing.T) {
-	data, err := os.ReadFile("../data/Sofia_API_Data_06062022.json")
-	if err != nil {
-		panic(err)
-	}
-	mCodeParent := GetCodeParentMap(data)
 
-	code := "ASARTDANY12"
-	ancestors := GetCodeAncestors(mCodeParent, code)
-	fmt.Println(ancestors)
+	nodeData, err := os.ReadFile("../../data/Sofia-API-Node-Data-13062023.json")
+	lk.FailOnErr("%v", err)
 
-	code = "AC9S1U02_E2"
-	ancestors = GetCodeAncestors(mCodeParent, code)
-	fmt.Println(ancestors)
+	mIdBlock := node2.GenNodeIdBlockMap(nodeData)
+	_, mCodeChildParent := node2.GenChildParentMap(nodeData, mIdBlock)
 
-	code = "AC9AMAFS01" // "PSCSEMC0_1"
-	ancestors = GetCodeAncestors(mCodeParent, code)
-	fmt.Println(ancestors)
-
-	fmt.Println(GetAncestorTitle(mCodeParent, "ASMATY9L", ""))
-	fmt.Println(GetAncestorTitle(mCodeParent, code, ""))
-
-	fmt.Println(GetCodeAncestor(mCodeParent, code, 0))
-
-	// for k := range mCodeTitle1 {
-	// 	p := GetCodeAncestors(mCodeParent, k)[0]
-	// 	if p == "GC" {
-	// 		fmt.Println(p, k)
-	// 	}
-	// }
-
+	fmt.Println(GetAncestorTitle("LSLiS5.6", "GC", mCodeChildParent))
 }
