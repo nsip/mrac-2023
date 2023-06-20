@@ -29,3 +29,8 @@ asn-json/fatal
 asn-json-ld/asn-json-ld
 asn-json-ld/fatal
 *.log
+
+task-split-ccp-2022-11-12/json
+task-split-ccp-2022-11-12/json-ld
+
+task-structure-improvement-2023-03-23/out

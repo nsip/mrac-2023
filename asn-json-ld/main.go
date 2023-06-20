@@ -9,6 +9,7 @@ import (
 	"strings"
 	"sync"
 
+	fd "github.com/digisan/gotk/file-dir"
 	"github.com/digisan/gotk/strs"
 	jt "github.com/digisan/json-tool"
 	lk "github.com/digisan/logkit"
@@ -51,9 +52,9 @@ func findIdLinkage(js string, mFamilyTree map[string][]string) (mIdLink2P, mIdLi
 	return
 }
 
-func cvt2jsonld(asnpath string) {
+func cvt2jsonld(asnPath string) {
 
-	data, err := os.ReadFile(asnpath)
+	data, err := os.ReadFile(asnPath)
 	if err != nil {
 		panic(err)
 	}
@@ -174,11 +175,10 @@ func cvt2jsonld(asnpath string) {
 		return ret + s
 	})
 
-	js = addContext(js, context)
-
-	name := filepath.Base(asnpath)
-	jsonldpath := filepath.Join("../data-out/asn-json-ld", name)
-	os.WriteFile(jsonldpath, []byte(js), os.ModePerm)
+	outDir := "../data-out/asn-json-ld"
+	fd.MustCreateDir(outDir)
+	jsonldPath := filepath.Join(outDir, filepath.Base(asnPath))
+	os.WriteFile(jsonldPath, []byte(addContext(js, context)), os.ModePerm)
 }
 
 func main() {
@@ -207,13 +207,12 @@ func main() {
 
 	for file := range mInputLa {
 		go func(file string) {
-			if file != "la-Languages.json" {
-				wg.Done()
-				return
-			}
+			// if file != "la-Languages.json" {
+			// 	wg.Done()
+			// 	return
+			// }
 			cvt2jsonld(filepath.Join("../data-out/asn-json", file))
 			wg.Done()
-
 		}(file)
 	}
 	wg.Wait()

@@ -73,12 +73,12 @@ func main() {
 	}
 	for _, f := range fs {
 
-		if f.IsDir() {
+		if f.IsDir() || filepath.Ext(f.Name()) != ".json" {
 			continue
 		}
-		if f.Name() != "la-Languages.json" {
-			continue
-		}
+		// if f.Name() != "la-Languages.json" {
+		// 	continue
+		// }
 
 		fPath := filepath.Join(dirIn, f.Name())
 		// fmt.Println(fPath)
@@ -121,12 +121,12 @@ func main() {
 	}
 	for _, f := range fs {
 
-		if f.IsDir() {
+		if f.IsDir() || filepath.Ext(f.Name()) != ".json" {
 			continue
 		}
-		if f.Name() != "la-Languages.json" {
-			continue
-		}
+		// if f.Name() != "la-Languages.json" {
+		// 	continue
+		// }
 
 		fPath := filepath.Join(dirIn, f.Name())
 		// fmt.Println(fPath)
