@@ -16,14 +16,17 @@ func TestNode2(t *testing.T) {
 
 	mIdBlock := GenNodeIdBlockMap(dataNode)
 	mCodeBlock := GenNodeCodeBlockMap(dataNode)
-	mIDChildParent, mCodeChildParent := GenChildParentMap(dataNode, mIdBlock)
+	mIdChildParent, mCodeChildParent := GenChildParentMap(dataNode, mIdBlock)
 
-	fmt.Printf("Total: %d - %d - %d - %d\n", len(mIdBlock), len(mCodeBlock), len(mIDChildParent), len(mCodeChildParent))
+	fmt.Printf("Total: %d - %d - %d - %d\n", len(mIdBlock), len(mCodeBlock), len(mIdChildParent), len(mCodeChildParent))
 
-	ancestryID := RetrieveAncestry("ffdaf9d5-514b-4f0d-873c-130ffbde52f4", mIDChildParent)
+	ancestryID := RetrieveAncestry("3ae876a8-10b9-44c7-9b2e-13b2ba08e217", mIdChildParent)
 	fmt.Println(ancestryID)
 
-	ancestryCode := RetrieveAncestry("LSLiS5.6", mCodeChildParent)
+	ancestryCode := RetrieveAncestryAsCodeById("3ae876a8-10b9-44c7-9b2e-13b2ba08e217", mIdChildParent, mIdBlock)
+	fmt.Println(ancestryCode)
+
+	ancestryCode = RetrieveAncestry("AC9TDI4P07_E5", mCodeChildParent)
 	fmt.Println(ancestryCode)
 
 	// fmt.Println(IsAncestorCode("AC9LIN10C03_E3", "Indicator", mCodeChildParent))

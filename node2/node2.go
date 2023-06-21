@@ -166,6 +166,14 @@ AGAIN:
 	return Reverse(Ancestry)
 }
 
+func RetrieveAncestryAsCodeById(Id string, mIdChildParent, mIdBlock map[string]string) (codes []string) {
+	ancestors := RetrieveAncestry(Id, mIdChildParent)
+	for _, ancestor := range ancestors {
+		codes = append(codes, GetCodeById(ancestor, mIdBlock))
+	}
+	return
+}
+
 // func IsAncestorID(id, ancestor string, mIDChildParent map[string]string) bool {
 // 	ancestry := RetrieveAncestryID(id, mIDChildParent)
 // 	return In(ancestor, ancestry...) && IdxOf(id, ancestry...) > IdxOf(ancestor, ancestry...)
