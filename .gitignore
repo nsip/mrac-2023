@@ -22,6 +22,7 @@ go.work
 
 data/data
 data-out
+data-out*
 fatal
 mrac-2023
 asn-json/asn-json

@@ -158,7 +158,7 @@ NEXT_LA:
 	return
 }
 
-func ConnFieldMapping(js, uri string, meta map[string]string) string {
+func ConnectionsFieldMapping(js string, mIdUrl, meta map[string]string) string {
 	r1 := regexp.MustCompile(`"connections":\s*\{[^{}]*\},?`)
 	r2 := regexp.MustCompile(`"[\d\w]{40}":\s*\[([\n\s]*"[\d\w-]+",?[\n\s]*)+\],?`)
 	return r1.ReplaceAllStringFunc(js, func(s string) string {
@@ -170,6 +170,7 @@ func ConnFieldMapping(js, uri string, meta map[string]string) string {
 			for i, pos := range starts {
 				if i > 1 && i%2 == 1 {
 					id := ss[starts[i-1]+1 : pos]
+					uri := mIdUrl[id]
 					m[id] = uri + id
 				}
 			}
