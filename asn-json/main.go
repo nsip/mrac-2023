@@ -9,6 +9,7 @@ import (
 	"sync"
 	"time"
 
+	fd "github.com/digisan/gotk/file-dir"
 	"github.com/digisan/gotk/track"
 	jt "github.com/digisan/json-tool"
 	lk "github.com/digisan/logkit"
@@ -49,37 +50,37 @@ func main() {
 	mIdBlock := node2.GenNodeIdBlockMap(dataNode)
 	_, mCodeChildParent := node2.GenChildParentMap(dataNode, mIdBlock)
 
-	// {
-	// 	outDir := "../data-out/asn-json"
-	// 	outFile := "asn-node.json"
-	// 	os.MkdirAll(outDir, os.ModePerm)
-	// 	outPath := filepath.Join(outDir, outFile)
+	{
+		outDir := "../data-out/asn-json" // make sure this dir is existing at below
+		outFile := "asn-node.json"
+		os.MkdirAll(outDir, os.ModePerm)
+		outPath := filepath.Join(outDir, outFile)
 
-	// 	if !fd.FileExists(outPath) {
-	// 		nmData, err := os.ReadFile(fileNM)
-	// 		if err != nil {
-	// 			panic(err)
-	// 		}
-	// 		nodeProc(nmData, mCodeChildParent, outDir, outFile, uri4id)
-	// 	}
+		if !fd.FileExists(outPath) {
+			nmData, err := os.ReadFile(fileNM)
+			if err != nil {
+				panic(err)
+			}
+			nodeProc(nmData, mCodeChildParent, outDir, outFile, uri4id)
+		}
 
-	// 	// 	// 	/////
+		// 	// 	// 	/////
 
-	// 	// 	data, err := os.ReadFile(outpath)
-	// 	// 	if err != nil {
-	// 	// 		log.Fatalln(err)
-	// 	// 	}
+		// 	// 	data, err := os.ReadFile(outpath)
+		// 	// 	if err != nil {
+		// 	// 		log.Fatalln(err)
+		// 	// 	}
 
-	// 	// 	mIdBlock, _ := getIdBlock(string(data))
+		// 	// 	mIdBlock, _ := getIdBlock(string(data))
 
-	// 	// 	inpath4exp := outpath
-	// 	// 	outexp := childrenRepl(inpath4exp, mIdBlock)
-	// 	// 	// os.WriteFile("./out/asnexp.json", []byte(outexp), os.ModePerm)
+		// 	// 	inpath4exp := outpath
+		// 	// 	outexp := childrenRepl(inpath4exp, mIdBlock)
+		// 	// 	// os.WriteFile("./out/asnexp.json", []byte(outexp), os.ModePerm)
 
-	// 	// 	rootWholeBlock := getRootWholeObject(outexp)
-	// 	// 	os.WriteFile("./out/asn-node-one.json", []byte(rootWholeBlock), os.ModePerm)
+		// 	// 	rootWholeBlock := getRootWholeObject(outexp)
+		// 	// 	os.WriteFile("./out/asn-node-one.json", []byte(rootWholeBlock), os.ModePerm)
 
-	// }
+	}
 
 	//////////////////////////////////////////////////////////////////////
 
@@ -121,6 +122,7 @@ func main() {
 
 			go func(file, la string) {
 
+				// this one is too time consuming, ignore here
 				if file == "la-Languages.json" {
 					wg.Done()
 					return
@@ -167,6 +169,8 @@ func main() {
 				)
 
 				js = restoreEsc(js)
+
+				js = jt.FmtStr(js, "  ")
 
 				os.WriteFile(filepath.Join(`../data-out/asn-json`, file), []byte(js), os.ModePerm)
 

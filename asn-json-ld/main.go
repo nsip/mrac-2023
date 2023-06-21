@@ -178,7 +178,12 @@ func cvt2jsonld(asnPath string) {
 	outDir := "../data-out/asn-json-ld"
 	fd.MustCreateDir(outDir)
 	jsonldPath := filepath.Join(outDir, filepath.Base(asnPath))
-	os.WriteFile(jsonldPath, []byte(addContext(js, context)), os.ModePerm)
+
+	js = addContext(js, context)
+
+	js = jt.FmtStr(js, "  ")
+
+	os.WriteFile(jsonldPath, []byte(js), os.ModePerm)
 }
 
 func main() {
@@ -207,12 +212,15 @@ func main() {
 
 	for file := range mInputLa {
 		go func(file string) {
-			// if file != "la-Languages.json" {
-			// 	wg.Done()
-			// 	return
-			// }
+
+			if file == "la-Languages.json" {
+				wg.Done()
+				return
+			}
+
 			cvt2jsonld(filepath.Join("../data-out/asn-json", file))
 			wg.Done()
+
 		}(file)
 	}
 	wg.Wait()
