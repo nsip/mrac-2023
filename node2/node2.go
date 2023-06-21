@@ -320,9 +320,12 @@ func MakeIdUrlText(mIdBlock, mCodeBlock, mIDChildParent, mCodeChildParent map[st
 		mIdUrl[GetIdByCode(code, mCodeBlock)] = url
 	}
 
+	os.RemoveAll(outPath4IdUrl)
 	for id, url := range mIdUrl {
 		fd.MustAppendFile(outPath4IdUrl, []byte(fmt.Sprintf("%s\t%s", id, url)), true)
 	}
+
+	os.RemoveAll(outPath4CodeUrl)
 	for code, url := range mCodeUrl {
 		fd.MustAppendFile(outPath4CodeUrl, []byte(fmt.Sprintf("%s\t%s", code, url)), true)
 	}
