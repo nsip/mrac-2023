@@ -5,9 +5,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"regexp"
 	"strings"
+	"time"
 
 	. "github.com/digisan/go-generics/v2"
 	dt "github.com/digisan/gotk/data-type"
@@ -232,7 +234,34 @@ func UpdateNodeWithMeta(dataNode []byte, URI string, meta map[string]string, out
 
 //////////////////////////////////////////////////////////////////////////
 
+var (
+	yyyy string
+	mm   string
+)
+
+func fetchTS(fPathOfTree string) (yyyy, mm string) {
+	data, err := os.ReadFile(fPathOfTree)
+	if err != nil {
+		log.Fatal(err)
+	}
+	layout := "2006-01-02T15:04:05.000Z"
+	ts := gjson.Get(string(data), "created_at").String()
+	t, err := time.Parse(layout, ts)
+	if err != nil {
+		log.Fatal(err)
+	}
+	ts = t.Format("2006-01-02")
+	ss := strings.Split(ts, "-")
+	return ss[0], ss[1]
+}
+
+func SetTS4Url(fPathOfTree string) {
+	yyyy, mm = fetchTS(fPathOfTree)
+}
+
 func MakeIdUrlText(mIdBlock, mCodeBlock, mIDChildParent, mCodeChildParent map[string]string, outPath4IdUrl, outPath4CodeUrl string) {
+
+	lk.FailOnErrWhen(len(yyyy) == 0 || len(mm) == 0, "%v", errors.New("TimeStamp is empty for URL, 'SetTS4Url' before 'MakeIdUrlText'"))
 
 	var (
 		mIdUrl   = make(map[string]string)
@@ -249,43 +278,43 @@ func MakeIdUrlText(mIdBlock, mCodeBlock, mIDChildParent, mCodeChildParent map[st
 			code := ancestors[2]
 			switch code {
 			case "HAS", "HASS", "ASHAS", "ASHASS":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/LA/HASS/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/LA/HASS/", yyyy, mm)
 			case "ENG", "ASENG":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/LA/ENG/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/LA/ENG/", yyyy, mm)
 			case "LAN", "ASLAN":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/LA/LAN/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/LA/LAN/", yyyy, mm)
 			case "SCI", "ASSCI":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/LA/SCI/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/LA/SCI/", yyyy, mm)
 			case "ART", "ASART":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/LA/ART/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/LA/ART/", yyyy, mm)
 			case "HPE", "ASHPE":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/LA/HPE/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/LA/HPE/", yyyy, mm)
 			case "MAT", "ASMAT":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/LA/MAT/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/LA/MAT/", yyyy, mm)
 			case "TEC", "ASTEC":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/LA/TEC/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/LA/TEC/", yyyy, mm)
 
 			case "CCT":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/GC/CCT/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/GC/CCT/", yyyy, mm)
 			case "N":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/GC/N/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/GC/N/", yyyy, mm)
 			case "DL":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/GC/DL/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/GC/DL/", yyyy, mm)
 			case "L":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/GC/L/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/GC/L/", yyyy, mm)
 			case "PSC":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/GC/PSC/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/GC/PSC/", yyyy, mm)
 			case "IU":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/GC/IU/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/GC/IU/", yyyy, mm)
 			case "EU":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/GC/EU/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/GC/EU/", yyyy, mm)
 
 			case "AA":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/CCP/AA/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/CCP/AA/", yyyy, mm)
 			case "S":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/CCP/S/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/CCP/S/", yyyy, mm)
 			case "A_TSI":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/CCP/A_TSI/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/CCP/A_TSI/", yyyy, mm)
 
 			default:
 				lk.Warn("code '%v' is missing its url (2)")
@@ -295,11 +324,11 @@ func MakeIdUrlText(mIdBlock, mCodeBlock, mIDChildParent, mCodeChildParent map[st
 			code := ancestors[1]
 			switch code {
 			case "AS", "LA":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/LA/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/LA/", yyyy, mm)
 			case "GC":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/GC/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/GC/", yyyy, mm)
 			case "CCP":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/CCP/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/CCP/", yyyy, mm)
 			default:
 				lk.Warn("code '%v' is missing its url (1)")
 			}
@@ -308,7 +337,7 @@ func MakeIdUrlText(mIdBlock, mCodeBlock, mIDChildParent, mCodeChildParent map[st
 			code := ancestors[0]
 			switch code {
 			case "root":
-				url = "http://vocabulary.curriculum.edu.au/MRAC/"
+				url = fmt.Sprintf("http://vocabulary.curriculum.edu.au/MRAC/%s/%s/", yyyy, mm)
 			default:
 				lk.Warn("code '%v' is missing its url (0)")
 			}

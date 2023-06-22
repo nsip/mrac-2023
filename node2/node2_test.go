@@ -42,7 +42,7 @@ const (
 	treeFile = "../data/Sofia-API-Tree-Data-13062023.json"
 )
 
-// *** //
+// ***** //
 func TestUpdateNodeWithMeta(t *testing.T) {
 
 	dataNode, err := os.ReadFile(nodeFile)
@@ -59,7 +59,7 @@ func TestUpdateNodeWithMeta(t *testing.T) {
 	UpdateNodeWithMeta(dataNode, uri4id, mMetaKeyName, "../data/node-meta.json")
 }
 
-// *** //
+// ***** //
 func TestMakeUrlText(t *testing.T) {
 
 	dataNode, err := os.ReadFile(nodeFile)
@@ -69,5 +69,6 @@ func TestMakeUrlText(t *testing.T) {
 	mCodeBlock := GenNodeCodeBlockMap(dataNode)
 	mIDChildParent, mCodeChildParent := GenChildParentMap(dataNode, mIdBlock)
 
+	SetTS4Url(treeFile)
 	MakeIdUrlText(mIdBlock, mCodeBlock, mIDChildParent, mCodeChildParent, "../data/id-url.txt", "../data/code-url.txt")
 }

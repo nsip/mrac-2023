@@ -6,7 +6,8 @@
 2. /tree/tree_test.go
 3. /asn-json
 4. /task-force-array-2023-06-21
-5. /asn-json-ld
-6. /url-prefix
-7. /task-split-ccp
-8. /task-structure-improvement
+5. /task-remove-fields-2023-06-22
+6. /asn-json-ld
+7. /url-prefix
+8. /task-split-ccp
+9. /task-structure-improvement

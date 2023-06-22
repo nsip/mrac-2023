@@ -81,7 +81,6 @@ func main() {
 	lk.FailOnErr("%v", err)
 
 	rt := addSquareBrackets(string(data), mustBeArray)
-	rt = jt.FmtStr(rt, "  ")
 
 	err = os.WriteFile(fPath, []byte(rt), os.ModePerm)
 	lk.FailOnErr("%v", err)
