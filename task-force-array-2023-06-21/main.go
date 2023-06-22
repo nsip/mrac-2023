@@ -10,28 +10,79 @@ import (
 	lk "github.com/digisan/logkit"
 )
 
+type ProcPos struct {
+	flag  bool
+	idx   int
+	space string
+}
+
+func (pp *ProcPos) Init() {
+	pp.flag = false
+	pp.idx = 0
+	pp.space = ""
+}
+
+func (pp *ProcPos) Start(i int, prefixSpace string) {
+	pp.flag = true
+	pp.idx = i
+	pp.space = prefixSpace
+}
+
+func (pp *ProcPos) End(i int) {
+	pp.flag = false
+	pp.idx = i
+	pp.space = ""
+}
+
 func addSquareBrackets(js, field string) string {
-	js = jt.FmtStr(js, "  ")
-	field = fmt.Sprintf(`"%s"`, strings.Trim(field, `"`))
+	js = jt.FmtStr(js, "  ")                              // formatted
+	field = fmt.Sprintf(`"%s"`, strings.Trim(field, `"`)) // warpped with "field"
 	idx := 0
-	strs.StrLineScan(js, func(line string) (bool, string) {
+
+	pp := ProcPos{}
+	pp.Init()
+
+	rt, err := strs.StrLineScan(js, func(line string) (bool, string) {
+
 		idx++
+
 		if strings.HasPrefix(strings.TrimSpace(line), field+": {") {
 			fmt.Println(1, idx, line)
+			space := strs.TrimTailFromFirst(line, "\"")
+			pp.Start(idx, space)
+			return true, strings.Replace(line, "{", "[{", 1)
 		}
-		if strings.HasPrefix(strings.TrimSpace(line), field+": [") {
-			fmt.Println(2, idx, line)
+
+		// if strings.HasPrefix(strings.TrimSpace(line), field+": [") {
+		// 	fmt.Println(2, idx, line)
+		//  return true, ""
+		// }
+
+		if pp.flag {
+			if line == pp.space+"}" || line == pp.space+"}," {
+				pp.End(idx)
+				return true, strings.Replace(line, "}", "}]", 1)
+			}
 		}
-		return true, ""
+
+		return true, line
 	})
-	return field
+
+	lk.FailOnErr("%v", err)
+	return jt.FmtStr(rt, "  ")
 }
 
 func main() {
 
-	data, err := os.ReadFile("../data-out/asn-json/la-English.json")
+	mustBeArray := "asn_hasLevel"
+
+	fPath := "../data-out/asn-json/la-English.json"
+	data, err := os.ReadFile(fPath)
 	lk.FailOnErr("%v", err)
 
-	r := addSquareBrackets(string(data), "asn_hasLevel")
-	fmt.Println(r)
+	rt := addSquareBrackets(string(data), mustBeArray)
+	rt = jt.FmtStr(rt, "  ")
+
+	err = os.WriteFile(fPath, []byte(rt), os.ModePerm)
+	lk.FailOnErr("%v", err)
 }
