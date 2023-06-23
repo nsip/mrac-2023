@@ -61,7 +61,7 @@ func main() {
 			if err != nil {
 				panic(err)
 			}
-			nodeProc(nmData, mCodeChildParent, outDir, outFile, uri4id)
+			nodeProc(nmData, mCodeChildParent, outDir, outFile)
 		}
 
 		// 	// 	// 	/////

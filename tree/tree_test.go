@@ -17,6 +17,7 @@ const (
 	treeFile = "../data/Sofia-API-Tree-Data-13062023.json"
 )
 
+// ***** //
 func TestPartition(t *testing.T) {
 
 	os.MkdirAll(out, os.ModePerm)

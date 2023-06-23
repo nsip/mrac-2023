@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	. "github.com/digisan/go-generics/v2"
+	fd "github.com/digisan/gotk/file-dir"
 	jt "github.com/digisan/json-tool"
 	"github.com/nsip/mrac-2023/asn-json/tool"
 	"github.com/tidwall/gjson"
@@ -74,12 +75,24 @@ func kvstrJoin(kvStrGrp ...string) string {
 	return sJoin(nonEmptyStrGrp, ",")
 }
 
+func loadUrl(fPath string) map[string]string {
+	m := make(map[string]string)
+	fd.FileLineScan(fPath, func(line string) (bool, string) {
+		ss := strings.Split(line, "\t")
+		m[ss[0]] = ss[1]
+		return true, ""
+	}, "")
+	return m
+}
+
+var mIdUrl = loadUrl("../data/id-url.txt")
+
 func proc(
 
 	js, s, name, value string,
 	mLvlSiblings map[int][]string,
 	mData map[string]interface{},
-	la, uri4id string,
+	la string,
 	mCodeChildParent map[string]string,
 	mNodeData map[string]interface{},
 	fnPathWithTitle func() string,
@@ -100,7 +113,7 @@ func proc(
 
 	switch name {
 	case "uuid":
-		return true, fSf(`"id": "%s/%s"`, uri4id, value)
+		return true, fSf(`"id": "%s%s"`, mIdUrl[value], value) // mIdUrl[value] already append with '/'
 
 	case "type":
 		return true, ""
@@ -344,7 +357,6 @@ func treeProc3(
 					mLvlSiblings,
 					mData,
 					la,
-					uri4id,
 					mCodeChildParent,
 					mNodeData,
 					getPathWithTitle,

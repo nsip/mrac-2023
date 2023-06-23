@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	uri4id = "http://vocabulary.curriculum.edu.au/" // "http://rdf.curriculum.edu.au/202110"
+	// uri4id = "http://vocabulary.curriculum.edu.au/" // "http://rdf.curriculum.edu.au/202110"
 
 	mLaUri = map[string]string{
 		"English":                        `http://vocabulary.curriculum.edu.au/framework/E`,

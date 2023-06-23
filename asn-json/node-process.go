@@ -155,7 +155,9 @@ func scanNodeIdTitle(data []byte) map[string]string {
 	return m
 }
 
-func nodeProc(dataNM []byte, mCodeChildParent map[string]string, outDir, outName, pref4children string) {
+func nodeProc(dataNM []byte, mCodeChildParent map[string]string, outDir, outName string) {
+
+	const pref4children = "http://vocabulary.curriculum.edu.au/"
 
 	e := bytes.LastIndexAny(dataNM, "}")
 	dataNM = dataNM[:e+1]
