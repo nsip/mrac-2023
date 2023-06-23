@@ -12,7 +12,7 @@ import (
 
 func rmOneLineField(js, field string, onValues ...string) string {
 	js = jt.FmtStr(js, "  ")                              // formatted
-	field = fmt.Sprintf(`"%s"`, strings.Trim(field, `"`)) // warpped with "field"
+	field = fmt.Sprintf(`"%s"`, strings.Trim(field, `"`)) // wrapped with "field"
 	idx := 0
 	rt, err := strs.StrLineScan(js, func(line string) (bool, string) {
 		idx++
@@ -25,13 +25,15 @@ func rmOneLineField(js, field string, onValues ...string) string {
 					return false, ""
 				}
 			}
-			// fmt.Println(1, idx, line)
 		}
 		return true, line
 	})
 	lk.FailOnErr("%v", err)
 	return jt.FmtStr(rt, "  ")
 }
+
+// @asn-json
+// remove "asn_conceptTerm" with value ["[]", "SCIENCE_TEACHER_BACKGROUND_INFORMATION"]
 
 func main() {
 

@@ -36,7 +36,7 @@ func (pp *ProcPos) End(i int) {
 
 func addSquareBrackets(js, field string) string {
 	js = jt.FmtStr(js, "  ")                              // formatted
-	field = fmt.Sprintf(`"%s"`, strings.Trim(field, `"`)) // warpped with "field"
+	field = fmt.Sprintf(`"%s"`, strings.Trim(field, `"`)) // wrapped with "field"
 	idx := 0
 
 	pp := ProcPos{}
@@ -71,6 +71,9 @@ func addSquareBrackets(js, field string) string {
 	lk.FailOnErr("%v", err)
 	return jt.FmtStr(rt, "  ")
 }
+
+// @asn-json
+// make all the "asn_hasLevel" value be array type
 
 func main() {
 
