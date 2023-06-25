@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/digisan/gotk/strs"
@@ -77,14 +78,27 @@ func addSquareBrackets(js, field string) string {
 
 func main() {
 
-	mustBeArray := "asn_hasLevel"
+	const (
+		mustBeArray = "asn_hasLevel"
+		inputDir    = "../data-out/asn-json/"
+	)
 
-	fPath := "../data-out/asn-json/la-English.json"
-	data, err := os.ReadFile(fPath)
-	lk.FailOnErr("%v", err)
+	de, err := os.ReadDir(inputDir)
+	if err != nil {
+		fmt.Printf("%v", err)
+		return
+	}
+	for _, f := range de {
+		fName := f.Name()
+		if strs.HasAnySuffix(fName, ".json") {
 
-	rt := addSquareBrackets(string(data), mustBeArray)
+			fPath := filepath.Join(inputDir, fName)
+			data, err := os.ReadFile(fPath)
+			lk.FailOnErr("%v", err)
+			rt := addSquareBrackets(string(data), mustBeArray)
+			err = os.WriteFile(fPath, []byte(rt), os.ModePerm)
+			lk.FailOnErr("%v", err)
 
-	err = os.WriteFile(fPath, []byte(rt), os.ModePerm)
-	lk.FailOnErr("%v", err)
+		}
+	}
 }

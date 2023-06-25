@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/digisan/gotk/strs"
@@ -37,15 +38,31 @@ func rmOneLineField(js, field string, onValues ...string) string {
 
 func main() {
 
-	toBeRemoved := "asn_conceptTerm"
-	onValues := []string{"[]", "SCIENCE_TEACHER_BACKGROUND_INFORMATION"}
+	const (
+		inputDir    = "../data-out/asn-json/"
+		toBeRemoved = "asn_conceptTerm"
+	)
 
-	fPath := "../data-out/asn-json/la-English.json"
-	data, err := os.ReadFile(fPath)
-	lk.FailOnErr("%v", err)
+	var (
+		onValues = []string{"[]", "SCIENCE_TEACHER_BACKGROUND_INFORMATION"}
+	)
 
-	rt := rmOneLineField(string(data), toBeRemoved, onValues...)
+	de, err := os.ReadDir(inputDir)
+	if err != nil {
+		fmt.Printf("%v", err)
+		return
+	}
+	for _, f := range de {
+		fName := f.Name()
+		if strs.HasAnySuffix(fName, ".json") {
 
-	err = os.WriteFile(fPath, []byte(rt), os.ModePerm)
-	lk.FailOnErr("%v", err)
+			fPath := filepath.Join(inputDir, fName)
+			data, err := os.ReadFile(fPath)
+			lk.FailOnErr("%v", err)
+			rt := rmOneLineField(string(data), toBeRemoved, onValues...)
+			err = os.WriteFile(fPath, []byte(rt), os.ModePerm)
+			lk.FailOnErr("%v", err)
+
+		}
+	}
 }

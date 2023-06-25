@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/digisan/gotk/strs"
@@ -67,18 +68,32 @@ func changeOneLineToStruct(js, field string) string {
 
 func main() {
 
-	fPath := "../data-out/asn-json-ld/la-Science.json"
-	data, err := os.ReadFile(fPath)
-	lk.FailOnErr("%v", err)
+	const (
+		inputDir = "../data-out/asn-json-ld/"
+	)
 
-	toBeRemoved := []string{"dc:text", "dc:title"}
-	rt := rmOneLineField(string(data), toBeRemoved...)
+	var (
+		toBeRemoved = []string{"dc:text", "dc:title"}
+		toBeChanged = "dc:description"
+	)
 
-	/////////////////////////////
+	de, err := os.ReadDir(inputDir)
+	if err != nil {
+		fmt.Printf("%v", err)
+		return
+	}
+	for _, f := range de {
+		fName := f.Name()
+		if strs.HasAnySuffix(fName, ".json", ".jsonld") {
 
-	toBeChanged := "dc:description"
-	rt = changeOneLineToStruct(rt, toBeChanged)
+			fPath := filepath.Join(inputDir, fName)
+			data, err := os.ReadFile(fPath)
+			lk.FailOnErr("%v", err)
+			rt := rmOneLineField(string(data), toBeRemoved...)
+			rt = changeOneLineToStruct(rt, toBeChanged)
+			err = os.WriteFile(fPath, []byte(rt), os.ModePerm)
+			lk.FailOnErr("%v", err)
 
-	err = os.WriteFile(fPath, []byte(rt), os.ModePerm)
-	lk.FailOnErr("%v", err)
+		}
+	}
 }
