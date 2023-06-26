@@ -123,10 +123,10 @@ func main() {
 			go func(file, la string) {
 
 				// this one is too time consuming, ignore here
-				if file == "la-Languages.json" {
-					wg.Done()
-					return
-				}
+				// if file == "la-Languages.json" {
+				// 	wg.Done()
+				// 	return
+				// }
 
 				fmt.Printf("----- %s ----- %s\n", file, la)
 

@@ -18,7 +18,7 @@ func main() {
 		outDir := "./json/MRAC/2023/06/GC/CCP/"
 		fd.MustCreateDir(outDir)
 
-		dataCcp, err := os.ReadFile("../data-out/asn-json/url/ccp-Cross-curriculum Priorities.json")
+		dataCcp, err := os.ReadFile("../data-out/asn-json/ccp-Cross-curriculum Priorities.json")
 		lk.FailOnErr("%v", err)
 
 		jsCcp := string(dataCcp)
@@ -68,7 +68,7 @@ func main() {
 		outDir := "./json-ld/MRAC/2023/06/GC/CCP/"
 		fd.MustCreateDir(outDir)
 
-		dataCcp, err := os.ReadFile("../data-out/asn-json-ld/url/ccp-Cross-curriculum Priorities.json")
+		dataCcp, err := os.ReadFile("../data-out/asn-json-ld/ccp-Cross-curriculum Priorities.json")
 		lk.FailOnErr("%v", err)
 
 		jsCcp := string(dataCcp)

@@ -208,10 +208,10 @@ func main() {
 	for file := range mInputLa {
 		go func(file string) {
 
-			if file == "la-Languages.json" {
-				wg.Done()
-				return
-			}
+			// if file == "la-Languages.json" {
+			// 	wg.Done()
+			// 	return
+			// }
 
 			cvt2jsonld(filepath.Join("../data-out/asn-json", file))
 			wg.Done()
