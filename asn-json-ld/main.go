@@ -115,7 +115,7 @@ func cvt2jsonld(asnPath string) {
 		return fmt.Sprintf(`"dc:modified": { "@value": "%s", "@type": "xsd:dateTime" }%s`, str, suffix)
 	})
 
-	rLangLit := regexp.MustCompile(`\{[\s\n]*"language":\s*"[^"]+",?[\s\n]*"literal":\s*"[^"]+"[\s\n]*\},?`)
+	rLangLit := regexp.MustCompile(`\{[\s\n]*"language":\s*"[^"]+",?[\s\n]*"literal":\s*".+"[\s\n]*\},?`)
 	js = rLangLit.ReplaceAllStringFunc(js, func(s string) string {
 		// fmt.Println(s)
 
@@ -125,14 +125,13 @@ func cvt2jsonld(asnPath string) {
 		}
 
 		starts, _ := strs.IndexAll(s, "\"")
-		lang := s[starts[2]+1 : starts[3]]
-		lit := s[starts[6]+1 : starts[7]]
-		// fmt.Println(lang, lit)
+		language := s[starts[2]+1 : starts[3]]
+		literal := s[starts[6]+1 : starts[len(starts)-1]]
 
-		if lang == "en-au" {
-			return fmt.Sprintf(`"%s"%s`, lit, suffix)
+		if language == "en-au" {
+			return fmt.Sprintf(`"%s"%s`, literal, suffix)
 		} else {
-			return fmt.Sprintf(`{ "@language": "%s", "@value": "%s" }%s`, lang, lit, suffix)
+			return fmt.Sprintf(`{ "@language": "%s", "@value": "%s" }%s`, language, literal, suffix)
 		}
 	})
 

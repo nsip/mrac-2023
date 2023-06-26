@@ -34,7 +34,7 @@ func rmOneLineField(js string, fields ...string) string {
 }
 
 // "dc:description" => { "@language", "@value" }
-func changeOneLineToStruct(js, field string) string {
+func changeOneLineToStruct(js, field string, f1, f2 string) string {
 	js = jt.FmtStr(js, "  ")                              // formatted
 	field = fmt.Sprintf(`"%s"`, strings.Trim(field, `"`)) // wrapped with "field"
 	idx := 0
@@ -48,9 +48,9 @@ func changeOneLineToStruct(js, field string) string {
 			trimed = strings.TrimSuffix(trimed, ",")
 		}
 
-		if strings.HasPrefix(trimed, field+":") {
+		if strings.HasPrefix(trimed, field+": \"") {
 			v := strings.Trim(strings.TrimSpace(strings.TrimPrefix(trimed, field+":")), "\"")
-			stru := fmt.Sprintf(`%s: { "@language": "en-au", "@value": "%s" }`, field, v)
+			stru := fmt.Sprintf(`%s: { "%s": "en-au", "%s": "%s" }`, field, f1, f2, v)
 			if appendComma {
 				stru += ","
 			}
@@ -74,7 +74,14 @@ func main() {
 
 	var (
 		toBeRemoved = []string{"dc:text", "dc:title"}
-		toBeChanged = "dc:description"
+
+		toBeChanged1   = "dc:description"
+		toBeChanged1F1 = "@language"
+		toBeChanged1F2 = "@value"
+
+		// toBeChanged2   = "dc:title"
+		// toBeChanged2F1 = "@language"
+		// toBeChanged2F2 = "@literal"
 	)
 
 	de, err := os.ReadDir(inputDir)
@@ -87,10 +94,17 @@ func main() {
 		if strs.HasAnySuffix(fName, ".json", ".jsonld") {
 
 			fPath := filepath.Join(inputDir, fName)
+
+			fmt.Printf("processing... %s\n", fPath)
+
 			data, err := os.ReadFile(fPath)
 			lk.FailOnErr("%v", err)
+
 			rt := rmOneLineField(string(data), toBeRemoved...)
-			rt = changeOneLineToStruct(rt, toBeChanged)
+
+			rt = changeOneLineToStruct(rt, toBeChanged1, toBeChanged1F1, toBeChanged1F2)
+			// rt = changeOneLineToStruct(rt, toBeChanged2, toBeChanged2F1, toBeChanged2F2)
+
 			err = os.WriteFile(fPath, []byte(rt), os.ModePerm)
 			lk.FailOnErr("%v", err)
 

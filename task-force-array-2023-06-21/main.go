@@ -48,7 +48,7 @@ func addSquareBrackets(js, field string) string {
 		idx++
 
 		if strings.HasPrefix(strings.TrimSpace(line), field+": {") {
-			fmt.Println(1, idx, line)
+			// fmt.Println(1, idx, line)
 			space := strs.TrimTailFromFirst(line, "\"")
 			pp.Start(idx, space)
 			return true, strings.Replace(line, "{", "[{", 1)

@@ -13,7 +13,7 @@ func TestMain(t *testing.T) {
 	main()
 }
 
-// ********** //
+// ***** //
 func TestRmDupl(t *testing.T) {
 
 	// each json must be formatted (VSCode)
