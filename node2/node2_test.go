@@ -11,7 +11,7 @@ import (
 
 func TestNode2(t *testing.T) {
 
-	dataNode, err := os.ReadFile("../data/Sofia-API-Node-Data-04072023.json")
+	dataNode, err := os.ReadFile("../data/Sofia-API-Node-Data-18072023.json")
 	lk.FailOnErr("%v", err)
 
 	mIdBlock := GenNodeIdBlockMap(dataNode)
@@ -37,9 +37,9 @@ func TestNode2(t *testing.T) {
 
 const (
 	uri4id   = "http://vocabulary.curriculum.edu.au/" // "http://rdf.curriculum.edu.au/202110/"
-	metaFile = "../data/Sofia-API-Meta-Data-04072023.json"
-	nodeFile = "../data/Sofia-API-Node-Data-04072023.json"
-	treeFile = "../data/Sofia-API-Tree-Data-04072023.json"
+	metaFile = "../data/Sofia-API-Meta-Data-18072023.json"
+	nodeFile = "../data/Sofia-API-Node-Data-18072023.json"
+	treeFile = "../data/Sofia-API-Tree-Data-18072023.json"
 )
 
 // ***** //

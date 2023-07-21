@@ -12,9 +12,9 @@ import (
 const (
 	out = "../data-out"
 
-	metaFile = "../data/Sofia-API-Meta-Data-04072023.json"
-	nodeFile = "../data/Sofia-API-Node-Data-04072023.json"
-	treeFile = "../data/Sofia-API-Tree-Data-04072023.json"
+	metaFile = "../data/Sofia-API-Meta-Data-18072023.json"
+	nodeFile = "../data/Sofia-API-Node-Data-18072023.json"
+	treeFile = "../data/Sofia-API-Tree-Data-18072023.json"
 )
 
 // ***** //

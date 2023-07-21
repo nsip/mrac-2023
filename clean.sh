@@ -9,8 +9,8 @@ find . -type f -executable -exec sh -c "file -i '{}' | grep -q 'x-executable; ch
 find ./ \( -type f \( -name "*.log" -o -name "*.temp" \) -o -type d -name "fatal" \) -exec rm -rf {} +
 
 if [ -n "$1" ] && [ $1 == "all" ]; then
-    rm -rf ./data-out
-    echo "executables & /data-out are deleted"
+    rm -rf ./data-out ./package
+    echo "executables & /data-out & /package are deleted"
 else
     echo "only deleted executables"
 fi
