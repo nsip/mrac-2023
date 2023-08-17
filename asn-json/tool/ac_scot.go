@@ -63,7 +63,7 @@ func scanScotJsonLd(scotJsonLdPath string) map[string][]string {
 			idVal := gjson.Get(out, "@id").String()
 			idVal = strings.Trim(idVal, " \t\r\n")
 
-			mObj := make(map[string]interface{})
+			mObj := make(map[string]any)
 			lk.FailOnErr("%v", json.Unmarshal([]byte(out), &mObj))
 
 			for k, v := range mObj {
@@ -72,8 +72,8 @@ func scanScotJsonLd(scotJsonLdPath string) map[string][]string {
 					lk.FailOnErrWhen(idVal != v.(string), "%v", fmt.Errorf("error in fetching prefLabel"))
 
 				case strings.HasSuffix(k, "#prefLabel"):
-					for _, mPrefLabel := range v.([]interface{}) {
-						mpl := mPrefLabel.(map[string]interface{})
+					for _, mPrefLabel := range v.([]any) {
+						mpl := mPrefLabel.(map[string]any)
 						if langVal, ok := mpl["@language"]; ok && langVal == "en" {
 							m[idVal] = append(m[idVal], mpl["@value"].(string)) // fetch @value under @language = "en"
 						}

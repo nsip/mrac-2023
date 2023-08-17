@@ -38,7 +38,7 @@ func GC(js string) map[string]string {
 	)
 
 	// L0
-	mRoot := map[string]interface{}{
+	mRoot := map[string]any{
 		"code":       gjson.Get(js, "code").String(),
 		"uuid":       gjson.Get(js, "uuid").String(),
 		"type":       gjson.Get(js, "type").String(),
@@ -48,7 +48,7 @@ func GC(js string) map[string]string {
 	}
 
 	// L1
-	mGC := map[string]interface{}{
+	mGC := map[string]any{
 		"code":       "",
 		"uuid":       "",
 		"type":       "",
@@ -58,7 +58,7 @@ func GC(js string) map[string]string {
 	}
 
 	// L2
-	mL := map[string]interface{}{
+	mL := map[string]any{
 		"code":         "",
 		"uuid":         "",
 		"type":         "",
@@ -69,7 +69,7 @@ func GC(js string) map[string]string {
 	}
 
 	// L2
-	mN := map[string]interface{}{
+	mN := map[string]any{
 		"code":         "",
 		"uuid":         "",
 		"type":         "",
@@ -80,7 +80,7 @@ func GC(js string) map[string]string {
 	}
 
 	// L2
-	mCCT := map[string]interface{}{
+	mCCT := map[string]any{
 		"code":         "",
 		"uuid":         "",
 		"type":         "",
@@ -91,7 +91,7 @@ func GC(js string) map[string]string {
 	}
 
 	// L2
-	mPSC := map[string]interface{}{
+	mPSC := map[string]any{
 		"code":         "",
 		"uuid":         "",
 		"type":         "",
@@ -102,7 +102,7 @@ func GC(js string) map[string]string {
 	}
 
 	// L2
-	mDL := map[string]interface{}{
+	mDL := map[string]any{
 		"code":         "",
 		"uuid":         "",
 		"type":         "",
@@ -113,7 +113,7 @@ func GC(js string) map[string]string {
 	}
 
 	// L2
-	mIU := map[string]interface{}{
+	mIU := map[string]any{
 		"code":         "",
 		"uuid":         "",
 		"type":         "",
@@ -124,7 +124,7 @@ func GC(js string) map[string]string {
 	}
 
 	// L2
-	mEU := map[string]interface{}{
+	mEU := map[string]any{
 		"code":         "",
 		"uuid":         "",
 		"type":         "",
@@ -135,7 +135,7 @@ func GC(js string) map[string]string {
 	}
 
 	var (
-		mL2s = []map[string]interface{}{mL, mN, mCCT, mPSC, mDL, mIU, mEU}
+		mL2s = []map[string]any{mL, mN, mCCT, mPSC, mDL, mIU, mEU}
 	)
 
 	valueC1 := gjson.Get(js, "children")
@@ -170,7 +170,7 @@ func GC(js string) map[string]string {
 								if In(code2str, gcCodes...) {
 									fmt.Println("  ", title2str, "  ", code2str)
 
-									var m map[string]interface{}
+									var m map[string]any
 
 									// switch {
 									// case strings.EqualFold("Literacy", title2str):

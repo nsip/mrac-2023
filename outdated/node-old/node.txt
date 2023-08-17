@@ -69,14 +69,14 @@ func Process(dataNode []byte, uri string, meta map[string]string, outDir string)
 		block, _ = sjson.Set(block, "uuid", newIdVal)
 		block = strings.Replace(block, `"uuid"`, `"id"`, 1)
 
-		m := make(map[string]interface{})
+		m := make(map[string]any)
 		json.Unmarshal([]byte(gjson.Get(block, "connections").String()), &m)
 
 		for k, v := range m {
 			// "abcdeft" => "Levels" etc.
 			block = strings.Replace(block, k, meta[k], 1)
 			// "abc-def" => "http://abc/def/{id}"
-			for _, a := range v.([]interface{}) {
+			for _, a := range v.([]any) {
 				block = strings.Replace(block, a.(string), fmt.Sprintf("%s%s", uri, a), 1)
 			}
 		}

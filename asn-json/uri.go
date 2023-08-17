@@ -71,7 +71,7 @@ var (
 	}
 )
 
-func getProLevel(mData map[string]interface{}, path string) string {
+func getProLevel(mData map[string]any, path string) string {
 AGAIN:
 	sp := jt.NewSibling(path, "doc.typeName")
 	if mData[sp] == "Level" {
@@ -88,7 +88,7 @@ AGAIN:
 	}
 }
 
-func getYears(mData map[string]interface{}, path string) []string {
+func getYears(mData map[string]any, path string) []string {
 AGAIN:
 	sp := jt.NewSibling(path, "doc.typeName")
 	if mData[sp] == "Level" {

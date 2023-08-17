@@ -208,14 +208,14 @@ func UpdateNodeWithMeta(dataNode []byte, URI string, meta map[string]string, out
 		block, _ = sjson.Set(block, "uuid", newIdVal)
 		block = strings.Replace(block, `"uuid"`, `"id"`, 1)
 
-		m := make(map[string]interface{})
+		m := make(map[string]any)
 		json.Unmarshal([]byte(gjson.Get(block, "connections").String()), &m)
 
 		for k, v := range m {
 			// "abcdeft" => "Levels" etc.
 			block = strings.Replace(block, k, meta[k], 1)
 			// "abc-def" => "http://abc/def/{id}"
-			for _, a := range v.([]interface{}) {
+			for _, a := range v.([]any) {
 				block = strings.Replace(block, a.(string), fmt.Sprintf("%s%s", URI, a), 1)
 			}
 		}
@@ -358,4 +358,10 @@ func MakeIdUrlText(mIdBlock, mCodeBlock, mIDChildParent, mCodeChildParent map[st
 	for code, url := range mCodeUrl {
 		fd.MustAppendFile(outPath4CodeUrl, []byte(fmt.Sprintf("%s\t%s", code, url)), true)
 	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+func GetLvlYrById(id string) {
+
 }

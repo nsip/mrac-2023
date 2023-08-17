@@ -30,7 +30,7 @@ func LA(js string) (mOut map[string]string) {
 		"The Arts":     "The Arts",
 	}
 
-	mRoot := map[string]interface{}{
+	mRoot := map[string]any{
 		"code":       gjson.Get(js, "code").String(),
 		"uuid":       gjson.Get(js, "uuid").String(),
 		"type":       gjson.Get(js, "type").String(),
@@ -39,7 +39,7 @@ func LA(js string) (mOut map[string]string) {
 		"children":   nil,
 	}
 
-	mASfield := map[string]interface{}{
+	mASfield := map[string]any{
 		"code":       "",
 		"uuid":       "",
 		"type":       "",
@@ -48,7 +48,7 @@ func LA(js string) (mOut map[string]string) {
 		"children":   nil,
 	}
 
-	mLAfield := map[string]interface{}{
+	mLAfield := map[string]any{
 		"code":       "",
 		"uuid":       "",
 		"type":       "",

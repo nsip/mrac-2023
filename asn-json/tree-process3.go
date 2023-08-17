@@ -91,10 +91,10 @@ func proc(
 
 	js, s, name, value string,
 	mLvlSiblings map[int][]string,
-	mData map[string]interface{},
+	mData map[string]any,
 	la string,
 	mCodeChildParent map[string]string,
-	mNodeData map[string]interface{},
+	mNodeData map[string]any,
 	fnPathWithTitle func() string,
 	fnPathWithDocType func() string,
 	fnPathWithCode func() string,
@@ -297,7 +297,7 @@ func treeProc3(
 	data []byte,
 	la string,
 	mCodeChildParent map[string]string,
-	mNodeData map[string]interface{},
+	mNodeData map[string]any,
 	paths []string,
 	// static for filling
 	pPrevDocTypePath *string,

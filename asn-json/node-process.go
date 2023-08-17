@@ -111,36 +111,41 @@ type asnjson struct {
 	Children []string `json:"children"` //DIRECT
 }
 
-// "Level 2 (Years 1- 2)"
 // "Year 9 and 10"
-func yearsSplit(yearstr string) (ret []string) {
-	if strings.Contains(yearstr, "Foundation") {
-		ret = append(ret, "Foundation Year")
-	}
-	if !(strings.Contains(yearstr, "(") && strings.Contains(yearstr, ")")) {
+// "Level 2 (Years 1- 2)"
+func yearsSplit(yearStr string) (rt []string) {
+
+	switch {
+
+	case strings.Contains(yearStr, "Foundation"):
+		rt = append(rt, "Foundation Year")
+
+	case strings.Contains(yearStr, "(") && strings.Contains(yearStr, ")"): // "Level 2 (Years 1- 2)"
+		s := strings.Index(yearStr, "(")
+		e := strings.LastIndex(yearStr, ")")
+		r := regexp.MustCompile(`\d+(\s*-\s*\d+)?$`)
+		r.ReplaceAllStringFunc(yearStr[s+1:e], func(s string) string {
+			yn := strings.Split(s, "-")
+			for _, y := range yn {
+				y = strings.Trim(y, " ")
+				rt = append(rt, "Year "+y)
+			}
+			return s
+		})
+
+	default: // "Year 9 and 10"
 		r := regexp.MustCompile(`\d+( and \d+)*$`)
-		ss := r.FindAllString(yearstr, 1)
+		ss := r.FindAllString(yearStr, 1)
 		if len(ss) > 0 {
 			s := ss[0]
 			yn := strings.Split(s, "and")
 			for _, y := range yn {
 				y = strings.Trim(y, " ")
-				ret = append(ret, "Year "+y)
+				rt = append(rt, "Year "+y)
 			}
 		}
-	} else {
-		s := strings.Index(yearstr, "(")
-		e := strings.LastIndex(yearstr, ")")
-		r := regexp.MustCompile(`\d+(\s*-\s*\d+)?$`)
-		r.ReplaceAllStringFunc(yearstr[s+1:e], func(s string) string {
-			yn := strings.Split(s, "-")
-			for _, y := range yn {
-				y = strings.Trim(y, " ")
-				ret = append(ret, "Year "+y)
-			}
-			return s
-		})
 	}
+
 	return
 }
 

@@ -13,7 +13,7 @@ import (
 
 func CCP(js, outDir string) string {
 
-	mRoot := map[string]interface{}{
+	mRoot := map[string]any{
 		"code":       gjson.Get(js, "code").String(),
 		"uuid":       gjson.Get(js, "uuid").String(),
 		"type":       gjson.Get(js, "type").String(),
