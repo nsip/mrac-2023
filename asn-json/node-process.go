@@ -2,18 +2,18 @@ package main
 
 import (
 	"bytes"
-	"path/filepath"
-
-	// "context"
 	"encoding/json"
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 
 	jt "github.com/digisan/json-tool"
+	lk "github.com/digisan/logkit"
 	"github.com/nsip/mrac-2023/asn-json/tool"
+	u "github.com/nsip/mrac-2023/util"
 	"github.com/tidwall/gjson"
 )
 
@@ -308,8 +308,12 @@ func nodeProc(dataNM []byte, mCodeChildParent map[string]string, outDir, outName
 		return true
 	})
 
-	out = "[" + strings.Join(parts, ",") + "]"       // combine whole
-	out = jt.FmtStr(out, "  ")                       // format json
+	out = "[" + strings.Join(parts, ",") + "]" // combine whole
+
+	// out = jt.FmtStr(out, "  ") // format json
+	out, err := u.FmtJSON(out)
+	lk.FailOnErr("%v", err)
+
 	out = jt.TrimFields(out, true, true, true, true) // remove empty object, string, array
 
 	if !strings.HasSuffix(outName, ".json") {

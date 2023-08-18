@@ -6,7 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"sync"
 	"time"
 
 	fd "github.com/digisan/gotk/file-dir"
@@ -14,6 +13,7 @@ import (
 	jt "github.com/digisan/json-tool"
 	lk "github.com/digisan/logkit"
 	"github.com/nsip/mrac-2023/node2"
+	u "github.com/nsip/mrac-2023/util"
 )
 
 const (
@@ -115,70 +115,74 @@ func main() {
 			log.Fatalln(err)
 		}
 
-		wg := sync.WaitGroup{}
-		wg.Add(len(mInputLa))
+		// wg := sync.WaitGroup{}
+		// wg.Add(len(mInputLa))
 
 		for file, la := range mInputLa {
 
-			go func(file, la string) {
+			// go func(file, la string) {
 
-				// this one is too time consuming, ignore here
-				// if file == "la-Languages.json" {
-				// 	wg.Done()
-				// 	return
-				// }
+			// this one is too time consuming, ignore here
+			if file != "la-Languages.json" {
+				// wg.Done()
+				// return
 
-				fmt.Printf("----- %s ----- %s\n", file, la)
+				continue
+			}
 
-				var (
-					prevDocTypePath = ""
-					retEL           = `` // used by 'Level' & its descendants
-					retPL           = `` // used by 'Level' & its descendants
-					progLvlABC      = "" // indicate Level 1a, 1b or 1c
-				)
+			fmt.Printf("----- %s ----- %s\n", file, la)
 
-				data, err := os.ReadFile(filepath.Join(`../data-out/restructure`, file))
-				if err != nil {
-					log.Fatalln(err)
-				}
-				js := removeEsc(string(data))
+			var (
+				prevDocTypePath = ""
+				retEL           = `` // used by 'Level' & its descendants
+				retPL           = `` // used by 'Level' & its descendants
+				progLvlABC      = "" // indicate Level 1a, 1b or 1c
+			)
 
-				///
-				switch {
-				case strings.Contains(js, `"Level 1c"`):
-					progLvlABC = "1c"
-				case strings.Contains(js, `"Level 1b"`):
-					progLvlABC = "1b"
-				case strings.Contains(js, `"Level 1a"`):
-					progLvlABC = "1a"
-				}
-				///
+			data, err := os.ReadFile(filepath.Join(`../data-out/restructure`, file))
+			if err != nil {
+				log.Fatalln(err)
+			}
+			js := removeEsc(string(data))
 
-				paths, _ := jt.GetLeavesPathOrderly(js)
+			///
+			switch {
+			case strings.Contains(js, `"Level 1c"`):
+				progLvlABC = "1c"
+			case strings.Contains(js, `"Level 1b"`):
+				progLvlABC = "1b"
+			case strings.Contains(js, `"Level 1a"`):
+				progLvlABC = "1a"
+			}
+			///
 
-				js = treeProc3(
-					[]byte(js),
-					la,
-					mCodeChildParent,
-					mNodeData,
-					paths,
-					&prevDocTypePath,
-					&retEL,
-					&retPL,
-					progLvlABC,
-				)
+			paths, _ := jt.GetLeavesPathOrderly(js)
 
-				js = restoreEsc(js)
+			js = treeProc3(
+				[]byte(js),
+				la,
+				mCodeChildParent,
+				mNodeData,
+				paths,
+				&prevDocTypePath,
+				&retEL,
+				&retPL,
+				progLvlABC,
+			)
 
-				js = jt.FmtStr(js, "  ")
+			js = restoreEsc(js)
 
-				os.WriteFile(filepath.Join(`../data-out/asn-json`, file), []byte(js), os.ModePerm)
+			// js = jt.FmtStr(js, "  ")
+			js, err = u.FmtJSON(js)
+			lk.FailOnErr("%v", err)
 
-				wg.Done()
+			os.WriteFile(filepath.Join(`../data-out/asn-json`, file), []byte(js), os.ModePerm)
 
-			}(file, la)
+			// wg.Done()
+			// }(file, la)
+
 		}
 
-		wg.Wait()
+		// wg.Wait()
 	}
 }

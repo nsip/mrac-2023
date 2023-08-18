@@ -9,8 +9,10 @@ import (
 
 	dt "github.com/digisan/gotk/data-type"
 	"github.com/digisan/gotk/strs"
-	jt "github.com/digisan/json-tool"
+
+	// jt "github.com/digisan/json-tool"
 	lk "github.com/digisan/logkit"
+	u "github.com/nsip/mrac-2023/util"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -147,7 +149,10 @@ NEXT_LA:
 					out, _ = sjson.SetRaw(out, path, bLA)
 				}
 
-				out = jt.FmtStr(out, "  ")
+				// out = jt.FmtStr(out, "  ")
+				out, err := u.FmtJSON(out)
+				lk.FailOnErr("%v", err)
+
 				lk.FailOnErrWhen(!dt.IsJSON([]byte(out)), "%v", errors.New("invalid JSON from [la]"))
 				mOut[la] = out
 				continue NEXT_LA

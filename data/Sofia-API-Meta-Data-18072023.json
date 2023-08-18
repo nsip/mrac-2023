@@ -1,74 +1,80 @@
 {
+  "type": "Schema",
+  "key": "metadata",
+  "name": "Metadata",
+  "plural": "Metadata",
   "fields": [
     {
+      "type": "Field",
       "key": "d3c618c8b8cdd42ccb448fc555ac9d60bd24c068",
       "name": "Levels",
-      "plural": "Levels",
-      "type": "Field"
+      "plural": "Levels"
     },
     {
+      "type": "Field",
       "key": "d478de0898b56e04aca8cd8615a96aa28f0d1b69",
       "name": "General Capabilities",
-      "plural": "General Capabilities",
-      "type": "Field"
+      "plural": "General Capabilities"
     },
     {
+      "type": "Field",
       "key": "b674f9c4c6935e08a8718fb3476d049cc3e65f37",
       "name": "Indicator Groups",
-      "plural": "Indicator Groups",
-      "type": "Field"
+      "plural": "Indicator Groups"
     },
     {
+      "type": "Field",
       "key": "43815cf42f6c422022750881de5c3d6c1ac03350",
       "name": "Content Descriptions",
-      "plural": "Content Descriptions",
-      "type": "Field"
+      "plural": "Content Descriptions"
     },
     {
+      "type": "Field",
       "key": "5f697c939578d4ec7d730dcea15f2267897d3ed5",
       "name": "Achievement Standard Components",
-      "plural": "Achievement Standard Components",
-      "type": "Field"
+      "plural": "Achievement Standard Components"
     },
     {
+      "type": "Field",
       "key": "4f23493b0194901d0524ea8088ca98c1daf84891",
       "name": "Organising Ideas",
-      "plural": "Organising Ideas",
-      "type": "Field"
+      "plural": "Organising Ideas"
     },
     {
+      "type": "Field",
       "key": "47da1cbc75bc8257db7392f30949c58bb14eb63e",
       "name": "Levels",
-      "plural": "Levels",
-      "type": "Field"
+      "plural": "Levels"
     },
     {
+      "type": "Field",
       "key": "70cb537d2cbf560149b0d31439cca78572ec2eef",
       "name": "Indicator Groups",
-      "plural": "Indicator Groups",
-      "type": "Field"
+      "plural": "Indicator Groups"
     },
     {
+      "type": "Field",
       "key": "e9996564217874389130a4e8d9585e81c6c59a2f",
       "name": "Organising Ideas",
-      "plural": "Organising Ideas",
-      "type": "Field"
+      "plural": "Organising Ideas"
     },
     {
+      "type": "Field",
       "key": "TEACHER_BACKGROUND_INFORMATION",
       "name": "Teacher Background Information",
+      "plural": "Teacher Background Information",
       "options": [
         {
           "key": "SCIENCE_TEACHER_BACKGROUND_INFORMATION",
           "name": "Science Teacher Background Information "
         }
-      ],
-      "plural": "Teacher Background Information",
-      "type": "Field"
+      ]
     },
     {
+      "type": "Field",
       "key": "LA_RES",
       "name": "Learning area resource",
+      "plural": "Learning area resources",
       "options": [
         {
           "key": "MEDIA_ARTS_EXAMPLES_OF_KNOWLEDGE_AND_SKILLS",
@@ -134,25 +140,19 @@
           "key": "HPE_FOCUS_AREAS",
           "name": "Health and Physical Education focus areas"
         }
-      ],
-      "plural": "Learning area resources",
-      "type": "Field"
+      ]
     },
     {
+      "type": "Field",
       "key": "AS_TAGS",
       "name": "Achievement Standard Tags",
+      "plural": "Achievement Standard Tags",
       "options": [
         {
           "key": "SHOWLINEBREAKAFTER",
           "name": "ShowLineBreakAfter=true"
         }
-      ],
-      "plural": "Achievement Standard Tags",
-      "type": "Field"
+      ]
     }
-  ],
-  "key": "metadata",
-  "name": "Metadata",
-  "plural": "Metadata",
-  "type": "Schema"
+  ]
 }

@@ -14,8 +14,8 @@ import (
 	. "github.com/digisan/go-generics/v2"
 	dt "github.com/digisan/gotk/data-type"
 	fd "github.com/digisan/gotk/file-dir"
-	jt "github.com/digisan/json-tool"
 	lk "github.com/digisan/logkit"
+	u "github.com/nsip/mrac-2023/util"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -226,7 +226,10 @@ func UpdateNodeWithMeta(dataNode []byte, URI string, meta map[string]string, out
 	})
 
 	out = "{" + strings.Join(parts, ",") + "}"
-	out = jt.FmtStr(out, "  ")
+
+	// out = jt.FmtStr(out, "  ")
+	out, err := u.FmtJSON(out)
+	lk.FailOnErr("%v", err)
 
 	lk.FailOnErrWhen(!dt.IsJSON([]byte(out)), "%v", errors.New("invalid JSON from node & meta"))
 	os.WriteFile(outPath, []byte(out), os.ModePerm)

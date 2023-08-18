@@ -11,7 +11,8 @@ import (
 	dt "github.com/digisan/gotk/data-type"
 	fd "github.com/digisan/gotk/file-dir"
 	"github.com/digisan/gotk/strs"
-	jt "github.com/digisan/json-tool"
+	lk "github.com/digisan/logkit"
+	u "github.com/nsip/mrac-2023/util"
 )
 
 func main() {
@@ -173,7 +174,13 @@ func main() {
 			log.Panicln(err)
 			return
 		}
-		if err := os.WriteFile(fPath, jt.Fmt(data, "    "), os.ModePerm); err != nil {
+
+		// data = jt.Fmt(data, "  ")
+		formatted, err := u.FmtJSON(string(data))
+		lk.FailOnErr("%v", err)
+		data = []byte(formatted)
+
+		if err := os.WriteFile(fPath, data, os.ModePerm); err != nil {
 			fmt.Println(fPath)
 			log.Panicln(err)
 			return

@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/digisan/gotk/strs"
-	jt "github.com/digisan/json-tool"
 	lk "github.com/digisan/logkit"
+	u "github.com/nsip/mrac-2023/util"
 )
 
 type ProcPos struct {
@@ -36,7 +36,10 @@ func (pp *ProcPos) End(i int) {
 }
 
 func addSquareBrackets(js, field string) string {
-	js = jt.FmtStr(js, "  ")                              // formatted
+
+	js, err := u.FmtJSON(js)
+	lk.FailOnErr("%v", err)
+
 	field = fmt.Sprintf(`"%s"`, strings.Trim(field, `"`)) // wrapped with "field"
 	idx := 0
 
@@ -70,7 +73,11 @@ func addSquareBrackets(js, field string) string {
 	})
 
 	lk.FailOnErr("%v", err)
-	return jt.FmtStr(rt, "  ")
+
+	rt, err = u.FmtJSON(rt)
+	lk.FailOnErr("%v", err)
+
+	return rt
 }
 
 // @asn-json

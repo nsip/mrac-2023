@@ -99,7 +99,9 @@ func TestFixDup_asn_hasLevel(t *testing.T) {
 			fmt.Println(err)
 			return
 		}
+
 		// out = jt.FmtStr(out, "  ") // Fmt overwrites duplicated fields
+
 		if err = os.WriteFile(`../data-out/asn-json/la-Languages-fix.json`, []byte(out), os.ModePerm); err != nil {
 			fmt.Println(err)
 			return

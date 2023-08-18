@@ -7,12 +7,16 @@ import (
 	"strings"
 
 	"github.com/digisan/gotk/strs"
-	jt "github.com/digisan/json-tool"
 	lk "github.com/digisan/logkit"
+	u "github.com/nsip/mrac-2023/util"
 )
 
 func rmOneLineField(js, field string, onValues ...string) string {
-	js = jt.FmtStr(js, "  ")                              // formatted
+
+	// js = jt.FmtStr(js, "  ")                              // formatted
+	js, err := u.FmtJSON(js)
+	lk.FailOnErr("%v", err)
+
 	field = fmt.Sprintf(`"%s"`, strings.Trim(field, `"`)) // wrapped with "field"
 	idx := 0
 	rt, err := strs.StrLineScan(js, func(line string) (bool, string) {
@@ -30,7 +34,12 @@ func rmOneLineField(js, field string, onValues ...string) string {
 		return true, line
 	})
 	lk.FailOnErr("%v", err)
-	return jt.FmtStr(rt, "  ")
+
+	// return jt.FmtStr(rt, "  ")
+	rt, err = u.FmtJSON(rt)
+	lk.FailOnErr("%v", err)
+
+	return rt
 }
 
 // @asn-json

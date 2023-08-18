@@ -6,8 +6,10 @@ import (
 
 	. "github.com/digisan/go-generics/v2"
 	dt "github.com/digisan/gotk/data-type"
-	jt "github.com/digisan/json-tool"
+
+	// jt "github.com/digisan/json-tool"
 	lk "github.com/digisan/logkit"
+	u "github.com/nsip/mrac-2023/util"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -252,7 +254,10 @@ func GC(js string) map[string]string {
 		out, _ = sjson.Set(out, "children.0.children.0.doc.typeName", L2["doc.typeName"])
 		out, _ = sjson.SetRaw(out, "children.0.children.0.children", L2["children"].(string))
 
-		out = jt.FmtStr(out, "  ")
+		// out = jt.FmtStr(out, "  ")
+		out, err := u.FmtJSON(out)
+		lk.FailOnErr("%v", err)
+
 		lk.FailOnErrWhen(!dt.IsJSON([]byte(out)), "%v", errors.New("invalid JSON from [gc]"))
 		mOut[fmt.Sprint(L2["title"])] = out
 	}

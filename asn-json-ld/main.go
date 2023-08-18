@@ -7,13 +7,13 @@ import (
 	"regexp"
 	"sort"
 	"strings"
-	"sync"
 
 	fd "github.com/digisan/gotk/file-dir"
 	"github.com/digisan/gotk/strs"
 	jt "github.com/digisan/json-tool"
 	lk "github.com/digisan/logkit"
 	"github.com/nsip/mrac-2023/asn-json/tool"
+	u "github.com/nsip/mrac-2023/util"
 	"github.com/tidwall/gjson"
 )
 
@@ -176,7 +176,9 @@ func cvt2jsonld(asnPath string) {
 
 	js = addContext(js, context)
 
-	js = jt.FmtStr(js, "  ")
+	// js = jt.FmtStr(js, "  ")
+	js, err = u.FmtJSON(js)
+	lk.FailOnErr("%v", err)
 
 	os.WriteFile(jsonldPath, []byte(js), os.ModePerm)
 }
@@ -202,23 +204,23 @@ func main() {
 		"gc-Personal and Social capability.json": "GC-PSC",
 	}
 
-	wg := sync.WaitGroup{}
-	wg.Add(len(mInputLa))
+	// wg := sync.WaitGroup{}
+	// wg.Add(len(mInputLa))
 
 	for file := range mInputLa {
-		go func(file string) {
+		// go func(file string) {
 
-			// if file == "la-Languages.json" {
-			// 	wg.Done()
-			// 	return
-			// }
+		// if file == "la-Languages.json" {
+		// 	wg.Done()
+		// 	return
+		// }
 
-			cvt2jsonld(filepath.Join("../data-out/asn-json", file))
-			wg.Done()
+		cvt2jsonld(filepath.Join("../data-out/asn-json", file))
 
-		}(file)
+		// wg.Done()
+		// }(file)
 	}
-	wg.Wait()
+	// wg.Wait()
 
 	lk.Warn("FORMAT each out file, then process extra duplicated line in 'main_test.go'")
 }

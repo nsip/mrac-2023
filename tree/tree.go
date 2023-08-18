@@ -5,12 +5,13 @@ import (
 	"os"
 	"strings"
 
+	. "github.com/digisan/go-generics/v2"
 	dt "github.com/digisan/gotk/data-type"
 	fd "github.com/digisan/gotk/file-dir"
 	"github.com/digisan/gotk/strs"
-	jt "github.com/digisan/json-tool"
 	lk "github.com/digisan/logkit"
 	. "github.com/nsip/mrac-2023/tree/sub"
+	u "github.com/nsip/mrac-2023/util"
 )
 
 func LoadUrl(fPath string) map[string]string {
@@ -88,13 +89,21 @@ func Partition(js, outDir string, mMeta map[string]string) {
 
 		js := ReStruct(string(data))
 
+		// validate json after ReStruct
+		// lk.FailOnErrWhen(!dt.IsJSON([]byte(js)), "%v", fmt.Errorf("%v is invalid json format (ReStruct)", in))
+
 		js = ConnectionsFieldMapping(js, mIdUrl, mMeta)
+
+		// validate json after ConnectionsFieldMapping
+		// lk.FailOnErrWhen(!dt.IsJSON([]byte(js)), "%v", fmt.Errorf("%v is invalid json format (ConnectionsFieldMapping)", in))
 
 		if len(js) > 0 {
 			lk.FailOnErrWhen(!dt.IsJSON([]byte(js)), "%v", fmt.Errorf("invalid JSON from [ReStruct %s]", fName))
-			js = jt.FmtStr(js, "  ")
 
-			// remove unwanted line
+			js, err = u.FmtJSON(js)
+			lk.FailOnErr("%v", err)
+
+			// remove unwanted line, step 1
 			js, err = strs.StrLineScan(js, func(line string) (bool, string) {
 				trimmed := strings.TrimSpace(line)
 				if strs.HasAnySuffix(trimmed, `: [],`, `: []`, `: "",`, `: ""`) {
@@ -106,7 +115,26 @@ func Partition(js, outDir string, mMeta map[string]string) {
 				return
 			}
 
+			// fix json after removing
+			js, err = strs.StrLineScanEx(js, 0, 1, "***", func(line string, cache []string) (bool, string) {
+				this := strings.TrimSpace(cache[0])
+				below := strings.TrimSpace(cache[1])
+				if len(this) == 0 {
+					return false, ""
+				}
+				if strings.HasSuffix(this, ",") && In(below, "]", "}") {
+					return true, strings.TrimSuffix(cache[0], ",")
+				}
+				return true, cache[0]
+			})
+			if err != nil {
+				return
+			}
+
 			out := fmt.Sprintf("./%s/restructure/%s.json", outDir, fName)
+
+			lk.FailOnErrWhen(!dt.IsJSON([]byte(js)), "%v", fmt.Errorf("%v is invalid json format", fName))
+
 			fd.MustWriteFile(out, []byte(js))
 		}
 	}
