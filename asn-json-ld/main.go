@@ -175,8 +175,6 @@ func cvt2jsonld(asnPath string) {
 	jsonldPath := filepath.Join(outDir, filepath.Base(asnPath))
 
 	js = addContext(js, context)
-
-	// js = jt.FmtStr(js, "  ")
 	js, err = u.FmtJSON(js)
 	lk.FailOnErr("%v", err)
 
@@ -221,6 +219,4 @@ func main() {
 		// }(file)
 	}
 	// wg.Wait()
-
-	lk.Warn("FORMAT each out file, then process extra duplicated line in 'main_test.go'")
 }

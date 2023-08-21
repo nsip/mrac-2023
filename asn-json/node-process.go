@@ -310,7 +310,6 @@ func nodeProc(dataNM []byte, mCodeChildParent map[string]string, outDir, outName
 
 	out = "[" + strings.Join(parts, ",") + "]" // combine whole
 
-	// out = jt.FmtStr(out, "  ") // format json
 	out, err := u.FmtJSON(out)
 	lk.FailOnErr("%v", err)
 

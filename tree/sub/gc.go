@@ -254,7 +254,6 @@ func GC(js string) map[string]string {
 		out, _ = sjson.Set(out, "children.0.children.0.doc.typeName", L2["doc.typeName"])
 		out, _ = sjson.SetRaw(out, "children.0.children.0.children", L2["children"].(string))
 
-		// out = jt.FmtStr(out, "  ")
 		out, err := u.FmtJSON(out)
 		lk.FailOnErr("%v", err)
 

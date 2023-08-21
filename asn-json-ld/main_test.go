@@ -63,7 +63,7 @@ func TestAddCtx(t *testing.T) {
 
 	os.MkdirAll("./out", os.ModePerm)
 
-	data, err := os.ReadFile("../asn-json/out/la-English.json")
+	data, err := os.ReadFile("../data-out/asn-json/la-English.json")
 	if err != nil {
 		panic(err)
 	}

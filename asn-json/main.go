@@ -172,7 +172,6 @@ func main() {
 
 			js = restoreEsc(js)
 
-			// js = jt.FmtStr(js, "  ")
 			js, err = u.FmtJSON(js)
 			lk.FailOnErr("%v", err)
 

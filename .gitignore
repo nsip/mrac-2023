@@ -39,3 +39,6 @@ task-structure-improvement-2023-03-23/out
 package
 *.zip
 release
+
+issues
+asn-json-ld/out

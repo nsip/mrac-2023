@@ -227,7 +227,6 @@ func UpdateNodeWithMeta(dataNode []byte, URI string, meta map[string]string, out
 
 	out = "{" + strings.Join(parts, ",") + "}"
 
-	// out = jt.FmtStr(out, "  ")
 	out, err := u.FmtJSON(out)
 	lk.FailOnErr("%v", err)
 

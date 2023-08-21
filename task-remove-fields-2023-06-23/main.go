@@ -14,7 +14,6 @@ import (
 // remove "dc:text", "dc:title"
 func rmOneLineField(js string, fields ...string) string {
 
-	// js = jt.FmtStr(js, "  ") // formatted
 	js, err := u.FmtJSON(js)
 	lk.FailOnErr("%v", err)
 
@@ -35,8 +34,6 @@ func rmOneLineField(js string, fields ...string) string {
 	})
 	lk.FailOnErr("%v", err)
 
-	// return jt.FmtStr(rt, "  ")
-
 	rt, err = u.FmtJSON(rt)
 	lk.FailOnErr("%v", err)
 
@@ -46,7 +43,6 @@ func rmOneLineField(js string, fields ...string) string {
 // "dc:description" => { "@language", "@value" }
 func changeOneLineToStruct(js, field string, f1, f2 string) string {
 
-	// js = jt.FmtStr(js, "  ")                              // formatted
 	js, err := u.FmtJSON(js)
 	lk.FailOnErr("%v", err)
 
@@ -74,7 +70,6 @@ func changeOneLineToStruct(js, field string, f1, f2 string) string {
 	})
 	lk.FailOnErr("%v", err)
 
-	// return jt.FmtStr(rt, "  ")
 	rt, err = u.FmtJSON(rt)
 	lk.FailOnErr("%v", err)
 
@@ -92,7 +87,8 @@ func main() {
 	)
 
 	var (
-		toBeRemoved = []string{"dc:text", "dc:title"}
+		// toBeRemoved = []string{"dc:text", "dc:title"}
+		toBeRemoved = []string{"dc:text"}
 
 		toBeChanged1   = "dc:description"
 		toBeChanged1F1 = "@language"

@@ -46,7 +46,6 @@ func CCP(js, outDir string) string {
 	out, _ = sjson.Set(out, "title", mRoot["title"])
 	out, _ = sjson.SetRaw(out, fmt.Sprintf("children.%d", 0), mRoot["children"].(string))
 
-	// out = jt.FmtStr(out, "  ")
 	out, err := u.FmtJSON(out)
 	lk.FailOnErr("%v", err)
 

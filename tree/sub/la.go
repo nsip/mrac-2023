@@ -149,7 +149,6 @@ NEXT_LA:
 					out, _ = sjson.SetRaw(out, path, bLA)
 				}
 
-				// out = jt.FmtStr(out, "  ")
 				out, err := u.FmtJSON(out)
 				lk.FailOnErr("%v", err)
 
