@@ -50,16 +50,16 @@ func changeOneLineToStruct(js, field string, f1, f2 string) string {
 	idx := 0
 	rt, err := strs.StrLineScan(js, func(line string) (bool, string) {
 		idx++
-		trimed := strings.TrimSpace(line)
+		trimmed := strings.TrimSpace(line)
 
 		appendComma := false
-		if strings.HasSuffix(trimed, ",") {
+		if strings.HasSuffix(trimmed, ",") {
 			appendComma = true
-			trimed = strings.TrimSuffix(trimed, ",")
+			trimmed = strings.TrimSuffix(trimmed, ",")
 		}
 
-		if strings.HasPrefix(trimed, field+": \"") {
-			v := strings.Trim(strings.TrimSpace(strings.TrimPrefix(trimed, field+":")), "\"")
+		if strings.HasPrefix(trimmed, field+": \"") {
+			v := strings.Trim(strings.TrimSpace(strings.TrimPrefix(trimmed, field+":")), "\"")
 			stru := fmt.Sprintf(`%s: { "%s": "en-au", "%s": "%s" }`, field, f1, f2, v)
 			if appendComma {
 				stru += ","
@@ -122,7 +122,6 @@ func main() {
 
 			err = os.WriteFile(fPath, []byte(rt), os.ModePerm)
 			lk.FailOnErr("%v", err)
-
 		}
 	}
 }
