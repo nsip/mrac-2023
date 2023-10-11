@@ -31,25 +31,28 @@ func insertDescriptionIfHasTitle(js string) string {
 			}
 
 			if !found {
+				// fmt.Println(line)
 
 				nSpace := 0
-				for _, c := range line {
-					if c == ' ' {
-						// fmt.Println(i)
-						// break
-						nSpace++
+				for i, c := range line {
+					if c != ' ' {
+						fmt.Println(i)
+						nSpace = i
+						break
 					}
 				}
 
-				fmt.Println(nSpace)
-				// fmt.Println(len(line) - len(ln))
-				fmt.Println(ln)
-				fmt.Println(line)
+				descContent := strings.TrimSpace(strings.TrimPrefix(ln, `"dc:title":`)) // content contains double quotes
+				descLine := fmt.Sprintf(`%s"dc:description": %s`, strings.Repeat(" ", nSpace), descContent)
+				// fmt.Println(descLine)
+
+				insert := strings.Join([]string{line, descLine}, "\n")
+				return true, insert
 
 			} //
 
 		}
-		return true, ""
+		return true, line
 
 	}); err == nil {
 		return rt
@@ -61,7 +64,8 @@ func insertDescriptionIfHasTitle(js string) string {
 func main() {
 
 	const (
-		inputDir = "../release/asn-json-ld/"
+		// inputDir = "../release/asn-json-ld/"
+		inputDir = "../release/json-ld-ccp/"
 	)
 
 	de, err := os.ReadDir(inputDir)
@@ -80,14 +84,14 @@ func main() {
 			data, err := os.ReadFile(fPath)
 			lk.FailOnErr("%v", err)
 
-			insertDescriptionIfHasTitle(string(data))
+			fmt.Println("---", len(data))
 
-			fmt.Printf("processing... %s\n", fPath)
+			rt := insertDescriptionIfHasTitle(string(data))
 
-			break
+			fmt.Printf("processed... %s\n", fPath)
 
-			// err = os.WriteFile(fPath, []byte(rt), os.ModePerm)
-			// lk.FailOnErr("%v", err)
+			err = os.WriteFile(fPath, []byte(rt), os.ModePerm)
+			lk.FailOnErr("%v", err)			
 		}
 	}
 }
