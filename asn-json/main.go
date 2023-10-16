@@ -13,7 +13,6 @@ import (
 	jt "github.com/digisan/json-tool"
 	lk "github.com/digisan/logkit"
 	"github.com/nsip/mrac-2023/node2"
-	u "github.com/nsip/mrac-2023/util"
 )
 
 const (
@@ -172,7 +171,7 @@ func main() {
 
 			js = restoreEsc(js)
 
-			js, err = u.FmtJSON(js)
+			js, err = jt.FmtJS(js)
 			lk.FailOnErr("%v", err)
 
 			os.WriteFile(filepath.Join(`../data-out/asn-json`, file), []byte(js), os.ModePerm)

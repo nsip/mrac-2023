@@ -13,7 +13,6 @@ import (
 	jt "github.com/digisan/json-tool"
 	lk "github.com/digisan/logkit"
 	"github.com/nsip/mrac-2023/asn-json/tool"
-	u "github.com/nsip/mrac-2023/util"
 	"github.com/tidwall/gjson"
 )
 
@@ -175,7 +174,7 @@ func cvt2jsonld(asnPath string) {
 	jsonldPath := filepath.Join(outDir, filepath.Base(asnPath))
 
 	js = addContext(js, context)
-	js, err = u.FmtJSON(js)
+	js, err = jt.FmtJS(js)
 	lk.FailOnErr("%v", err)
 
 	os.WriteFile(jsonldPath, []byte(js), os.ModePerm)

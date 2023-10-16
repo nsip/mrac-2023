@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/digisan/gotk/strs"
-	u "github.com/nsip/mrac-2023/util"
+	jt "github.com/digisan/json-tool"
 )
 
 func main() {
@@ -17,7 +17,7 @@ func main() {
 	for _, f := range de {
 		fName := f.Name()
 		if strs.HasAnySuffix(fName, ".json", ".jsonld") {
-			if formatted, err := u.FmtJSONFile(fName); err == nil {
+			if formatted, err := jt.FmtFileJS(fName); err == nil {
 				if err := os.WriteFile(fName, []byte(formatted), os.ModePerm); err != nil {
 					fmt.Printf("%v", err)
 					return
@@ -28,7 +28,7 @@ func main() {
 			// 	fmt.Printf("%v", err)
 			// 	return
 			// }
-			// if formatted, err := u.FmtJSON(string(bytes)); err == nil {
+			// if formatted, err := jt.FmtJS(string(bytes)); err == nil {
 			// 	if err := os.WriteFile(fName, []byte(formatted), os.ModePerm); err != nil {
 			// 		fmt.Printf("%v", err)
 			// 		return

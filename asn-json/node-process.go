@@ -13,7 +13,6 @@ import (
 	jt "github.com/digisan/json-tool"
 	lk "github.com/digisan/logkit"
 	"github.com/nsip/mrac-2023/asn-json/tool"
-	u "github.com/nsip/mrac-2023/util"
 	"github.com/tidwall/gjson"
 )
 
@@ -310,7 +309,7 @@ func nodeProc(dataNM []byte, mCodeChildParent map[string]string, outDir, outName
 
 	out = "[" + strings.Join(parts, ",") + "]" // combine whole
 
-	out, err := u.FmtJSON(out)
+	out, err := jt.FmtJS(out)
 	lk.FailOnErr("%v", err)
 
 	out = jt.TrimFields(out, true, true, true, true) // remove empty object, string, array

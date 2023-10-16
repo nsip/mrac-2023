@@ -8,7 +8,6 @@ find . -type f -executable -exec sh -c "file -i '{}' | grep -q 'x-executable; ch
 # find ./ -type f \( -name "*.log" -o -name "*.temp" \) -exec rm {} \;
 find ./ \( -type f \( -name "*.log" -o -name "*.temp" \) -o -type d -name "fatal" \) -exec rm -rf {} +
 
-rm -f ./util/*.json
 rm -rf ./issues/package
 rm -rf ./asn-json-ld/out
 rm -rf ./asn-json/out
