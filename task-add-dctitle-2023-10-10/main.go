@@ -65,7 +65,7 @@ func main() {
 
 	const (
 		// inputDir = "../release/asn-json-ld/"
-		inputDir = "../release/json-ld-ccp/"
+		inputDir = "../release/asn-json-ld-ccp/"
 	)
 
 	de, err := os.ReadDir(inputDir)

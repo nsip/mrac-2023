@@ -16,10 +16,10 @@ import (
 )
 
 const (
-	// fileMeta = "../data/Sofia-API-Meta-Data-18072023.json"
-	// fileTree = "../data/Sofia-API-Tree-Data-18072023.json"
-	fileNode = "../data/Sofia-API-Node-Data-18072023.json" // only for get mCodeChildParent
-	fileNM   = "../data/node-meta.json"                    // here, it is updated fileNode
+	// fileMeta = "../data/Sofia-API-Meta-Data-06NOV2023.json"
+	// fileTree = "../data/Sofia-API-Tree-Data-06NOV2023.json"
+	fileNode = "../data/Sofia-API-Node-Data-06NOV2023.json" // only for get mCodeChildParent
+	fileNM   = "../data/node-meta.json"                     // here, it is updated fileNode
 )
 
 var mEscStr = map[string]string{

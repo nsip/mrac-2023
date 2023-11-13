@@ -41,7 +41,7 @@ var (
 		"connections.CD":     `"Content Descriptions":\s*\[[^\[\]]+\],?`,
 	}
 
-	mAsnCT = tool.GetAsnConceptTerm("../data/ACv9_ScOT_BC_20220422.txt", "../data/scot.jsonld")
+	mAsnCT = tool.GetAsnConceptTerm("../data/SCOT_20231110.txt", "../data/pp_project_schoolsonlinethesaurus.jsonld")
 
 	reMerged = func() (*regexp.Regexp, map[string]*regexp.Regexp) {
 		mRE4Each := map[string]*regexp.Regexp{}

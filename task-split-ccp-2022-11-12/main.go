@@ -15,7 +15,7 @@ func main() {
 
 	// asn json
 	{
-		outDir := "./json/MRAC/2023/07/GC/CCP/"
+		outDir := "./json/MRAC/2023/11/GC/CCP/"
 		fd.MustCreateDir(outDir)
 
 		dataCcp, err := os.ReadFile("../data-out/asn-json/ccp-Cross-curriculum Priorities.json")
@@ -65,7 +65,7 @@ func main() {
 
 	// asn-json-ld
 	{
-		outDir := "./json-ld/MRAC/2023/07/GC/CCP/"
+		outDir := "./json-ld/MRAC/2023/11/GC/CCP/"
 		fd.MustCreateDir(outDir)
 
 		dataCcp, err := os.ReadFile("../data-out/asn-json-ld/ccp-Cross-curriculum Priorities.json")
