@@ -3,6 +3,7 @@ module github.com/nsip/mrac-2023
 go 1.21
 
 require (
+	github.com/digisan/csv-tool v0.2.13
 	github.com/digisan/go-generics v0.4.1
 	github.com/digisan/gotk v0.4.9
 	github.com/digisan/json-tool v0.2.12
