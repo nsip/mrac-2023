@@ -1,17 +1,15 @@
 package tool
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
-	"os"
 	"strings"
-	"sync"
 
+	dt "github.com/digisan/gotk/data-type"
 	fd "github.com/digisan/gotk/file-dir"
+	"github.com/digisan/gotk/strs"
 	jt "github.com/digisan/json-tool"
 	lk "github.com/digisan/logkit"
-	"github.com/tidwall/gjson"
 )
 
 func getAcScotMap(acscotPath string) map[string][]string {
@@ -37,71 +35,182 @@ func getAcScotMap(acscotPath string) map[string][]string {
 	return m
 }
 
-// scotJsonLd: http://vocabulary.curriculum.edu.au/scot/export/scot.jsonld
-func scanScotJsonLd(scotJsonLdPath string) map[string][]string {
+//////////////////////////////////////////////////////////////////////////////////////
 
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+func scanSCOT(scotPath string) map[string][]string {
 
-	file, err := os.Open(scotJsonLdPath)
+	js, err := jt.FmtFileJS(scotPath)
 	lk.FailOnErr("%v", err)
 
-	cOut, cErr, err := jt.ScanObjectInArray(ctx, file, true)
-	lk.FailOnErr("%v", err)
+	// fmt.Println("js length:", len(js))
 
-	wg := &sync.WaitGroup{}
-	wg.Add(2)
+	// @ 2space indents
+	const hs_aboveOCB = "      "
+	const hs_belowCCB = hs_aboveOCB
+	const hs_prefLabel = "        " // pre-running scan to check 'strings.Contains(line, "#prefLabel\":")'
 
-	m := make(map[string][]string)
+	var mBlock = make(map[string]string)
 
-	go func(m map[string][]string) {
-		for out := range cOut {
+	// adjust below 4096 to search '}'
+	const JUNK = "JUNK"
+	strs.StrLineScanEx(js, 4, 4096, JUNK, func(line string, cache []string) (bool, string) {
 
-			// according to Nick guidance
-			// "http://www.w3.org/2004/02/skos/core#prefLabel" + "@language": "en", => "@value"
+		// if strings.Contains(line, "#prefLabel\":") {
+		// 	hs := strs.HeadSpace(line)
+		// 	fmt.Println(line, len(hs))
+		// 	if hs != hs_prefLabel {
+		// 		panic("FAILED")
+		// 	}
+		// 	// above := cache[:8]
+		// 	// below := cache[9:]
+		// 	// for i, bl := range below {
+		// 	// 	if bl != JUNK && strings.Contains(bl, "@language") && strings.Contains(bl, "en") {
+		// 	// 		fmt.Println(below[i+1])
+		// 	// 	}
+		// 	// }
+		// }
 
-			idVal := gjson.Get(out, "@id").String()
-			idVal = strings.Trim(idVal, " \t\r\n")
+		if strings.Contains(line, "@id") {
 
-			mObj := make(map[string]any)
-			lk.FailOnErr("%v", json.Unmarshal([]byte(out), &mObj))
+			above, below := cache[:4], cache[5:]
+			getStart, getEnd := false, false
+			pEnd := 0
 
-			for k, v := range mObj {
-				switch {
-				case k == "@id":
-					lk.FailOnErrWhen(idVal != v.(string), "%v", fmt.Errorf("error in fetching prefLabel"))
-
-				case strings.HasSuffix(k, "#prefLabel"):
-					for _, mPrefLabel := range v.([]any) {
-						mpl := mPrefLabel.(map[string]any)
-						if langVal, ok := mpl["@language"]; ok && langVal == "en" {
-							m[idVal] = append(m[idVal], mpl["@value"].(string)) // fetch @value under @language = "en"
+			al1 := above[len(above)-1]
+			if al1 != JUNK && al1 == hs_aboveOCB+"{" {
+				if strs.HeadSpace(line) == hs_prefLabel {
+					// fmt.Println(line)
+					getStart = true
+					for i, bl := range below {
+						if bl != JUNK && (bl == hs_belowCCB+"}" || bl == hs_belowCCB+"},") {
+							// fmt.Printf("%02d%s\n", i, bl)
+							getEnd = true
+							pEnd = i
+							break
+						}
+						if i == len(below)-1 {
+							panic("CANNOT FIND")
 						}
 					}
 				}
 			}
+
+			if getStart && getEnd {
+				blocks := append([]string{al1, line}, below[:pEnd+1]...)
+				block := strings.TrimSuffix(strings.Join(blocks, "\n"), ",")
+				lk.FailOnErrWhen(!dt.IsJSON([]byte(block)), "%v", fmt.Errorf("JSON ERROR"))
+				mBlock[line] = block
+			}
 		}
-		wg.Done()
-	}(m)
 
-	go func() {
-		for err := range cErr {
-			lk.FailOnErr("%v", err)
+		return true, ""
+	})
+
+	// fmt.Println("mBlock length:", len(mBlock))
+
+	rt := make(map[string][]string)
+	for id, block := range mBlock {
+
+		obj := make(map[string]any)
+		lk.FailOnErr("%v", json.Unmarshal([]byte(block), &obj))
+
+		for field, value := range obj {
+
+			if strings.HasSuffix(field, "#prefLabel") {
+
+				lsPrefLabelValue, ok := value.([]any)
+				lk.FailOnErrWhen(!ok, "%v", "#prefLabel value ERROR 1")
+
+				for _, m := range lsPrefLabelValue {
+
+					mpl, ok := m.(map[string]any)
+					lk.FailOnErrWhen(!ok, "%v", "#prefLabel value ERROR 2")
+
+					if langVal, ok := mpl["@language"]; ok && langVal == "en" {
+
+						id = strings.TrimSpace(id)
+						id = strings.TrimPrefix(id, `"@id":`)
+						id = strings.TrimSpace(id)
+						id = strings.TrimSuffix(id, ",")
+						id = strings.Trim(id, `"`)
+
+						rt[id] = append(rt[id], mpl["@value"].(string))
+					}
+				}
+			}
 		}
-		wg.Done()
-	}()
-
-	wg.Wait()
-
-	return m
+	}
+	return rt
 }
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+// scotJsonLd: http://vocabulary.curriculum.edu.au/scot/export/scot.jsonld
+// func scanScotJsonLd(scotJsonLdPath string) map[string][]string {
+
+// 	ctx, cancel := context.WithCancel(context.Background())
+// 	defer cancel()
+
+// 	file, err := os.Open(scotJsonLdPath)
+// 	lk.FailOnErr("%v", err)
+
+// 	cOut, cErr, err := jt.ScanObjectInArray(ctx, file, true)
+// 	lk.FailOnErr("%v", err)
+
+// 	wg := &sync.WaitGroup{}
+// 	wg.Add(2)
+
+// 	m := make(map[string][]string)
+// 	go func(m map[string][]string) {
+// 		for out := range cOut { // { "@id", "@graph" }
+
+// 			fmt.Println("test")
+
+// 			// according to Nick guidance
+// 			// "http://www.w3.org/2004/02/skos/core#prefLabel" + "@language": "en", => "@value"
+
+// 			idVal := gjson.Get(out, "@id").String()
+// 			idVal = strings.TrimSpace(idVal) // e.g. "http://vocabulary.curriculum.edu.au/scot/linkeddata/dbpedia/en"
+
+// 			mObj := make(map[string]any)
+// 			lk.FailOnErr("%v", json.Unmarshal([]byte(out), &mObj))
+
+// 			for k, v := range mObj {
+// 				switch {
+// 				case k == "@id":
+// 					lk.FailOnErrWhen(idVal != v.(string), "%v", fmt.Errorf("error in fetching prefLabel"))
+
+// 				case strings.HasSuffix(k, "#prefLabel"):
+// 					for _, mPrefLabel := range v.([]any) {
+// 						mpl := mPrefLabel.(map[string]any)
+// 						if langVal, ok := mpl["@language"]; ok && langVal == "en" {
+// 							m[idVal] = append(m[idVal], mpl["@value"].(string)) // fetch @value under @language = "en"
+// 						}
+// 					}
+// 				}
+// 			}
+// 		}
+// 		wg.Done()
+// 	}(m)
+
+// 	go func() {
+// 		for err := range cErr {
+// 			lk.FailOnErr("%v", err)
+// 		}
+// 		wg.Done()
+// 	}()
+
+// 	wg.Wait()
+
+// 	return m
+// }
 
 func GetAsnConceptTerm(acscotPath, scotJsonLdPath string) map[string]string {
 
 	m := make(map[string]string)
 
 	m1 := getAcScotMap(acscotPath)
-	m2 := scanScotJsonLd(scotJsonLdPath)
+	m2 := scanSCOT(scotJsonLdPath) // scanScotJsonLd(scotJsonLdPath)
 
 	for code, scotUris := range m1 {
 		// fmt.Println(code)

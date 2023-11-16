@@ -3,11 +3,11 @@ module github.com/nsip/mrac-2023
 go 1.21
 
 require (
-	github.com/digisan/csv-tool v0.2.13
-	github.com/digisan/go-generics v0.4.1
-	github.com/digisan/gotk v0.4.9
-	github.com/digisan/json-tool v0.2.12
-	github.com/digisan/logkit v0.2.13
+	github.com/digisan/csv-tool v0.2.14
+	github.com/digisan/go-generics v0.4.2
+	github.com/digisan/gotk v0.4.11
+	github.com/digisan/json-tool v0.2.13
+	github.com/digisan/logkit v0.2.14
 	github.com/tidwall/gjson v1.17.0
 	github.com/tidwall/sjson v1.2.5
 )
