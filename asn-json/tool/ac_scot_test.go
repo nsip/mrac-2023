@@ -8,7 +8,7 @@ import (
 func TestAcScot(t *testing.T) {
 	m := getAcScotMap("../../data/SCOT_20231110.txt")
 	fmt.Println(len(m))
-	fmt.Println(m["AC9ADA10C01"])
+	fmt.Println(m["AC9M1N06"])
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -33,6 +33,27 @@ func TestScanSCOT(t *testing.T) {
 // }
 
 func TestGetAsnConceptTerm(t *testing.T) {
+
 	m := GetAsnConceptTerm("../../data/SCOT_20231110.txt", "../../data/pp_project_schoolsonlinethesaurus.jsonld")
-	fmt.Println(m["AC9HC10K05"])
+	fmt.Println(len(m))
+	fmt.Println(m["AC9M1N06"])
+
+	//
+	// *** create id-preflabel.txt ***
+	//
+	// const out = "id-preflabel.txt"
+	// const sep = "\t"
+	// os.RemoveAll(out)
+	// for k, v := range m {
+	// 	// fmt.Println(k, v)
+	// 	fd.MustAppendFile(out, []byte(strings.Join([]string{k, v}, sep)), true)
+	// }
+}
+
+func TestLoadIdPrefLbl(t *testing.T) {
+	const in = "id-preflabel.txt"
+	m := LoadIdPrefLbl(in)
+	fmt.Println(len(m))
+	code := "AC9M1N06"
+	fmt.Printf("%s: %s\n", code, m[code])
 }

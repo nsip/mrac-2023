@@ -238,3 +238,16 @@ func GetAsnConceptTerm(acscotPath, scotJsonLdPath string) map[string]string {
 
 	return m
 }
+
+func LoadIdPrefLbl(fpath string) map[string]string {
+
+	lk.FailOnErrWhen(!fd.FileExists(fpath), "%v", fmt.Errorf("id-preflabel.txt (%s) [made from scot.txt & .jsonld] doesn't exist", fpath))
+
+	rt := make(map[string]string)
+	fd.FileLineScan(fpath, func(line string) (bool, string) {
+		kv := strings.SplitN(line, "\t", 2)
+		rt[kv[0]] = kv[1]
+		return true, ""
+	}, "")
+	return rt
+}

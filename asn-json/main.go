@@ -125,7 +125,6 @@ func main() {
 			if file != "la-Languages.json" {
 				// wg.Done()
 				// return
-
 				continue
 			}
 
@@ -177,9 +176,10 @@ func main() {
 			os.WriteFile(filepath.Join(`../data-out/asn-json`, file), []byte(js), os.ModePerm)
 
 			// wg.Done()
+
 			// }(file, la)
 
-		}
+		} // end of for
 
 		// wg.Wait()
 	}
