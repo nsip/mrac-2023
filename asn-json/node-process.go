@@ -90,7 +90,9 @@ type asnjson struct {
 		PrefLabel string `json:"prefLabel"` // Predicate
 	} `json:"asn_crossSubjectReference"`
 
-	Asn_conceptTerm string `json:"asn_conceptTerm"` // tag key
+	// Asn_conceptTerm string `json:"asn_conceptTerm"` // tag key
+
+	Asn_conceptKeyword string `json:"asn_conceptKeyword"` // tag key
 
 	///////////////
 
@@ -233,7 +235,8 @@ func nodeProc(dataNM []byte, mCodeChildParent map[string]string, outDir, outName
 			aj.Leaf = "true"
 		}
 		if gjson.Get(block, "tags").IsObject() {
-			aj.Asn_conceptTerm = "SCIENCE_TEACHER_BACKGROUND_INFORMATION"
+			// aj.Asn_conceptTerm = "SCIENCE_TEACHER_BACKGROUND_INFORMATION"
+			aj.Asn_conceptKeyword = "SCIENCE_TEACHER_BACKGROUND_INFORMATION"
 		}
 
 		// Predicate

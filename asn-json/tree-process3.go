@@ -234,7 +234,7 @@ func proc(
 		return true, sJoin(rets, ",")
 
 	case "tag":
-		return true, fSf(`"asn_conceptTerm": "%s"`, "SCIENCE_TEACHER_BACKGROUND_INFORMATION")
+		return true, fSf(`"asn_conceptKeyword": "%s"`, "SCIENCE_TEACHER_BACKGROUND_INFORMATION")
 
 	case "connections.Levels",
 		"connections.OI",
