@@ -1,6 +1,6 @@
 module github.com/nsip/mrac-2023
 
-go 1.21
+go 1.21.4
 
 require (
 	github.com/digisan/csv-tool v0.2.14

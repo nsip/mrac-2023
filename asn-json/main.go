@@ -122,7 +122,7 @@ func main() {
 			// go func(file, la string) {
 
 			// this one is too time consuming, ignore here
-			if file != "la-Languages.json" {
+			if file == "la-Languages.json" {
 				// wg.Done()
 				// return
 				continue

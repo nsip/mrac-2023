@@ -21,8 +21,8 @@ func main() {
 		todo = [6]bool{true, true, true, true, true, true}
 	)
 
-	inDir := "../task-split-ccp-2022-11-12/json-ld/MRAC/2023/11/GC/CCP"
-	outDir := "./out/json-ld-ccp"
+	inDir := "../task-split-ccp-2022-11-12/asn-json-ld-ccp"
+	outDir := "./asn-json-ld-ccp"
 	fd.MustCreateDir(outDir)
 
 	files, err := os.ReadDir(inDir)
