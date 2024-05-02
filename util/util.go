@@ -5,7 +5,7 @@ import (
 	"os"
 	"os/exec"
 
-	. "github.com/digisan/go-generics/v2"
+	. "github.com/digisan/go-generics"
 	fd "github.com/digisan/gotk/file-dir"
 	lk "github.com/digisan/logkit"
 )

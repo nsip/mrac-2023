@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	. "github.com/digisan/go-generics/v2"
+	. "github.com/digisan/go-generics"
 	dt "github.com/digisan/gotk/data-type"
 	fd "github.com/digisan/gotk/file-dir"
 	lk "github.com/digisan/logkit"
