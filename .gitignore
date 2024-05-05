@@ -43,3 +43,5 @@ release-bak
 
 issues
 asn-json-ld/out
+
+asn-json-v2/*.json

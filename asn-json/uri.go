@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	jt "github.com/digisan/json-tool"
+	lk "github.com/digisan/logkit"
 )
 
 var (
@@ -72,7 +73,10 @@ var (
 )
 
 func getProLevel(mData map[string]any, path string) string {
+	N := 0
 AGAIN:
+	lk.FailOnErrWhen(N > 500, "%v", fmt.Errorf("getProLevel DeadLoop?"))
+
 	sp := jt.NewSibling(path, "doc.typeName")
 	if mData[sp] == "Level" {
 		lvlstr := mData[jt.NewSibling(path, "title")].(string)
@@ -84,12 +88,16 @@ AGAIN:
 		if path == "" {
 			return ""
 		}
+		N++
 		goto AGAIN
 	}
 }
 
 func getYears(mData map[string]any, path string) []string {
+	N := 0
 AGAIN:
+	lk.FailOnErrWhen(N > 500, "%v", fmt.Errorf("getYears DeadLoop?"))
+
 	sp := jt.NewSibling(path, "doc.typeName")
 	if mData[sp] == "Level" {
 		return yearsSplit(mData[jt.NewSibling(path, "title")].(string))
@@ -98,6 +106,7 @@ AGAIN:
 		if path == "" {
 			return nil
 		}
+		N++
 		goto AGAIN
 	}
 }

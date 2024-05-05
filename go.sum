@@ -10,8 +10,8 @@ github.com/digisan/go-generics v0.5.4 h1:oCTD2gSHX0L+F1Mr9A9OnRhm3xV1XJf3V82TX0o
 github.com/digisan/go-generics v0.5.4/go.mod h1:ltRQuvN3M89PsKXLxU0hONlEN68uVO1FXLlCO3Qc6Hw=
 github.com/digisan/gotk v0.5.7 h1:RAHwumWGTakKH7H4AGYJX3bV8XgmrUTPMwfQv8EUFyQ=
 github.com/digisan/gotk v0.5.7/go.mod h1:3bFCY7tgfC/Wvco0FrAqlB+SFj/Q/fdgtTCo2yng6UU=
-github.com/digisan/json-tool v0.4.5 h1:4jCKMEXDXfGgt4PGLxyum5Ax0zmEQcykz9gsQoiX010=
-github.com/digisan/json-tool v0.4.5/go.mod h1:axbx/teL4+S2FbsU83Y1T9AL4tD36VPrd4AfRtdq5fM=
+github.com/digisan/json-tool v0.4.6 h1:74Mu/EQpi7/qk/w2thYAFhzr4yJYZorKRcc0mLIkN8k=
+github.com/digisan/json-tool v0.4.6/go.mod h1:b1yVmKlR4ncu0cuKinTblHww2Zy2wzi/wPFWdIX3VA8=
 github.com/digisan/logkit v0.3.7 h1:hWOkXmocbRyXwAEJWV3dptqc5WQ5yPO7kTT2Y0uuK7Q=
 github.com/digisan/logkit v0.3.7/go.mod h1:OiNKoCkkEkWv+MFqxARC5NCo4vtDFHTdgU65VbokYMA=
 github.com/gookit/color v1.5.4 h1:FZmqs7XOyGgCAxmWyPslpiok1k05wmY3SJTytgvYFs0=
@@ -38,8 +38,8 @@ golang.org/x/exp v0.0.0-20220909182711-5c715a9e8561 h1:MDc5xs78ZrZr3HMQugiXOAkSZ
 golang.org/x/exp v0.0.0-20220909182711-5c715a9e8561/go.mod h1:cyybsKvd6eL0RnXn6p/Grxp8F5bW7iYuBgsNCOHpMYE=
 golang.org/x/net v0.24.0 h1:1PcaxkF854Fu3+lvBIx5SYn9wRlBzzcnHZSiaFFAb0w=
 golang.org/x/net v0.24.0/go.mod h1:2Q7sJY5mzlzWjKtYUEXSlBWCdyaioyXzRB2RtU8KVE8=
-golang.org/x/sys v0.19.0 h1:q5f1RH2jigJ1MoAWp2KTp3gm5zAGFUTarQZ5U386+4o=
-golang.org/x/sys v0.19.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=
+golang.org/x/sys v0.20.0 h1:Od9JTbYCk261bKm4M/mw7AklTlFYIa0bIp9BgSm1S8Y=
+golang.org/x/sys v0.20.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=

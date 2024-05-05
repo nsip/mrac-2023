@@ -8,10 +8,10 @@
 2. /asn-json/tool/ac_scot_test.go [in TestGetAsnConceptTerm] (if there is
    existing id-preflabel.txt, can ignore this step)
 
-3. /tree/tree_test.go (then copy gc-_.json & ccp-_.json, from data-out/ into
-   data-out/restructure/ before next step)
+3. /tree/tree_test.go (then copy gc-_.json & ccp-_.json, from /data-out/ into
+   /data-out/restructure/ before next step)
 
-4. /asn-json
+4. /asn-json (rewriting... /asn-json-v2)
 
 5. /task-force-array-2023-06-21
 

@@ -159,10 +159,14 @@ func GenChildParentMap(dataNode []byte, mIdBlock map[string]string) (mIDChildPar
 
 func RetrieveAncestry(IdOrCode string, mIdOrCodeChildParent map[string]string) []string {
 	Ancestry := []string{IdOrCode}
+	N := 0
 AGAIN:
+	lk.FailOnErrWhen(N > 500, "%v", fmt.Errorf("RetrieveAncestry DeadLoop?"))
+
 	if pIdOrCode, ok := mIdOrCodeChildParent[IdOrCode]; ok {
 		Ancestry = append(Ancestry, pIdOrCode)
 		IdOrCode = pIdOrCode
+		N++
 		goto AGAIN
 	}
 	return Reverse(Ancestry)
