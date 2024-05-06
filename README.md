@@ -25,9 +25,9 @@
 
 10. /task-structure-improvement (indir only for ccp here)
 
-11. `mkdir release && cp -rf /data-out/asn-json /release`
-    `cp -rf /data-out/asn-json-ld /release`
-    `cp -rf /split-ccp/asn-json-ccp /release`
-    `cp -rf /structure-improvement/asn-json-ld-ccp /release`
+11. `mkdir ./release && cp -rf ./data-out/asn-json ./release`
+    `cp -rf ./data-out/asn-json-ld ./release`
+    `cp -rf ./split-ccp/asn-json-ccp ./release` *
+    `cp -rf ./structure-improvement/asn-json-ld-ccp ./release` *
 
 12. /task-add-dctitle-2023-10-10 (only for json-ld) (/release must exist)

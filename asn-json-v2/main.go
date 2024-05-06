@@ -28,13 +28,32 @@ var (
 	profLvl          = ""
 	eduLvl           = ""
 	mAsnCT           = LoadIdPrefLbl("../data/id-preflabel.txt")
-	fileNodeMeta     = "../data/node-meta.json" // here, it is updated fileNode
-	mNodeMeta        map[string]any
 	fileNode         = "../data/Sofia-API-Node-Data-22April2024.json" // only for get mCodeChildParent
 	mCodeChildParent map[string]string
+	fileNodeMeta     = "../data/node-meta.json" // here, it is updated fileNode
+	mNodeMeta        map[string]any
 )
 
 func main() {
+
+	dataNodeMeta, err := os.ReadFile(fileNodeMeta)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	// mUidTitle := scanNodeIdTitle(dataNodeMeta) // title should be node title
+	mNodeMeta, err = jt.Flatten(dataNodeMeta)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	dataFileNode, err := os.ReadFile(fileNode)
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+	mIdBlock := node2.GenNodeIdBlockMap(dataFileNode)
+	_, mCodeChildParent = node2.GenChildParentMap(dataFileNode, mIdBlock)
+
+	/////////////////////////////////////////////////////////////////////
 
 	mInputLa := map[string]string{
 		"la-Languages.json":                      "Languages",
@@ -57,99 +76,76 @@ func main() {
 
 	/////////////////////////////////////////////////////////////////////
 
-	fPath := "../data-out/restructure/la-Languages.json"
-	fOut := filepath.Join("./", filepath.Base(fPath))
+	for file, LA := range mInputLa {
 
-	La, ok := mInputLa[filepath.Base(fPath)]
-	if !ok {
-		log.Fatalln("missing la from mInputLa")
-	}
-	la = La
+		fPath := filepath.Join("../data-out/restructure/", file) // "../data-out/restructure/la-Languages.json"
+		fOut := filepath.Join("./", filepath.Base(fPath))
+		la = LA
 
-	/////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////
 
-	data, err := os.ReadFile(fPath)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	js = string(data)
+		data, err := os.ReadFile(fPath)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		js = string(data)
 
-	mData, err = jt.Flatten(data)
-	if err != nil {
-		log.Fatalln(err)
-	}
+		mData, err = jt.Flatten(data)
+		if err != nil {
+			log.Fatalln(err)
+		}
 
-	/////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////
 
-	progLvlABC := "" // indicate Level 1a, 1b or 1c
-	switch {
-	case strings.Contains(js, `"Level 1c"`):
-		progLvlABC = "1c"
-	case strings.Contains(js, `"Level 1b"`):
-		progLvlABC = "1b"
-	case strings.Contains(js, `"Level 1a"`):
-		progLvlABC = "1a"
-	}
+		progLvlABC := "" // indicate Level 1a, 1b or 1c
+		switch {
+		case strings.Contains(js, `"Level 1c"`):
+			progLvlABC = "1c"
+		case strings.Contains(js, `"Level 1b"`):
+			progLvlABC = "1b"
+		case strings.Contains(js, `"Level 1a"`):
+			progLvlABC = "1a"
+		}
 
-	switch progLvlABC {
-	case "1c":
-		mPLUri = MapMerge(mProglvlUri, mProglvlABCUri)
-	case "1b":
-		mPLUri = MapMerge(mProglvlUri, mProglvlABUri)
-	case "1a":
-		mPLUri = MapMerge(mProglvlUri, mProglvlAUri)
-	default:
-		mPLUri = MapMerge(mProglvlUri)
-	}
+		switch progLvlABC {
+		case "1c":
+			mPLUri = MapMerge(mProglvlUri, mProglvlABCUri)
+		case "1b":
+			mPLUri = MapMerge(mProglvlUri, mProglvlABUri)
+		case "1a":
+			mPLUri = MapMerge(mProglvlUri, mProglvlAUri)
+		default:
+			mPLUri = MapMerge(mProglvlUri)
+		}
 
-	/////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////
 
-	dataNodeMeta, err := os.ReadFile(fileNodeMeta)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	// mUidTitle := scanNodeIdTitle(dataNodeMeta) // title should be node title
-	mNodeMeta, err = jt.Flatten(dataNodeMeta)
-	if err != nil {
-		log.Fatalln(err)
-	}
+		defer track.TrackTime(time.Now())
 
-	//////////////
+		paths, err := jts.ScanJsonLine(fPath, fOut, jts.OptLineProc{})
+		if err != nil {
+			log.Fatalln(err)
+		}
+		fmt.Printf("processing... %s with %d paths\n", fPath, len(paths))
+		wholePaths = paths
 
-	dataFileNode, err := os.ReadFile(fileNode)
-	if err != nil {
-		log.Fatalf("%v", err)
-	}
-	mIdBlock := node2.GenNodeIdBlockMap(dataFileNode)
-	_, mCodeChildParent = node2.GenChildParentMap(dataFileNode, mIdBlock)
+		/////////////////////////////////////////////////////////////////////
 
-	/////////////////////////////////////////////////////////////////////
+		opt := jts.OptLineProc{
+			Fn_KV:          proc_kv,          // nil
+			Fn_KV_Str:      proc_kv_str,      // nil
+			Fn_KV_Obj_Open: proc_kv_obj_open, // nil
+			Fn_KV_Arr_Open: proc_kv_arr_open, // nil
+			Fn_Obj:         proc_obj,         // nil
+			Fn_Arr:         proc_arr,         // nil
+			Fn_Elem:        proc_elem,        // nil
+			Fn_Elem_Str:    proc_elem_str,    // nil
+		}
 
-	defer track.TrackTime(time.Now())
-
-	paths, err := jts.ScanJsonLine(fPath, fOut, jts.OptLineProc{})
-	if err != nil {
-		log.Fatalln(err)
-	}
-	fmt.Printf("processing... %s with %d paths\n", fPath, len(paths))
-	wholePaths = paths
-
-	/////////////////////////////////////////////////////////////////////
-
-	opt := jts.OptLineProc{
-		Fn_KV:          proc_kv,          // nil
-		Fn_KV_Str:      proc_kv_str,      // nil
-		Fn_KV_Obj_Open: proc_kv_obj_open, // nil
-		Fn_KV_Arr_Open: proc_kv_arr_open, // nil
-		Fn_Obj:         proc_obj,         // nil
-		Fn_Arr:         proc_arr,         // nil
-		Fn_Elem:        proc_elem,        // nil
-		Fn_Elem_Str:    proc_elem_str,    // nil
-	}
-
-	_, err = jts.ScanJsonLine(fPath, fOut, opt)
-	if err != nil {
-		log.Fatalln(err)
+		_, err = jts.ScanJsonLine(fPath, fOut, opt)
+		if err != nil {
+			log.Fatalln(err)
+		}
 	}
 }
 
