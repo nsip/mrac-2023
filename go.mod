@@ -6,7 +6,7 @@ require (
 	github.com/digisan/csv-tool v0.3.8
 	github.com/digisan/go-generics v0.5.4
 	github.com/digisan/gotk v0.5.7
-	github.com/digisan/json-tool v0.4.6
+	github.com/digisan/json-tool v0.4.8
 	github.com/digisan/logkit v0.3.7
 	github.com/tidwall/gjson v1.17.1
 	github.com/tidwall/sjson v1.2.5
