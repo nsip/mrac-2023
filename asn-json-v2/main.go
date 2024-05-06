@@ -9,22 +9,29 @@ import (
 	"time"
 
 	. "github.com/digisan/go-generics"
+	"github.com/digisan/gotk/strs"
 	"github.com/digisan/gotk/track"
 	jt "github.com/digisan/json-tool"
 	jts "github.com/digisan/json-tool/scan"
+	"github.com/nsip/mrac-2023/node2"
+	"github.com/tidwall/gjson"
 )
 
 var (
-	mIdUrl          = loadUrl("../data/id-url.txt")
-	js              = ""
-	wholePaths      = []string{}
-	la              = ""
-	mPLUri          = make(map[string][]string)
-	mData           = make(map[string]any)
-	prevDocTypePath = ""
-	profLvl         = ""
-	eduLvl          = ""
-	mAsnCT          = LoadIdPrefLbl("../data/id-preflabel.txt")
+	mIdUrl           = loadUrl("../data/id-url.txt")
+	js               = ""
+	wholePaths       = []string{}
+	la               = ""
+	mPLUri           = make(map[string][]string)
+	mData            = make(map[string]any)
+	prevDocTypePath  = ""
+	profLvl          = ""
+	eduLvl           = ""
+	mAsnCT           = LoadIdPrefLbl("../data/id-preflabel.txt")
+	fileNodeMeta     = "../data/node-meta.json" // here, it is updated fileNode
+	mNodeMeta        map[string]any
+	fileNode         = "../data/Sofia-API-Node-Data-22April2024.json" // only for get mCodeChildParent
+	mCodeChildParent map[string]string
 )
 
 func main() {
@@ -50,7 +57,7 @@ func main() {
 
 	/////////////////////////////////////////////////////////////////////
 
-	fPath := "../data-out/restructure/la-English.json"
+	fPath := "../data-out/restructure/la-Languages.json"
 	fOut := filepath.Join("./", filepath.Base(fPath))
 
 	La, ok := mInputLa[filepath.Base(fPath)]
@@ -97,6 +104,27 @@ func main() {
 
 	/////////////////////////////////////////////////////////////////////
 
+	dataNodeMeta, err := os.ReadFile(fileNodeMeta)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	// mUidTitle := scanNodeIdTitle(dataNodeMeta) // title should be node title
+	mNodeMeta, err = jt.Flatten(dataNodeMeta)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	//////////////
+
+	dataFileNode, err := os.ReadFile(fileNode)
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+	mIdBlock := node2.GenNodeIdBlockMap(dataFileNode)
+	_, mCodeChildParent = node2.GenChildParentMap(dataFileNode, mIdBlock)
+
+	/////////////////////////////////////////////////////////////////////
+
 	defer track.TrackTime(time.Now())
 
 	paths, err := jts.ScanJsonLine(fPath, fOut, jts.OptLineProc{})
@@ -109,14 +137,14 @@ func main() {
 	/////////////////////////////////////////////////////////////////////
 
 	opt := jts.OptLineProc{
-		Fn_KV:          nil,              // proc_kv
+		Fn_KV:          proc_kv,          // nil
 		Fn_KV_Str:      proc_kv_str,      // nil
 		Fn_KV_Obj_Open: proc_kv_obj_open, // nil
-		Fn_KV_Arr_Open: nil,              // proc_kv_arr_open
+		Fn_KV_Arr_Open: proc_kv_arr_open, // nil
 		Fn_Obj:         proc_obj,         // nil
-		Fn_Arr:         nil,              // proc_arr
-		Fn_Elem:        nil,              // proc_elem
-		Fn_Elem_Str:    nil,              // proc_elem_str
+		Fn_Arr:         proc_arr,         // nil
+		Fn_Elem:        proc_elem,        // nil
+		Fn_Elem_Str:    proc_elem_str,    // nil
 	}
 
 	_, err = jts.ScanJsonLine(fPath, fOut, opt)
@@ -128,6 +156,12 @@ func main() {
 /////////////////////////////////////////////////////////////////////
 
 func proc_kv(I int, path, k string, v any) (bool, string) {
+
+	// remove 'tags' object's lines
+	if strings.Contains(path, ".tags.") {
+		return false, ""
+	}
+
 	return true, fmt.Sprintf(`"%v": %v`, k, v)
 }
 
@@ -261,21 +295,33 @@ func proc_kv_str(I int, path, k, v string) (bool, string) {
 		return true, strings.Join(rets, ",")
 	}
 
-	if k == "tag" {
-		return true, fmt.Sprintf(`"asn_conceptKeyword": "%s"`, "SCIENCE_TEACHER_BACKGROUND_INFORMATION")
+	// remove 'tags' object's lines
+	if strings.Contains(path, ".tags.") {
+		return false, ""
 	}
-
-	// if In(k, "Levels", "OI", "ASC", "IG", "CD") {
-	// }
 
 	return true, fmt.Sprintf(`"%v": "%v"`, k, v)
 }
 
 func proc_kv_obj_open(I int, path, k, v string) (bool, string) {
 
+	// remove 'tags' object's lines
+	if strings.Contains(path, ".tags.") {
+		return false, ""
+	}
+
 	// unwrap 'doc' object
 	if k == "doc" {
-		fmt.Println("--->", path, k, v)
+		return false, ""
+	}
+
+	// replace whole 'tags' object to below
+	if k == "tags" {
+		return true, fmt.Sprintf(`"asn_conceptKeyword": "%s"`, "SCIENCE_TEACHER_BACKGROUND_INFORMATION")
+	}
+
+	// unwrap 'connections' object
+	if k == "connections" {
 		return false, ""
 	}
 
@@ -283,6 +329,58 @@ func proc_kv_obj_open(I int, path, k, v string) (bool, string) {
 }
 
 func proc_kv_arr_open(I int, path, k, v string) (bool, string) {
+
+	// remove 'tags' object's lines
+	if strings.Contains(path, ".tags.") {
+		return false, ""
+	}
+
+	// remove 'connections' each tag line
+	if strings.Contains(path, ".connections.") {
+		if In(k,
+			"Levels",
+			"Organising Ideas",
+			"Achievement Standard Components",
+			"Indicator Groups",
+			"Content Descriptions") {
+
+			if r := gjson.Get(js, path); r.IsArray() {
+				for i, rElem := range r.Array() {
+					if i == 0 {
+						v := rElem.Str
+						id := v[strings.LastIndex(v, "/")+1:]
+						code := jt.GetStrVal(mNodeMeta[id+"."+"code"])
+						nodeType := GetCodeType(code, mCodeChildParent)
+						if len(nodeType) == 0 {
+							switch {
+							case strings.HasPrefix(code, "AS"):
+								nodeType = "AS"
+							case strings.HasPrefix(code, "LA"):
+								nodeType = "LA"
+							}
+						}
+						switch nodeType {
+						case "GC":
+							return true, `"asn_skillEmbodied": [`
+						case "LA":
+							return true, `"dc_relation": [`
+						case "AS":
+							return true, `"asn_hasLevel": [`
+						case "CCP":
+							return true, `"asn_crossSubjectReference": [`
+						default:
+							log.Fatalf("nodeType '%v' is none of [GC CCP LA AS], code is '%v'", nodeType, code)
+						}
+					}
+				}
+			} else {
+				log.Fatalln("connections.xxx value should be array")
+			}
+
+			return false, ""
+		}
+	}
+
 	return true, fmt.Sprintf(`"%v": %v`, k, v)
 }
 
@@ -290,7 +388,19 @@ func proc_obj(I int, path, v string) (bool, string) {
 
 	// remove doc '}' and add comma if necessary
 	if strings.HasSuffix(path, ".doc}") {
-		fmt.Println("===>", path, v)
+		return true, " " // non-empty space, means let outer makes comma if needed
+	}
+
+	// remove 'tags' object's lines
+	if strings.Contains(path, ".tags.") {
+		return false, ""
+	}
+	if strings.HasSuffix(path, ".tags}") {
+		return true, " " // non-empty space, means let outer makes comma if needed
+	}
+
+	// remove connections '}' and add comma if necessary
+	if strings.HasSuffix(path, ".connections}") {
 		return true, " " // non-empty space, means let outer makes comma if needed
 	}
 
@@ -298,13 +408,62 @@ func proc_obj(I int, path, v string) (bool, string) {
 }
 
 func proc_arr(I int, path, v string) (bool, string) {
+
+	// remove 'tags' object's lines
+	if strings.Contains(path, ".tags.") {
+		return false, ""
+	}
+
+	// keep 'connections.xxx' end ']'
+
 	return true, v
 }
 
 func proc_elem(I int, path string, v any) (bool, string) {
+
+	// remove 'tags' object's lines
+	if strings.Contains(path, ".tags.") {
+		return false, ""
+	}
+
 	return true, v.(string)
 }
 
 func proc_elem_str(I int, path, v string) (bool, string) {
+
+	// remove 'tags' object's lines
+	if strings.Contains(path, ".tags.") {
+		return false, ""
+	}
+
+	// process 'connections.xxx' each element
+	if strs.ContainsAny(path,
+		"connections.Levels.",
+		"connections.Organising Ideas.",
+		"connections.Achievement Standard Components.",
+		"connections.Indicator Groups.",
+		"connections.Content Descriptions.") {
+
+		id := v[strings.LastIndex(v, "/")+1:]
+		code := jt.GetStrVal(mNodeMeta[id+"."+"code"])
+		title := jt.GetStrVal(mNodeMeta[id+"."+"title"])
+		nodeType := GetCodeType(code, mCodeChildParent)
+		if len(nodeType) == 0 {
+			switch {
+			case strings.HasPrefix(code, "AS"):
+				nodeType = "AS"
+			case strings.HasPrefix(code, "LA"):
+				nodeType = "LA"
+			}
+		}
+
+		switch nodeType {
+		case "GC", "CCP":
+			return true, fmt.Sprintf(`{ "uri": "%s", "prefLabel": "%s" }`, v, code)
+		default:
+			return true, fmt.Sprintf(`{ "uri": "%s", "prefLabel": "%s" }`, v, title)
+		}
+	}
+
 	return true, fmt.Sprintf(`"%v"`, v)
 }
