@@ -122,7 +122,7 @@ func main() {
 
 		defer track.TrackTime(time.Now())
 
-		paths, err := jts.ScanJsonLine(fPath, fOut, jts.OptLineProc{})
+		paths, _, err := jts.ScanJsonLine(fPath, fOut, jts.OptLineProc{})
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -142,7 +142,7 @@ func main() {
 			Fn_Elem_Str:    proc_elem_str,    // nil
 		}
 
-		_, err = jts.ScanJsonLine(fPath, fOut, opt)
+		_, _, err = jts.ScanJsonLine(fPath, fOut, opt)
 		if err != nil {
 			log.Fatalln(err)
 		}
