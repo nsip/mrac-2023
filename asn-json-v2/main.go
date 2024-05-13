@@ -122,7 +122,7 @@ func main() {
 
 		defer track.TrackTime(time.Now())
 
-		paths, _, err := jts.ScanJsonLine(fPath, fOut, jts.OptLineProc{})
+		_, paths, _, err := jts.AnalyzeJson(fPath)
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -142,8 +142,7 @@ func main() {
 			Fn_Elem_Str:    proc_elem_str,    // nil
 		}
 
-		_, _, err = jts.ScanJsonLine(fPath, fOut, opt)
-		if err != nil {
+		if err := jts.ScanJsonLine(fPath, fOut, opt); err != nil {
 			log.Fatalln(err)
 		}
 	}
@@ -151,28 +150,32 @@ func main() {
 
 /////////////////////////////////////////////////////////////////////
 
-func proc_kv(I int, path, k string, v any) (bool, string) {
+func proc_kv(I int, k string, v any, lines []string, paths []string) (bool, string, bool) {
+
+	path := paths[I]
 
 	// remove 'tags' object's lines
 	if strings.Contains(path, ".tags.") {
-		return false, ""
+		return false, "", true
 	}
 
-	return true, fmt.Sprintf(`"%v": %v`, k, v)
+	return true, fmt.Sprintf(`"%v": %v`, k, v), false
 }
 
-func proc_kv_str(I int, path, k, v string) (bool, string) {
+func proc_kv_str(I int, k string, v string, lines []string, paths []string) (bool, string, bool) {
+
+	path := paths[I]
 
 	if k == "uuid" {
-		return true, fmt.Sprintf(`"id": "%s%s"`, mIdUrl[v], v) // mIdUrl[value] already append with '/'
+		return true, fmt.Sprintf(`"id": "%s%s"`, mIdUrl[v], v), false // mIdUrl[value] already append with '/'
 	}
 
 	if k == "type" {
-		return false, ""
+		return false, "", true
 	}
 
 	if k == "created_at" {
-		return true, fmt.Sprintf(`"dcterms_modified": { "literal": "%v" }`, v)
+		return true, fmt.Sprintf(`"dcterms_modified": { "literal": "%v" }`, v), false
 	}
 
 	if k == "title" {
@@ -180,19 +183,19 @@ func proc_kv_str(I int, path, k, v string) (bool, string) {
 		// with 'text' sibling
 		sibling := jt.NewSibling(path, "text")
 		if In(sibling, wholePaths...) {
-			return true, fmt.Sprintf(`"dcterms_title": { "language": "en-au", "literal": "%s" }`, v)
+			return true, fmt.Sprintf(`"dcterms_title": { "language": "en-au", "literal": "%s" }`, v), false
 		}
 
 		// without 'text' sibling
-		return true, fmt.Sprintf(`"dcterms_title": { "language": "en-au", "literal": "%s" }, "text": "%s"`, v, v)
+		return true, fmt.Sprintf(`"dcterms_title": { "language": "en-au", "literal": "%s" }, "text": "%s"`, v, v), false
 	}
 
 	if k == "text" {
-		return true, fmt.Sprintf(`"dcterms_description": { "language": "en-au", "literal": "%s" }, "text": "%s"`, v, v)
+		return true, fmt.Sprintf(`"dcterms_description": { "language": "en-au", "literal": "%s" }, "text": "%s"`, v, v), false
 	}
 
 	if k == "position" {
-		return true, fmt.Sprintf(`"asn_listID": "%v"`, v)
+		return true, fmt.Sprintf(`"asn_listID": "%v"`, v), false
 	}
 
 	if k == "typeName" {
@@ -237,7 +240,7 @@ func proc_kv_str(I int, path, k, v string) (bool, string) {
 			eduLvl = ""
 		}
 
-		return true, kvStrJoin(staLbl, profLvl, eduLvl)
+		return true, kvStrJoin(staLbl, profLvl, eduLvl), false
 	}
 
 	if k == "code" {
@@ -288,47 +291,51 @@ func proc_kv_str(I int, path, k, v string) (bool, string) {
 				rets = append(rets, r)
 			}
 		}
-		return true, strings.Join(rets, ",")
+		return true, strings.Join(rets, ","), false
 	}
 
 	// remove 'tags' object's lines
 	if strings.Contains(path, ".tags.") {
-		return false, ""
+		return false, "", true
 	}
 
-	return true, fmt.Sprintf(`"%v": "%v"`, k, v)
+	return true, fmt.Sprintf(`"%v": "%v"`, k, v), false
 }
 
-func proc_kv_obj_open(I int, path, k, v string) (bool, string) {
+func proc_kv_obj_open(I int, k string, v string, lines []string, paths []string) (bool, string, bool) {
+
+	path := paths[I]
 
 	// remove 'tags' object's lines
 	if strings.Contains(path, ".tags.") {
-		return false, ""
+		return false, "", true
 	}
 
 	// unwrap 'doc' object
 	if k == "doc" {
-		return false, ""
+		return false, "", true
 	}
 
 	// replace whole 'tags' object to below
 	if k == "tags" {
-		return true, fmt.Sprintf(`"asn_conceptKeyword": "%s"`, "SCIENCE_TEACHER_BACKGROUND_INFORMATION")
+		return true, fmt.Sprintf(`"asn_conceptKeyword": "%s"`, "SCIENCE_TEACHER_BACKGROUND_INFORMATION"), false
 	}
 
 	// unwrap 'connections' object
 	if k == "connections" {
-		return false, ""
+		return false, "", true
 	}
 
-	return true, fmt.Sprintf(`"%v": %v`, k, v)
+	return true, fmt.Sprintf(`"%v": %v`, k, v), false
 }
 
-func proc_kv_arr_open(I int, path, k, v string) (bool, string) {
+func proc_kv_arr_open(I int, k string, v string, lines []string, paths []string) (bool, string, bool) {
+
+	path := paths[I]
 
 	// remove 'tags' object's lines
 	if strings.Contains(path, ".tags.") {
-		return false, ""
+		return false, "", true
 	}
 
 	// remove 'connections' each tag line
@@ -357,13 +364,13 @@ func proc_kv_arr_open(I int, path, k, v string) (bool, string) {
 						}
 						switch nodeType {
 						case "GC":
-							return true, `"asn_skillEmbodied": [`
+							return true, `"asn_skillEmbodied": [`, false
 						case "LA":
-							return true, `"dc_relation": [`
+							return true, `"dc_relation": [`, false
 						case "AS":
-							return true, `"asn_hasLevel": [`
+							return true, `"asn_hasLevel": [`, false
 						case "CCP":
-							return true, `"asn_crossSubjectReference": [`
+							return true, `"asn_crossSubjectReference": [`, false
 						default:
 							log.Fatalf("nodeType '%v' is none of [GC CCP LA AS], code is '%v'", nodeType, code)
 						}
@@ -373,63 +380,71 @@ func proc_kv_arr_open(I int, path, k, v string) (bool, string) {
 				log.Fatalln("connections.xxx value should be array")
 			}
 
-			return false, ""
+			return false, "", true
 		}
 	}
 
-	return true, fmt.Sprintf(`"%v": %v`, k, v)
+	return true, fmt.Sprintf(`"%v": %v`, k, v), false
 }
 
-func proc_obj(I int, path, v string) (bool, string) {
+func proc_obj(I int, v string, lines []string, paths []string) (bool, string, bool) {
+
+	path := paths[I]
 
 	// remove doc '}' and add comma if necessary
 	if strings.HasSuffix(path, ".doc}") {
-		return true, " " // non-empty space, means let outer makes comma if needed
+		return true, " ", false // non-empty space, means let outer makes comma if needed
 	}
 
 	// remove 'tags' object's lines
 	if strings.Contains(path, ".tags.") {
-		return false, ""
+		return false, "", true
 	}
 	if strings.HasSuffix(path, ".tags}") {
-		return true, " " // non-empty space, means let outer makes comma if needed
+		return true, " ", false // non-empty space, means let outer makes comma if needed
 	}
 
 	// remove connections '}' and add comma if necessary
 	if strings.HasSuffix(path, ".connections}") {
-		return true, " " // non-empty space, means let outer makes comma if needed
+		return true, " ", false // non-empty space, means let outer makes comma if needed
 	}
 
-	return true, v
+	return true, v, false
 }
 
-func proc_arr(I int, path, v string) (bool, string) {
+func proc_arr(I int, v string, lines []string, paths []string) (bool, string, bool) {
+
+	path := paths[I]
 
 	// remove 'tags' object's lines
 	if strings.Contains(path, ".tags.") {
-		return false, ""
+		return false, "", true
 	}
 
 	// keep 'connections.xxx' end ']'
 
-	return true, v
+	return true, v, false
 }
 
-func proc_elem(I int, path string, v any) (bool, string) {
+func proc_elem(I int, v any, lines []string, paths []string) (bool, string, bool) {
+
+	path := paths[I]
 
 	// remove 'tags' object's lines
 	if strings.Contains(path, ".tags.") {
-		return false, ""
+		return false, "", true
 	}
 
-	return true, v.(string)
+	return true, v.(string), false
 }
 
-func proc_elem_str(I int, path, v string) (bool, string) {
+func proc_elem_str(I int, v string, lines []string, paths []string) (bool, string, bool) {
+
+	path := paths[I]
 
 	// remove 'tags' object's lines
 	if strings.Contains(path, ".tags.") {
-		return false, ""
+		return false, "", true
 	}
 
 	// process 'connections.xxx' each element
@@ -455,11 +470,11 @@ func proc_elem_str(I int, path, v string) (bool, string) {
 
 		switch nodeType {
 		case "GC", "CCP":
-			return true, fmt.Sprintf(`{ "uri": "%s", "prefLabel": "%s" }`, v, code)
+			return true, fmt.Sprintf(`{ "uri": "%s", "prefLabel": "%s" }`, v, code), false
 		default:
-			return true, fmt.Sprintf(`{ "uri": "%s", "prefLabel": "%s" }`, v, title)
+			return true, fmt.Sprintf(`{ "uri": "%s", "prefLabel": "%s" }`, v, title), false
 		}
 	}
 
-	return true, fmt.Sprintf(`"%v"`, v)
+	return true, fmt.Sprintf(`"%v"`, v), false
 }
