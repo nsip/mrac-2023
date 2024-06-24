@@ -1,7 +1,7 @@
 package tool
 
 import (
-	. "github.com/digisan/go-generics/v2"
+	. "github.com/digisan/go-generics"
 	"github.com/nsip/mrac-2023/node2"
 )
 

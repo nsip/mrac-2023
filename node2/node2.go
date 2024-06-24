@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	. "github.com/digisan/go-generics/v2"
+	. "github.com/digisan/go-generics"
 	dt "github.com/digisan/gotk/data-type"
 	fd "github.com/digisan/gotk/file-dir"
 	lk "github.com/digisan/logkit"
@@ -159,10 +159,14 @@ func GenChildParentMap(dataNode []byte, mIdBlock map[string]string) (mIDChildPar
 
 func RetrieveAncestry(IdOrCode string, mIdOrCodeChildParent map[string]string) []string {
 	Ancestry := []string{IdOrCode}
+	N := 0
 AGAIN:
+	lk.FailOnErrWhen(N > 500, "%v", fmt.Errorf("RetrieveAncestry DeadLoop?"))
+
 	if pIdOrCode, ok := mIdOrCodeChildParent[IdOrCode]; ok {
 		Ancestry = append(Ancestry, pIdOrCode)
 		IdOrCode = pIdOrCode
+		N++
 		goto AGAIN
 	}
 	return Reverse(Ancestry)

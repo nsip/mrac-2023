@@ -1,0 +1,1658 @@
+{
+  "type": "Schema",
+  "key": "metadata",
+  "name": "Metadata",
+  "plural": "Metadata",
+  "fields": [
+    {
+      "type": "Field",
+      "key": "d3c618c8b8cdd42ccb448fc555ac9d60bd24c068",
+      "name": "Levels",
+      "plural": "Levels"
+    },
+    {
+      "type": "Field",
+      "key": "d478de0898b56e04aca8cd8615a96aa28f0d1b69",
+      "name": "General Capabilities",
+      "plural": "General Capabilities"
+    },
+    {
+      "type": "Field",
+      "key": "b674f9c4c6935e08a8718fb3476d049cc3e65f37",
+      "name": "Indicator Groups",
+      "plural": "Indicator Groups"
+    },
+    {
+      "type": "Field",
+      "key": "43815cf42f6c422022750881de5c3d6c1ac03350",
+      "name": "Content Descriptions",
+      "plural": "Content Descriptions"
+    },
+    {
+      "type": "Field",
+      "key": "5f697c939578d4ec7d730dcea15f2267897d3ed5",
+      "name": "Achievement Standard Components",
+      "plural": "Achievement Standard Components"
+    },
+    {
+      "type": "Field",
+      "key": "4f23493b0194901d0524ea8088ca98c1daf84891",
+      "name": "Organising Ideas",
+      "plural": "Organising Ideas"
+    },
+    {
+      "type": "Field",
+      "key": "47da1cbc75bc8257db7392f30949c58bb14eb63e",
+      "name": "Levels",
+      "plural": "Levels"
+    },
+    {
+      "type": "Field",
+      "key": "70cb537d2cbf560149b0d31439cca78572ec2eef",
+      "name": "Indicator Groups",
+      "plural": "Indicator Groups"
+    },
+    {
+      "type": "Field",
+      "key": "e9996564217874389130a4e8d9585e81c6c59a2f",
+      "name": "Organising Ideas",
+      "plural": "Organising Ideas"
+    },
+    {
+      "type": "Field",
+      "key": "TEACHER_BACKGROUND_INFORMATION",
+      "name": "Teacher Background Information",
+      "plural": "Teacher Background Information",
+      "options": [
+        {
+          "key": "SCIENCE_TEACHER_BACKGROUND_INFORMATION",
+          "name": "Science Teacher Background Information "
+        }
+      ]
+    },
+    {
+      "type": "Field",
+      "key": "CURRICULUM_CONNECTIONS",
+      "name": "Curriculum connections",
+      "plural": "Curriculum connections",
+      "options": [
+        {
+          "key": "AC9OSSRR_Y6",
+          "name": "AC9OSSRR_Y6"
+        },
+        {
+          "key": "AC9FWICS_Y2",
+          "name": "AC9FWICS_Y2"
+        },
+        {
+          "key": "AC9MHCAB_Y5",
+          "name": "AC9MHCAB_Y5"
+        },
+        {
+          "key": "AC9OSDCD_Y5",
+          "name": "AC9OSDCD_Y5"
+        },
+        {
+          "key": "AC9CFRRR_Y9",
+          "name": "AC9CFRRR_Y9"
+        },
+        {
+          "key": "AC9FFPEO_Y1",
+          "name": "AC9FFPEO_Y1"
+        },
+        {
+          "key": "AC9FFPEO_Y10",
+          "name": "AC9FFPEO_Y10"
+        },
+        {
+          "key": "AC9FWTAC_Y6",
+          "name": "AC9FWTAC_Y6"
+        },
+        {
+          "key": "AC9CFPER_Y7",
+          "name": "AC9CFPER_Y7"
+        },
+        {
+          "key": "AC9FWIFC_Y5",
+          "name": "AC9FWIFC_Y5"
+        },
+        {
+          "key": "AC9CFECO_Y5",
+          "name": "AC9CFECO_Y5"
+        },
+        {
+          "key": "AC9RMRHG_Y1",
+          "name": "AC9RMRHG_Y1"
+        },
+        {
+          "key": "AC9FFVAR_Y2",
+          "name": "AC9FFVAR_Y2"
+        },
+        {
+          "key": "AC9OLCON_Y7",
+          "name": "AC9OLCON_Y7"
+        },
+        {
+          "key": "AC9FWNFS_Y2",
+          "name": "AC9FWNFS_Y2"
+        },
+        {
+          "key": "AC9CFECO_Y2",
+          "name": "AC9CFECO_Y2"
+        },
+        {
+          "key": "AC9OLCON_Y2",
+          "name": "AC9OLCON_Y2"
+        },
+        {
+          "key": "AC9MHACS_Y8",
+          "name": "AC9MHACS_Y8"
+        },
+        {
+          "key": "AC9OLCON_Y1",
+          "name": "AC9OLCON_Y1"
+        },
+        {
+          "key": "AC9MHDPS_Y7",
+          "name": "AC9MHDPS_Y7"
+        },
+        {
+          "key": "AC9RMRPR_Y3",
+          "name": "AC9RMRPR_Y3"
+        },
+        {
+          "key": "AC9OLSAK_Y1",
+          "name": "AC9OLSAK_Y1"
+        },
+        {
+          "key": "AC9AITOA_Y2",
+          "name": "AC9AITOA_Y2"
+        },
+        {
+          "key": "AC9FFMEC_Y8",
+          "name": "AC9FFMEC_Y8"
+        },
+        {
+          "key": "AC9FFSUL_Y2",
+          "name": "AC9FFSUL_Y2"
+        },
+        {
+          "key": "AC9MHDPS_Y3",
+          "name": "AC9MHDPS_Y3"
+        },
+        {
+          "key": "AC9OSRRC_Y2",
+          "name": "AC9OSRRC_Y2"
+        },
+        {
+          "key": "AC9MHHEB_Y8",
+          "name": "AC9MHHEB_Y8"
+        },
+        {
+          "key": "AC9RMRHG_Y6",
+          "name": "AC9RMRHG_Y6"
+        },
+        {
+          "key": "AC9FWICS_Y4",
+          "name": "AC9FWICS_Y4"
+        },
+        {
+          "key": "AC9FWIFC_Y4",
+          "name": "AC9FWIFC_Y4"
+        },
+        {
+          "key": "AC9FWICS_Y9",
+          "name": "AC9FWICS_Y9"
+        },
+        {
+          "key": "AC9RMTAT_Y4",
+          "name": "AC9RMTAT_Y4"
+        },
+        {
+          "key": "AC9CFENT_Y4",
+          "name": "AC9CFENT_Y4"
+        },
+        {
+          "key": "AC9FWIFC_Y1",
+          "name": "AC9FWIFC_Y1"
+        },
+        {
+          "key": "AC9AIRUA_Y8",
+          "name": "AC9AIRUA_Y8"
+        },
+        {
+          "key": "AC9MHACS_Y1",
+          "name": "AC9MHACS_Y1"
+        },
+        {
+          "key": "AC9FFVAR_Y8",
+          "name": "AC9FFVAR_Y8"
+        },
+        {
+          "key": "AC9OSRRC_Y10",
+          "name": "AC9OSRRC_Y10"
+        },
+        {
+          "key": "AC9FFPEO_Y3",
+          "name": "AC9FFPEO_Y3"
+        },
+        {
+          "key": "AC9OLHAW_Y9",
+          "name": "AC9OLHAW_Y9"
+        },
+        {
+          "key": "AC9FFSUL_Y8",
+          "name": "AC9FFSUL_Y8"
+        },
+        {
+          "key": "AC9OSWRR_Y2",
+          "name": "AC9OSWRR_Y2"
+        },
+        {
+          "key": "AC9CFRRR_Y5",
+          "name": "AC9CFRRR_Y5"
+        },
+        {
+          "key": "AC9FWIFC_Y8",
+          "name": "AC9FWIFC_Y8"
+        },
+        {
+          "key": "AC9OSSRR_Y7",
+          "name": "AC9OSSRR_Y7"
+        },
+        {
+          "key": "AC9AITOA_Y6",
+          "name": "AC9AITOA_Y6"
+        },
+        {
+          "key": "AC9RMRPR_Y9",
+          "name": "AC9RMRPR_Y9"
+        },
+        {
+          "key": "AC9FWNFS_Y4",
+          "name": "AC9FWNFS_Y4"
+        },
+        {
+          "key": "AC9FWICS_Y10",
+          "name": "AC9FWICS_Y10"
+        },
+        {
+          "key": "AC9FFVAR_Y1",
+          "name": "AC9FFVAR_Y1"
+        },
+        {
+          "key": "AC9MHHEB_Y2",
+          "name": "AC9MHHEB_Y2"
+        },
+        {
+          "key": "AC9RMTAT_Y1",
+          "name": "AC9RMTAT_Y1"
+        },
+        {
+          "key": "AC9OLCAS_Y6",
+          "name": "AC9OLCAS_Y6"
+        },
+        {
+          "key": "AC9RMTAT_Y3",
+          "name": "AC9RMTAT_Y3"
+        },
+        {
+          "key": "AC9FWIFC_Y3",
+          "name": "AC9FWIFC_Y3"
+        },
+        {
+          "key": "AC9AIRUA_Y2",
+          "name": "AC9AIRUA_Y2"
+        },
+        {
+          "key": "AC9MHDPS_FY",
+          "name": "AC9MHDPS_FY"
+        },
+        {
+          "key": "AC9FFVAR_Y10",
+          "name": "AC9FFVAR_Y10"
+        },
+        {
+          "key": "AC9OLCON_Y8",
+          "name": "AC9OLCON_Y8"
+        },
+        {
+          "key": "AC9MHDPS_Y10",
+          "name": "AC9MHDPS_Y10"
+        },
+        {
+          "key": "AC9OSDCD_FY",
+          "name": "AC9OSDCD_FY"
+        },
+        {
+          "key": "AC9FFECO_Y8",
+          "name": "AC9FFECO_Y8"
+        },
+        {
+          "key": "AC9MHACS_Y9",
+          "name": "AC9MHACS_Y9"
+        },
+        {
+          "key": "AC9OLSAK_Y4",
+          "name": "AC9OLSAK_Y4"
+        },
+        {
+          "key": "AC9RMRHG_Y2",
+          "name": "AC9RMRHG_Y2"
+        },
+        {
+          "key": "AC9RMDPS_Y3",
+          "name": "AC9RMDPS_Y3"
+        },
+        {
+          "key": "AC9CFRRR_Y7",
+          "name": "AC9CFRRR_Y7"
+        },
+        {
+          "key": "AC9MHHEB_Y4",
+          "name": "AC9MHHEB_Y4"
+        },
+        {
+          "key": "AC9FFPEO_Y5",
+          "name": "AC9FFPEO_Y5"
+        },
+        {
+          "key": "AC9OLCAS_Y9",
+          "name": "AC9OLCAS_Y9"
+        },
+        {
+          "key": "AC9FWNFS_FY",
+          "name": "AC9FWNFS_FY"
+        },
+        {
+          "key": "AC9FFECO_Y7",
+          "name": "AC9FFECO_Y7"
+        },
+        {
+          "key": "AC9AIRUA_Y6",
+          "name": "AC9AIRUA_Y6"
+        },
+        {
+          "key": "AC9MHHEB_Y1",
+          "name": "AC9MHHEB_Y1"
+        },
+        {
+          "key": "AC9OLHAW_Y10",
+          "name": "AC9OLHAW_Y10"
+        },
+        {
+          "key": "AC9FFPEO_Y9",
+          "name": "AC9FFPEO_Y9"
+        },
+        {
+          "key": "AC9FWIFC_Y7",
+          "name": "AC9FWIFC_Y7"
+        },
+        {
+          "key": "AC9OLCON_Y6",
+          "name": "AC9OLCON_Y6"
+        },
+        {
+          "key": "AC9OSMOD_Y7",
+          "name": "AC9OSMOD_Y7"
+        },
+        {
+          "key": "AC9CFPER_Y4",
+          "name": "AC9CFPER_Y4"
+        },
+        {
+          "key": "AC9AIRUA_Y1",
+          "name": "AC9AIRUA_Y1"
+        },
+        {
+          "key": "AC9FFMEC_Y5",
+          "name": "AC9FFMEC_Y5"
+        },
+        {
+          "key": "AC9CFENT_Y7",
+          "name": "AC9CFENT_Y7"
+        },
+        {
+          "key": "AC9RMDPS_Y9",
+          "name": "AC9RMDPS_Y9"
+        },
+        {
+          "key": "AC9FWTAC_Y1",
+          "name": "AC9FWTAC_Y1"
+        },
+        {
+          "key": "AC9AIUAW_Y6",
+          "name": "AC9AIUAW_Y6"
+        },
+        {
+          "key": "AC9MHHEB_Y6",
+          "name": "AC9MHHEB_Y6"
+        },
+        {
+          "key": "AC9FFPEO_Y6",
+          "name": "AC9FFPEO_Y6"
+        },
+        {
+          "key": "AC9OSRRC_Y5",
+          "name": "AC9OSRRC_Y5"
+        },
+        {
+          "key": "AC9AIUAW_Y1",
+          "name": "AC9AIUAW_Y1"
+        },
+        {
+          "key": "AC9OLCAS_Y4",
+          "name": "AC9OLCAS_Y4"
+        },
+        {
+          "key": "AC9OLHAW_Y8",
+          "name": "AC9OLHAW_Y8"
+        },
+        {
+          "key": "AC9CFRRR_Y2",
+          "name": "AC9CFRRR_Y2"
+        },
+        {
+          "key": "AC9OLSAK_Y6",
+          "name": "AC9OLSAK_Y6"
+        },
+        {
+          "key": "AC9RMTAT_Y5",
+          "name": "AC9RMTAT_Y5"
+        },
+        {
+          "key": "AC9MHCAB_FY",
+          "name": "AC9MHCAB_FY"
+        },
+        {
+          "key": "AC9OSRRC_Y7",
+          "name": "AC9OSRRC_Y7"
+        },
+        {
+          "key": "AC9CFECO_Y7",
+          "name": "AC9CFECO_Y7"
+        },
+        {
+          "key": "AC9RMTAT_Y9",
+          "name": "AC9RMTAT_Y9"
+        },
+        {
+          "key": "AC9OSRRC_Y6",
+          "name": "AC9OSRRC_Y6"
+        },
+        {
+          "key": "AC9MHACS_Y6",
+          "name": "AC9MHACS_Y6"
+        },
+        {
+          "key": "AC9FFSUL_Y3",
+          "name": "AC9FFSUL_Y3"
+        },
+        {
+          "key": "AC9FFSUL_Y1",
+          "name": "AC9FFSUL_Y1"
+        },
+        {
+          "key": "AC9OSMOD_Y9",
+          "name": "AC9OSMOD_Y9"
+        },
+        {
+          "key": "AC9FFSUL_Y6",
+          "name": "AC9FFSUL_Y6"
+        },
+        {
+          "key": "AC9FFPEO_Y4",
+          "name": "AC9FFPEO_Y4"
+        },
+        {
+          "key": "AC9RMRPR_Y6",
+          "name": "AC9RMRPR_Y6"
+        },
+        {
+          "key": "AC9CFPER_Y10",
+          "name": "AC9CFPER_Y10"
+        },
+        {
+          "key": "AC9FWNFS_Y1",
+          "name": "AC9FWNFS_Y1"
+        },
+        {
+          "key": "AC9CFENT_Y10",
+          "name": "AC9CFENT_Y10"
+        },
+        {
+          "key": "AC9OLHAW_Y6",
+          "name": "AC9OLHAW_Y6"
+        },
+        {
+          "key": "AC9OLHAW_Y5",
+          "name": "AC9OLHAW_Y5"
+        },
+        {
+          "key": "AC9RMDPS_Y10",
+          "name": "AC9RMDPS_Y10"
+        },
+        {
+          "key": "AC9FFMEC_Y3",
+          "name": "AC9FFMEC_Y3"
+        },
+        {
+          "key": "AC9OSRRC_Y4",
+          "name": "AC9OSRRC_Y4"
+        },
+        {
+          "key": "AC9OSRRC_FY",
+          "name": "AC9OSRRC_FY"
+        },
+        {
+          "key": "AC9AIRUA_Y5",
+          "name": "AC9AIRUA_Y5"
+        },
+        {
+          "key": "AC9OSWRR_Y3",
+          "name": "AC9OSWRR_Y3"
+        },
+        {
+          "key": "AC9MHCAB_Y10",
+          "name": "AC9MHCAB_Y10"
+        },
+        {
+          "key": "AC9FFMEC_Y10",
+          "name": "AC9FFMEC_Y10"
+        },
+        {
+          "key": "AC9OSDCD_Y10",
+          "name": "AC9OSDCD_Y10"
+        },
+        {
+          "key": "AC9FFVAR_Y5",
+          "name": "AC9FFVAR_Y5"
+        },
+        {
+          "key": "AC9MHCAB_Y8",
+          "name": "AC9MHCAB_Y8"
+        },
+        {
+          "key": "AC9OSRRC_Y9",
+          "name": "AC9OSRRC_Y9"
+        },
+        {
+          "key": "AC9FFECO_Y1",
+          "name": "AC9FFECO_Y1"
+        },
+        {
+          "key": "AC9FWTAC_Y5",
+          "name": "AC9FWTAC_Y5"
+        },
+        {
+          "key": "AC9FFSUL_Y5",
+          "name": "AC9FFSUL_Y5"
+        },
+        {
+          "key": "AC9OLCAS_Y5",
+          "name": "AC9OLCAS_Y5"
+        },
+        {
+          "key": "AC9MHCAB_Y9",
+          "name": "AC9MHCAB_Y9"
+        },
+        {
+          "key": "AC9MHHEB_Y5",
+          "name": "AC9MHHEB_Y5"
+        },
+        {
+          "key": "AC9CFECO_Y6",
+          "name": "AC9CFECO_Y6"
+        },
+        {
+          "key": "AC9FFECO_Y3",
+          "name": "AC9FFECO_Y3"
+        },
+        {
+          "key": "AC9MHACS_FY",
+          "name": "AC9MHACS_FY"
+        },
+        {
+          "key": "AC9OLSAK_Y3",
+          "name": "AC9OLSAK_Y3"
+        },
+        {
+          "key": "AC9CFPER_Y5",
+          "name": "AC9CFPER_Y5"
+        },
+        {
+          "key": "AC9RMRHG_Y3",
+          "name": "AC9RMRHG_Y3"
+        },
+        {
+          "key": "AC9OSDCD_Y8",
+          "name": "AC9OSDCD_Y8"
+        },
+        {
+          "key": "AC9CFENT_Y3",
+          "name": "AC9CFENT_Y3"
+        },
+        {
+          "key": "AC9AITOA_Y3",
+          "name": "AC9AITOA_Y3"
+        },
+        {
+          "key": "AC9FWIFC_Y9",
+          "name": "AC9FWIFC_Y9"
+        },
+        {
+          "key": "AC9AIUAW_Y2",
+          "name": "AC9AIUAW_Y2"
+        },
+        {
+          "key": "AC9FFECO_Y4",
+          "name": "AC9FFECO_Y4"
+        },
+        {
+          "key": "AC9CFECO_Y1",
+          "name": "AC9CFECO_Y1"
+        },
+        {
+          "key": "AC9OSSRR_Y4",
+          "name": "AC9OSSRR_Y4"
+        },
+        {
+          "key": "AC9RMDPS_Y7",
+          "name": "AC9RMDPS_Y7"
+        },
+        {
+          "key": "AC9CFPER_Y2",
+          "name": "AC9CFPER_Y2"
+        },
+        {
+          "key": "AC9OSDCD_Y3",
+          "name": "AC9OSDCD_Y3"
+        },
+        {
+          "key": "AC9FWNFS_Y8",
+          "name": "AC9FWNFS_Y8"
+        },
+        {
+          "key": "AC9CFRRR_FY",
+          "name": "AC9CFRRR_FY"
+        },
+        {
+          "key": "AC9CFENT_Y5",
+          "name": "AC9CFENT_Y5"
+        },
+        {
+          "key": "AC9FFVAR_Y4",
+          "name": "AC9FFVAR_Y4"
+        },
+        {
+          "key": "AC9FFMEC_Y2",
+          "name": "AC9FFMEC_Y2"
+        },
+        {
+          "key": "AC9FFSUL_Y10",
+          "name": "AC9FFSUL_Y10"
+        },
+        {
+          "key": "AC9RMRHG_Y8",
+          "name": "AC9RMRHG_Y8"
+        },
+        {
+          "key": "AC9MHACS_Y10",
+          "name": "AC9MHACS_Y10"
+        },
+        {
+          "key": "AC9FFSUL_FY",
+          "name": "AC9FFSUL_FY"
+        },
+        {
+          "key": "AC9FWNFS_Y3",
+          "name": "AC9FWNFS_Y3"
+        },
+        {
+          "key": "AC9AIUAW_Y10",
+          "name": "AC9AIUAW_Y10"
+        },
+        {
+          "key": "AC9FFMEC_Y4",
+          "name": "AC9FFMEC_Y4"
+        },
+        {
+          "key": "AC9OSWRR_Y7",
+          "name": "AC9OSWRR_Y7"
+        },
+        {
+          "key": "AC9FFMEC_Y7",
+          "name": "AC9FFMEC_Y7"
+        },
+        {
+          "key": "AC9FWIFC_Y6",
+          "name": "AC9FWIFC_Y6"
+        },
+        {
+          "key": "AC9OLCON_Y5",
+          "name": "AC9OLCON_Y5"
+        },
+        {
+          "key": "AC9MHACS_Y2",
+          "name": "AC9MHACS_Y2"
+        },
+        {
+          "key": "AC9OSMOD_Y10",
+          "name": "AC9OSMOD_Y10"
+        },
+        {
+          "key": "AC9AIUAW_Y3",
+          "name": "AC9AIUAW_Y3"
+        },
+        {
+          "key": "AC9MHACS_Y4",
+          "name": "AC9MHACS_Y4"
+        },
+        {
+          "key": "AC9MHDPS_Y6",
+          "name": "AC9MHDPS_Y6"
+        },
+        {
+          "key": "AC9FWIFC_Y10",
+          "name": "AC9FWIFC_Y10"
+        },
+        {
+          "key": "AC9OSSRR_Y1",
+          "name": "AC9OSSRR_Y1"
+        },
+        {
+          "key": "AC9FWNFS_Y9",
+          "name": "AC9FWNFS_Y9"
+        },
+        {
+          "key": "AC9OLSAK_Y2",
+          "name": "AC9OLSAK_Y2"
+        },
+        {
+          "key": "AC9AIUAW_Y9",
+          "name": "AC9AIUAW_Y9"
+        },
+        {
+          "key": "AC9RMRHG_Y7",
+          "name": "AC9RMRHG_Y7"
+        },
+        {
+          "key": "AC9OLCON_Y9",
+          "name": "AC9OLCON_Y9"
+        },
+        {
+          "key": "AC9OLCAS_Y2",
+          "name": "AC9OLCAS_Y2"
+        },
+        {
+          "key": "AC9FWICS_Y5",
+          "name": "AC9FWICS_Y5"
+        },
+        {
+          "key": "AC9OLCAS_FY",
+          "name": "AC9OLCAS_FY"
+        },
+        {
+          "key": "AC9OLSAK_Y9",
+          "name": "AC9OLSAK_Y9"
+        },
+        {
+          "key": "AC9OSSRR_Y10",
+          "name": "AC9OSSRR_Y10"
+        },
+        {
+          "key": "AC9OSDCD_Y9",
+          "name": "AC9OSDCD_Y9"
+        },
+        {
+          "key": "AC9RMTAT_Y7",
+          "name": "AC9RMTAT_Y7"
+        },
+        {
+          "key": "AC9CFECO_FY",
+          "name": "AC9CFECO_FY"
+        },
+        {
+          "key": "AC9OSSRR_Y5",
+          "name": "AC9OSSRR_Y5"
+        },
+        {
+          "key": "AC9OSRRC_Y1",
+          "name": "AC9OSRRC_Y1"
+        },
+        {
+          "key": "AC9RMRHG_Y10",
+          "name": "AC9RMRHG_Y10"
+        },
+        {
+          "key": "AC9FFECO_Y10",
+          "name": "AC9FFECO_Y10"
+        },
+        {
+          "key": "AC9AITOA_Y7",
+          "name": "AC9AITOA_Y7"
+        },
+        {
+          "key": "AC9FWTAC_Y9",
+          "name": "AC9FWTAC_Y9"
+        },
+        {
+          "key": "AC9RMRPR_Y5",
+          "name": "AC9RMRPR_Y5"
+        },
+        {
+          "key": "AC9AIRUA_Y7",
+          "name": "AC9AIRUA_Y7"
+        },
+        {
+          "key": "AC9RMRHG_Y5",
+          "name": "AC9RMRHG_Y5"
+        },
+        {
+          "key": "AC9FWTAC_Y3",
+          "name": "AC9FWTAC_Y3"
+        },
+        {
+          "key": "AC9FFMEC_FY",
+          "name": "AC9FFMEC_FY"
+        },
+        {
+          "key": "AC9FFVAR_Y3",
+          "name": "AC9FFVAR_Y3"
+        },
+        {
+          "key": "AC9OLCAS_Y8",
+          "name": "AC9OLCAS_Y8"
+        },
+        {
+          "key": "AC9RMRPR_Y7",
+          "name": "AC9RMRPR_Y7"
+        },
+        {
+          "key": "AC9OSWRR_FY",
+          "name": "AC9OSWRR_FY"
+        },
+        {
+          "key": "AC9FWICS_Y1",
+          "name": "AC9FWICS_Y1"
+        },
+        {
+          "key": "AC9CFPER_Y6",
+          "name": "AC9CFPER_Y6"
+        },
+        {
+          "key": "AC9AIUAW_FY",
+          "name": "AC9AIUAW_FY"
+        },
+        {
+          "key": "AC9MHHEB_Y9",
+          "name": "AC9MHHEB_Y9"
+        },
+        {
+          "key": "AC9AITOA_Y10",
+          "name": "AC9AITOA_Y10"
+        },
+        {
+          "key": "AC9FFECO_Y2",
+          "name": "AC9FFECO_Y2"
+        },
+        {
+          "key": "AC9OSMOD_Y4",
+          "name": "AC9OSMOD_Y4"
+        },
+        {
+          "key": "AC9FWNFS_Y7",
+          "name": "AC9FWNFS_Y7"
+        },
+        {
+          "key": "AC9CFENT_Y6",
+          "name": "AC9CFENT_Y6"
+        },
+        {
+          "key": "AC9OSMOD_Y2",
+          "name": "AC9OSMOD_Y2"
+        },
+        {
+          "key": "AC9MHDPS_Y5",
+          "name": "AC9MHDPS_Y5"
+        },
+        {
+          "key": "AC9OSDCD_Y6",
+          "name": "AC9OSDCD_Y6"
+        },
+        {
+          "key": "AC9MHCAB_Y7",
+          "name": "AC9MHCAB_Y7"
+        },
+        {
+          "key": "AC9FWTAC_Y8",
+          "name": "AC9FWTAC_Y8"
+        },
+        {
+          "key": "AC9OLSAK_Y5",
+          "name": "AC9OLSAK_Y5"
+        },
+        {
+          "key": "AC9MHCAB_Y4",
+          "name": "AC9MHCAB_Y4"
+        },
+        {
+          "key": "AC9FWNFS_Y6",
+          "name": "AC9FWNFS_Y6"
+        },
+        {
+          "key": "AC9CFRRR_Y8",
+          "name": "AC9CFRRR_Y8"
+        },
+        {
+          "key": "AC9CFRRR_Y10",
+          "name": "AC9CFRRR_Y10"
+        },
+        {
+          "key": "AC9RMRPR_Y2",
+          "name": "AC9RMRPR_Y2"
+        },
+        {
+          "key": "AC9OSRRC_Y3",
+          "name": "AC9OSRRC_Y3"
+        },
+        {
+          "key": "AC9AITOA_Y9",
+          "name": "AC9AITOA_Y9"
+        },
+        {
+          "key": "AC9OSSRR_Y9",
+          "name": "AC9OSSRR_Y9"
+        },
+        {
+          "key": "AC9RMRHG_FY",
+          "name": "AC9RMRHG_FY"
+        },
+        {
+          "key": "AC9MHDPS_Y1",
+          "name": "AC9MHDPS_Y1"
+        },
+        {
+          "key": "AC9OSDCD_Y2",
+          "name": "AC9OSDCD_Y2"
+        },
+        {
+          "key": "AC9OSWRR_Y10",
+          "name": "AC9OSWRR_Y10"
+        },
+        {
+          "key": "AC9MHACS_Y3",
+          "name": "AC9MHACS_Y3"
+        },
+        {
+          "key": "AC9FFPEO_Y2",
+          "name": "AC9FFPEO_Y2"
+        },
+        {
+          "key": "AC9FFVAR_Y7",
+          "name": "AC9FFVAR_Y7"
+        },
+        {
+          "key": "AC9OLCON_FY",
+          "name": "AC9OLCON_FY"
+        },
+        {
+          "key": "AC9FWICS_Y8",
+          "name": "AC9FWICS_Y8"
+        },
+        {
+          "key": "AC9OLHAW_Y2",
+          "name": "AC9OLHAW_Y2"
+        },
+        {
+          "key": "AC9OSSRR_Y8",
+          "name": "AC9OSSRR_Y8"
+        },
+        {
+          "key": "AC9AIUAW_Y8",
+          "name": "AC9AIUAW_Y8"
+        },
+        {
+          "key": "AC9OSMOD_FY",
+          "name": "AC9OSMOD_FY"
+        },
+        {
+          "key": "AC9CFENT_Y2",
+          "name": "AC9CFENT_Y2"
+        },
+        {
+          "key": "AC9OSRRC_Y8",
+          "name": "AC9OSRRC_Y8"
+        },
+        {
+          "key": "AC9RMDPS_FY",
+          "name": "AC9RMDPS_FY"
+        },
+        {
+          "key": "AC9OLCAS_Y7",
+          "name": "AC9OLCAS_Y7"
+        },
+        {
+          "key": "AC9FWTAC_Y2",
+          "name": "AC9FWTAC_Y2"
+        },
+        {
+          "key": "AC9OLSAK_Y7",
+          "name": "AC9OLSAK_Y7"
+        },
+        {
+          "key": "AC9RMRPR_Y10",
+          "name": "AC9RMRPR_Y10"
+        },
+        {
+          "key": "AC9OSWRR_Y8",
+          "name": "AC9OSWRR_Y8"
+        },
+        {
+          "key": "AC9OSDCD_Y1",
+          "name": "AC9OSDCD_Y1"
+        },
+        {
+          "key": "AC9OSSRR_FY",
+          "name": "AC9OSSRR_FY"
+        },
+        {
+          "key": "AC9CFPER_Y9",
+          "name": "AC9CFPER_Y9"
+        },
+        {
+          "key": "AC9OSMOD_Y1",
+          "name": "AC9OSMOD_Y1"
+        },
+        {
+          "key": "AC9OSWRR_Y4",
+          "name": "AC9OSWRR_Y4"
+        },
+        {
+          "key": "AC9AITOA_Y5",
+          "name": "AC9AITOA_Y5"
+        },
+        {
+          "key": "AC9RMDPS_Y4",
+          "name": "AC9RMDPS_Y4"
+        },
+        {
+          "key": "AC9MHACS_Y5",
+          "name": "AC9MHACS_Y5"
+        },
+        {
+          "key": "AC9FFSUL_Y4",
+          "name": "AC9FFSUL_Y4"
+        },
+        {
+          "key": "AC9MHHEB_Y3",
+          "name": "AC9MHHEB_Y3"
+        },
+        {
+          "key": "AC9CFENT_Y8",
+          "name": "AC9CFENT_Y8"
+        },
+        {
+          "key": "AC9OLSAK_Y8",
+          "name": "AC9OLSAK_Y8"
+        },
+        {
+          "key": "AC9MHCAB_Y2",
+          "name": "AC9MHCAB_Y2"
+        },
+        {
+          "key": "AC9MHDPS_Y2",
+          "name": "AC9MHDPS_Y2"
+        },
+        {
+          "key": "AC9OLSAK_FY",
+          "name": "AC9OLSAK_FY"
+        },
+        {
+          "key": "AC9MHHEB_Y7",
+          "name": "AC9MHHEB_Y7"
+        },
+        {
+          "key": "AC9OLCAS_Y3",
+          "name": "AC9OLCAS_Y3"
+        },
+        {
+          "key": "AC9FFECO_Y9",
+          "name": "AC9FFECO_Y9"
+        },
+        {
+          "key": "AC9OSSRR_Y2",
+          "name": "AC9OSSRR_Y2"
+        },
+        {
+          "key": "AC9FFECO_Y5",
+          "name": "AC9FFECO_Y5"
+        },
+        {
+          "key": "AC9AITOA_Y1",
+          "name": "AC9AITOA_Y1"
+        },
+        {
+          "key": "AC9RMRHG_Y4",
+          "name": "AC9RMRHG_Y4"
+        },
+        {
+          "key": "AC9OSMOD_Y6",
+          "name": "AC9OSMOD_Y6"
+        },
+        {
+          "key": "AC9MHHEB_Y10",
+          "name": "AC9MHHEB_Y10"
+        },
+        {
+          "key": "AC9FWTAC_Y4",
+          "name": "AC9FWTAC_Y4"
+        },
+        {
+          "key": "AC9AITOA_Y8",
+          "name": "AC9AITOA_Y8"
+        },
+        {
+          "key": "AC9AIRUA_FY",
+          "name": "AC9AIRUA_FY"
+        },
+        {
+          "key": "AC9OLCON_Y3",
+          "name": "AC9OLCON_Y3"
+        },
+        {
+          "key": "AC9CFECO_Y4",
+          "name": "AC9CFECO_Y4"
+        },
+        {
+          "key": "AC9FWIFC_Y2",
+          "name": "AC9FWIFC_Y2"
+        },
+        {
+          "key": "AC9AIRUA_Y9",
+          "name": "AC9AIRUA_Y9"
+        },
+        {
+          "key": "AC9FFMEC_Y9",
+          "name": "AC9FFMEC_Y9"
+        },
+        {
+          "key": "AC9CFENT_Y1",
+          "name": "AC9CFENT_Y1"
+        },
+        {
+          "key": "AC9OLCON_Y4",
+          "name": "AC9OLCON_Y4"
+        },
+        {
+          "key": "AC9CFENT_Y9",
+          "name": "AC9CFENT_Y9"
+        },
+        {
+          "key": "AC9FFPEO_Y8",
+          "name": "AC9FFPEO_Y8"
+        },
+        {
+          "key": "AC9OSWRR_Y9",
+          "name": "AC9OSWRR_Y9"
+        },
+        {
+          "key": "AC9FWICS_Y3",
+          "name": "AC9FWICS_Y3"
+        },
+        {
+          "key": "AC9OSDCD_Y4",
+          "name": "AC9OSDCD_Y4"
+        },
+        {
+          "key": "AC9MHCAB_Y1",
+          "name": "AC9MHCAB_Y1"
+        },
+        {
+          "key": "AC9OLCON_Y10",
+          "name": "AC9OLCON_Y10"
+        },
+        {
+          "key": "AC9CFRRR_Y3",
+          "name": "AC9CFRRR_Y3"
+        },
+        {
+          "key": "AC9OSWRR_Y1",
+          "name": "AC9OSWRR_Y1"
+        },
+        {
+          "key": "AC9CFPER_FY",
+          "name": "AC9CFPER_FY"
+        },
+        {
+          "key": "AC9RMTAT_FY",
+          "name": "AC9RMTAT_FY"
+        },
+        {
+          "key": "AC9CFENT_FY",
+          "name": "AC9CFENT_FY"
+        },
+        {
+          "key": "AC9OSWRR_Y5",
+          "name": "AC9OSWRR_Y5"
+        },
+        {
+          "key": "AC9FWICS_Y7",
+          "name": "AC9FWICS_Y7"
+        },
+        {
+          "key": "AC9CFRRR_Y6",
+          "name": "AC9CFRRR_Y6"
+        },
+        {
+          "key": "AC9FWNFS_Y5",
+          "name": "AC9FWNFS_Y5"
+        },
+        {
+          "key": "AC9OSDCD_Y7",
+          "name": "AC9OSDCD_Y7"
+        },
+        {
+          "key": "AC9AITOA_Y4",
+          "name": "AC9AITOA_Y4"
+        },
+        {
+          "key": "AC9OSWRR_Y6",
+          "name": "AC9OSWRR_Y6"
+        },
+        {
+          "key": "AC9MHHEB_FY",
+          "name": "AC9MHHEB_FY"
+        },
+        {
+          "key": "AC9OSMOD_Y5",
+          "name": "AC9OSMOD_Y5"
+        },
+        {
+          "key": "AC9FFPEO_Y7",
+          "name": "AC9FFPEO_Y7"
+        },
+        {
+          "key": "AC9FFVAR_Y9",
+          "name": "AC9FFVAR_Y9"
+        },
+        {
+          "key": "AC9RMDPS_Y1",
+          "name": "AC9RMDPS_Y1"
+        },
+        {
+          "key": "AC9AIUAW_Y4",
+          "name": "AC9AIUAW_Y4"
+        },
+        {
+          "key": "AC9MHDPS_Y8",
+          "name": "AC9MHDPS_Y8"
+        },
+        {
+          "key": "AC9RMDPS_Y8",
+          "name": "AC9RMDPS_Y8"
+        },
+        {
+          "key": "AC9CFPER_Y3",
+          "name": "AC9CFPER_Y3"
+        },
+        {
+          "key": "AC9OLHAW_Y4",
+          "name": "AC9OLHAW_Y4"
+        },
+        {
+          "key": "AC9CFPER_Y8",
+          "name": "AC9CFPER_Y8"
+        },
+        {
+          "key": "AC9AIRUA_Y3",
+          "name": "AC9AIRUA_Y3"
+        },
+        {
+          "key": "AC9CFECO_Y3",
+          "name": "AC9CFECO_Y3"
+        },
+        {
+          "key": "AC9OLHAW_Y3",
+          "name": "AC9OLHAW_Y3"
+        },
+        {
+          "key": "AC9OLCAS_Y1",
+          "name": "AC9OLCAS_Y1"
+        },
+        {
+          "key": "AC9RMDPS_Y2",
+          "name": "AC9RMDPS_Y2"
+        },
+        {
+          "key": "AC9FFSUL_Y7",
+          "name": "AC9FFSUL_Y7"
+        },
+        {
+          "key": "AC9RMRPR_FY",
+          "name": "AC9RMRPR_FY"
+        },
+        {
+          "key": "AC9CFECO_Y9",
+          "name": "AC9CFECO_Y9"
+        },
+        {
+          "key": "AC9FWTAC_FY",
+          "name": "AC9FWTAC_FY"
+        },
+        {
+          "key": "AC9MHDPS_Y4",
+          "name": "AC9MHDPS_Y4"
+        },
+        {
+          "key": "AC9AIRUA_Y10",
+          "name": "AC9AIRUA_Y10"
+        },
+        {
+          "key": "AC9MHACS_Y7",
+          "name": "AC9MHACS_Y7"
+        },
+        {
+          "key": "AC9RMRHG_Y9",
+          "name": "AC9RMRHG_Y9"
+        },
+        {
+          "key": "AC9FFPEO_FY",
+          "name": "AC9FFPEO_FY"
+        },
+        {
+          "key": "AC9AIRUA_Y4",
+          "name": "AC9AIRUA_Y4"
+        },
+        {
+          "key": "AC9RMDPS_Y6",
+          "name": "AC9RMDPS_Y6"
+        },
+        {
+          "key": "AC9CFPER_Y1",
+          "name": "AC9CFPER_Y1"
+        },
+        {
+          "key": "AC9FWICS_FY",
+          "name": "AC9FWICS_FY"
+        },
+        {
+          "key": "AC9AIUAW_Y5",
+          "name": "AC9AIUAW_Y5"
+        },
+        {
+          "key": "AC9RMTAT_Y6",
+          "name": "AC9RMTAT_Y6"
+        },
+        {
+          "key": "AC9FFMEC_Y6",
+          "name": "AC9FFMEC_Y6"
+        },
+        {
+          "key": "AC9OLHAW_Y1",
+          "name": "AC9OLHAW_Y1"
+        },
+        {
+          "key": "AC9FFECO_FY",
+          "name": "AC9FFECO_FY"
+        },
+        {
+          "key": "AC9RMTAT_Y2",
+          "name": "AC9RMTAT_Y2"
+        },
+        {
+          "key": "AC9RMTAT_Y8",
+          "name": "AC9RMTAT_Y8"
+        },
+        {
+          "key": "AC9CFRRR_Y1",
+          "name": "AC9CFRRR_Y1"
+        },
+        {
+          "key": "AC9CFECO_Y10",
+          "name": "AC9CFECO_Y10"
+        },
+        {
+          "key": "AC9FWTAC_Y10",
+          "name": "AC9FWTAC_Y10"
+        },
+        {
+          "key": "AC9RMRPR_Y8",
+          "name": "AC9RMRPR_Y8"
+        },
+        {
+          "key": "AC9RMTAT_Y10",
+          "name": "AC9RMTAT_Y10"
+        },
+        {
+          "key": "AC9OSSRR_Y3",
+          "name": "AC9OSSRR_Y3"
+        },
+        {
+          "key": "AC9OLCAS_Y10",
+          "name": "AC9OLCAS_Y10"
+        },
+        {
+          "key": "AC9FFVAR_Y6",
+          "name": "AC9FFVAR_Y6"
+        },
+        {
+          "key": "AC9FWIFC_FY",
+          "name": "AC9FWIFC_FY"
+        },
+        {
+          "key": "AC9FFECO_Y6",
+          "name": "AC9FFECO_Y6"
+        },
+        {
+          "key": "AC9FFSUL_Y9",
+          "name": "AC9FFSUL_Y9"
+        },
+        {
+          "key": "AC9OSMOD_Y3",
+          "name": "AC9OSMOD_Y3"
+        },
+        {
+          "key": "AC9OLHAW_Y7",
+          "name": "AC9OLHAW_Y7"
+        },
+        {
+          "key": "AC9FWICS_Y6",
+          "name": "AC9FWICS_Y6"
+        },
+        {
+          "key": "AC9OLHAW_FY",
+          "name": "AC9OLHAW_FY"
+        },
+        {
+          "key": "AC9RMRPR_Y4",
+          "name": "AC9RMRPR_Y4"
+        },
+        {
+          "key": "AC9OSMOD_Y8",
+          "name": "AC9OSMOD_Y8"
+        },
+        {
+          "key": "AC9CFECO_Y8",
+          "name": "AC9CFECO_Y8"
+        },
+        {
+          "key": "AC9OLSAK_Y10",
+          "name": "AC9OLSAK_Y10"
+        },
+        {
+          "key": "AC9RMRPR_Y1",
+          "name": "AC9RMRPR_Y1"
+        },
+        {
+          "key": "AC9AIUAW_Y7",
+          "name": "AC9AIUAW_Y7"
+        },
+        {
+          "key": "AC9MHDPS_Y9",
+          "name": "AC9MHDPS_Y9"
+        },
+        {
+          "key": "AC9FFMEC_Y1",
+          "name": "AC9FFMEC_Y1"
+        },
+        {
+          "key": "AC9MHCAB_Y6",
+          "name": "AC9MHCAB_Y6"
+        },
+        {
+          "key": "AC9FWNFS_Y10",
+          "name": "AC9FWNFS_Y10"
+        },
+        {
+          "key": "AC9FWTAC_Y7",
+          "name": "AC9FWTAC_Y7"
+        },
+        {
+          "key": "AC9AITOA_FY",
+          "name": "AC9AITOA_FY"
+        },
+        {
+          "key": "AC9CFRRR_Y4",
+          "name": "AC9CFRRR_Y4"
+        },
+        {
+          "key": "AC9RMDPS_Y5",
+          "name": "AC9RMDPS_Y5"
+        },
+        {
+          "key": "AC9MHCAB_Y3",
+          "name": "AC9MHCAB_Y3"
+        },
+        {
+          "key": "AC9FFVAR_FY",
+          "name": "AC9FFVAR_FY"
+        }
+      ]
+    },
+    {
+      "type": "Field",
+      "key": "LA_RES",
+      "name": "Learning area resource",
+      "plural": "Learning area resources",
+      "options": [
+        {
+          "key": "MEDIA_ARTS_EXAMPLES_OF_KNOWLEDGE_AND_SKILLS",
+          "name": "Media Arts Examples of knowledge and skills"
+        },
+        {
+          "key": "SPANISH_LANGUAGE_RESOURCE",
+          "name": "Spanish language resource"
+        },
+        {
+          "key": "LATIN_LANGUAGE_RESOURCE",
+          "name": "Latin language resource"
+        },
+        {
+          "key": "ARABIC_LANGUAGE_RESOURCE",
+          "name": "Arabic language resource"
+        },
+        {
+          "key": "MATHEMATICS_OPTIONAL_CONTENT_POST_YEAR_10",
+          "name": "Optional content for post-Year 10 Mathematics pathways"
+        },
+        {
+          "key": "DRAMA_EXAMPLES_OF_KNOWLEDGE_AND_SKILLS",
+          "name": "Drama Examples of knowledge and skills"
+        },
+        {
+          "key": "FRAMEWORK_FOR_ABORIGINAL_LANGUAGES_AND_TORRES_STRAIT_ISLANDER_LANGUAGES_RESOURCE",
+          "name": "Framework for Aboriginal Languages and Torres Strait Islander Languages resource"
+        },
+        {
+          "key": "CHINESE_LANGUAGE_RESOURCE",
+          "name": "Chinese language resource"
+        },
+        {
+          "key": "INDONESIAN_LANGUAGE_RESOURCE",
+          "name": "Indonesian language resource"
+        },
+        {
+          "key": "JAPANESE_LANGUAGE_RESOURCE",
+          "name": "Japanese language resource"
+        },
+        {
+          "key": "HINDI_LANGUAGE_RESOURCE",
+          "name": "Hindi language resource"
+        },
+        {
+          "key": "VISUAL_ARTS_EXAMPLES_OF_KNOWLEDGE_AND_SKILLS",
+          "name": "Visual Arts Examples of knowledge and skills"
+        },
+        {
+          "key": "FRAMEWORK_FOR_CLASSICAL_LANGUAGES_RESOURCE",
+          "name": "Framework for Classical Languages resource"
+        },
+        {
+          "key": "MODERN_GREEK_LANGUAGE_RESOURCE",
+          "name": "Modern Greek language resources"
+        },
+        {
+          "key": "AUSLAN_LANGUAGE_RESOURCE",
+          "name": "Auslan language resource"
+        },
+        {
+          "key": "DEEP_TIME_HISTORY_OF_AUSTRALIA_RESOURCE",
+          "name": "Deep time history of Australia resource"
+        },
+        {
+          "key": "FRENCH_LANGUAGE_RESOURCE",
+          "name": "French language resource"
+        },
+        {
+          "key": "DANCE_EXAMPLES_OF_KNOWLEDGE_AND_SKILLS",
+          "name": "Dance Examples of knowledge and skills"
+        },
+        {
+          "key": "KOREAN_LANGUAGE_RESOURCE",
+          "name": "Korean language resource"
+        },
+        {
+          "key": "GERMAN_LANGUAGE_RESOURCE",
+          "name": "German language resource"
+        },
+        {
+          "key": "TURKISH_LANGUAGE_RESOURCE",
+          "name": "Turkish language resource"
+        },
+        {
+          "key": "VIETNAMESE_LANGUAGE_RESOURCE",
+          "name": "Vietnamese language resource"
+        },
+        {
+          "key": "MUSIC_EXAMPLES_OF_KNOWLEDGE_AND_SKILLS",
+          "name": "Music Examples of knowledge and skills"
+        },
+        {
+          "key": "ITALIAN_LANGUAGE_RESOURCE",
+          "name": "Italian language resource"
+        },
+        {
+          "key": "HPE_FOCUS_AREAS",
+          "name": "Health and Physical Education focus areas"
+        },
+        {
+          "key": "CLASSICAL_GREEK_LANGUAGE_RESOURCE",
+          "name": "Classical Greek language resource"
+        }
+      ]
+    },
+    {
+      "type": "Field",
+      "key": "AS_TAGS",
+      "name": "Achievement Standard Tags",
+      "plural": "Achievement Standard Tags",
+      "options": [
+        {
+          "key": "SHOWLINEBREAKAFTER",
+          "name": "ShowLineBreakAfter=true"
+        }
+      ]
+    }
+  ]
+}
