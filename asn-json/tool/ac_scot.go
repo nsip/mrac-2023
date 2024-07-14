@@ -213,6 +213,7 @@ func GetAsnConceptTerm(acscotPath, scotJsonLdPath string) map[string]string {
 	m2 := scanSCOT(scotJsonLdPath) // scanScotJsonLd(scotJsonLdPath)
 
 	for code, scotUris := range m1 {
+		seen := make(map[string]bool)
 		// fmt.Println(code)
 		asnConceptTerm := "["
 		for _, scotUri := range scotUris {
@@ -220,6 +221,10 @@ func GetAsnConceptTerm(acscotPath, scotJsonLdPath string) map[string]string {
 			gotM2 := false
 			for _, v := range m2[scotUri] {
 				// fmt.Println(v)
+				if seen[v] {
+					continue
+				}
+				seen[v] = true
 				asnConceptTerm += fmt.Sprintf(`{ "uri": "%s", "prefLabel": "%s"	}`, scotUri, v)
 				gotM2 = true
 			}

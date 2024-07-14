@@ -18,8 +18,8 @@ import (
 const (
 	// fileMeta = "../data/Sofia-API-Meta-Data-22April2024.json"
 	// fileTree = "../data/Sofia-API-Tree-Data-22April2024.json"
-	fileNode = "../data/Sofia-API-Node-Data-22April2024.json" // only for get mCodeChildParent
-	fileNM   = "../data/node-meta.json"                     // here, it is updated fileNode
+	fileNode = "../data/Sofia-API-Node-Data.json" // only for get mCodeChildParent
+	fileNM   = "../data/node-meta.json"           // here, it is updated fileNode
 )
 
 var mEscStr = map[string]string{

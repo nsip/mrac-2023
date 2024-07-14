@@ -11,8 +11,8 @@ import (
 // make scot txt, "mrac\turl"
 func main() {
 	const url = "http://vocabulary.curriculum.edu.au/scot/"
-	const mapFile = "mapping-20231110.csv"
-	const outFile = "./SCOT_20231110.txt"
+	const mapFile = "../data/mapping.csv"
+	const outFile = "../data/SCOT.txt"
 	ct.ScanFile(mapFile, func(i, n int, headers, items []string) (ok bool, hdr string, row string) {
 		scot, mrac := "", ""
 		for i, hdr := range headers {

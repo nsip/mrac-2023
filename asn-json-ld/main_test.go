@@ -17,7 +17,8 @@ func TestMain(t *testing.T) {
 func TestRmDupl(t *testing.T) {
 
 	// each json must be formatted (VSCode)
-	in := "./out"
+	// in := "./out"
+	in := "../data-out/asn-json-ld"
 	files, _, err := fd.WalkFileDir(in, false)
 	if err != nil {
 		panic(err)

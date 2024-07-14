@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -42,6 +43,12 @@ func findIdLinkage(js string, mFamilyTree map[string][]string) (mIdLink2P, mIdLi
 		for _, child := range children {
 			if strings.HasSuffix(child, ".id") {
 				id := gjson.Get(js, child).String()
+				val := gjson.Get(js, jt.NewUncle(child, "id"))
+				if !val.Exists() {
+					log.Printf("child: %s\n", child)
+					log.Printf("js: %+v\n", js)
+					log.Printf("NewUncle: %s\n", jt.NewUncle(child, "id"))
+				}
 				pid := gjson.Get(js, jt.NewUncle(child, "id")).String()
 				mIdLink2P[id] = append(mIdLink2P[id], pid)
 				mIdLink2C[pid] = append(mIdLink2C[pid], id)
@@ -212,7 +219,7 @@ func main() {
 		// 	// 	return
 		// 	continue
 		// }
-
+		fmt.Printf("Processing: %s\n", file)
 		cvt2jsonld(filepath.Join("../data-out/asn-json", file))
 
 		// wg.Done()

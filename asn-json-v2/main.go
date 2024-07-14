@@ -28,7 +28,7 @@ var (
 	profLvl          = ""
 	eduLvl           = ""
 	mAsnCT           = LoadIdPrefLbl("../data/id-preflabel.txt")
-	fileNode         = "../data/Sofia-API-Node-Data-22April2024.json" // only for get mCodeChildParent
+	fileNode         = "../data/Sofia-API-Node-Data.json" // only for get mCodeChildParent
 	mCodeChildParent map[string]string
 	fileNodeMeta     = "../data/node-meta.json" // here, it is updated fileNode
 	mNodeMeta        map[string]any
@@ -79,7 +79,8 @@ func main() {
 	for file, LA := range mInputLa {
 
 		fPath := filepath.Join("../data-out/restructure/", file) // "../data-out/restructure/la-Languages.json"
-		fOut := filepath.Join("./", filepath.Base(fPath))
+		// fOut := filepath.Join("./", filepath.Base(fPath))
+		fOut := filepath.Join("../data-out/asn-json/", filepath.Base(fPath))
 		la = LA
 
 		/////////////////////////////////////////////////////////////////////

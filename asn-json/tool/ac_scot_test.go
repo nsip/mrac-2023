@@ -2,11 +2,15 @@ package tool
 
 import (
 	"fmt"
+	"os"
+	"strings"
 	"testing"
+
+	fd "github.com/digisan/gotk/file-dir"
 )
 
 func TestAcScot(t *testing.T) {
-	m := getAcScotMap("../../data/SCOT_20231110.txt")
+	m := getAcScotMap("../../data/SCOT.txt")
 	fmt.Println(len(m))
 	fmt.Println(m["AC9M1N06"])
 }
@@ -34,24 +38,24 @@ func TestScanSCOT(t *testing.T) {
 
 func TestGetAsnConceptTerm(t *testing.T) {
 
-	m := GetAsnConceptTerm("../../data/SCOT_20231110.txt", "../../data/pp_project_schoolsonlinethesaurus.jsonld")
+	m := GetAsnConceptTerm("../../data/SCOT.txt", "../../data/pp_project_schoolsonlinethesaurus.jsonld")
 	fmt.Println(len(m))
 	fmt.Println(m["AC9M1N06"])
 
 	//
 	// *** create id-preflabel.txt ***
 	//
-	// const out = "id-preflabel.txt"
-	// const sep = "\t"
-	// os.RemoveAll(out)
-	// for k, v := range m {
-	// 	// fmt.Println(k, v)
-	// 	fd.MustAppendFile(out, []byte(strings.Join([]string{k, v}, sep)), true)
-	// }
+	const out = "../../data/id-preflabel.txt"
+	const sep = "\t"
+	os.RemoveAll(out)
+	for k, v := range m {
+		// fmt.Println(k, v)
+		fd.MustAppendFile(out, []byte(strings.Join([]string{k, v}, sep)), true)
+	}
 }
 
 func TestLoadIdPrefLbl(t *testing.T) {
-	const in = "id-preflabel.txt"
+	const in = "../../data/id-preflabel.txt"
 	m := LoadIdPrefLbl(in)
 	fmt.Println(len(m))
 	code := "AC9M1N06"

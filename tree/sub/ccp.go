@@ -3,6 +3,7 @@ package sub
 import (
 	"errors"
 	"fmt"
+	"strings"
 
 	dt "github.com/digisan/gotk/data-type"
 	// jt "github.com/digisan/json-tool"
@@ -31,7 +32,7 @@ func CCP(js, outDir string) string {
 				valueTitle1 := gjson.Get(block1, "title")
 				title1str := valueTitle1.String()
 				fmt.Println(title1str, ":")
-				if title1str == "Cross-curriculum Priorities" {
+				if strings.ToLower(title1str) == "cross-curriculum priorities" {
 					mRoot["children"] = block1
 				}
 			}

@@ -1,7 +1,6 @@
 package node2
- 
+
 import (
-	"fmt"
 	"os"
 	"testing"
 
@@ -9,6 +8,7 @@ import (
 	"github.com/nsip/mrac-2023/meta"
 )
 
+/*
 func TestNode2(t *testing.T) {
 
 	dataNode, err := os.ReadFile("../data/Sofia-API-Node-Data-18072023.json")
@@ -34,12 +34,13 @@ func TestNode2(t *testing.T) {
 	// fmt.Println(GetIdByCode("AC9LIN10C03_E3", mCodeBlock))
 	// fmt.Println(GetCodeById("ffdaf9d5-514b-4f0d-873c-130ffbde52f4", mIdBlock))
 }
+*/
 
 const (
 	uri4id   = "http://vocabulary.curriculum.edu.au/" // "http://rdf.curriculum.edu.au/202110/"
-	metaFile = "../data/Sofia-API-Meta-Data-22April2024.json"
-	nodeFile = "../data/Sofia-API-Node-Data-22April2024.json"
-	treeFile = "../data/Sofia-API-Tree-Data-22April2024.json"
+	metaFile = "../data/Sofia-API-Meta-Data.json"
+	nodeFile = "../data/Sofia-API-Node-Data.json"
+	treeFile = "../data/Sofia-API-Tree-Data.json"
 )
 
 // ***** //

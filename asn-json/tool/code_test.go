@@ -11,7 +11,7 @@ import (
 
 func TestGetAllCode(t *testing.T) {
 
-	nodeData, err := os.ReadFile("../../data/Sofia-API-Node-Data-18072023.json")
+	nodeData, err := os.ReadFile("../../data/Sofia-API-Node-Data.json")
 	lk.FailOnErr("%v", err)
 
 	mIdBlock := node2.GenNodeIdBlockMap(nodeData)
