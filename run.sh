@@ -58,6 +58,8 @@ go run main.go
 cd ..
 echo "Validate..."
 cp validate/validate.rb release
-cp data/pp_project_schoolsonlinethesaurus.jsonld release/asn-json-ld
+cp data/pp_project_schoolsonlinethesaurus.jsonld release/asn-json-ld/scot.jsonld
+cp data/mapping.csv release/mapping.csv
 cd release
 ruby validate.rb
+rm release/mapping.csv scot.jsonld

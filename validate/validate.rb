@@ -15,6 +15,8 @@ require 'csv'
 # * whether cross-references to other parts of MRAC are pointing to the right kind
 # of referent;
 # * whether ScOT cross-references are legal;
+# * whether ScOT cross-references from content descriptions are duplicated;
+# * whether content descriptions are missing ScOT cross-references;
 # * whether the year levels assigned to nodes are consistent with their
 # identifier;
 # * whether the year levels of a child node are a subset of the year levels of a parent node;
@@ -103,8 +105,8 @@ def child_parent(json)
     child_parent(j)
   end
   json['asn:hasLevel']&.each do |j|
-    #j["asn:statementNotation"] and
-      #puts "#{json["asn:statementNotation"]} : #{json["asn:statementLabel"]} hasLevel #{j["asn:statementNotation"]} : #{j["asn:statementLabel"]}"
+    # j["asn:statementNotation"] and
+    # puts "#{json["asn:statementNotation"]} : #{json["asn:statementLabel"]} hasLevel #{j["asn:statementNotation"]} : #{j["asn:statementLabel"]}"
     j['gem:isChildOf']&.each do |k|
       id(json) or next
       (id(json) == id(k)) and next
@@ -251,6 +253,8 @@ def scot_mappings(json)
       scot_mappings1(s, json['asn:statementNotation'])
     elsif @mappings[json['asn:statementNotation']]
       scot_mappings1([], json['asn:statementNotation'])
+    elsif json['asn:statementLabel'] == "Content Description"
+      @err.puts "#{@f}: scot mappings: no values given for #{json['asn:statementNotation']} by ACARA"
     end
     json.each do |_k, m|
       scot_mappings(m)
@@ -262,15 +266,18 @@ end
 
 def scot_mappings1(terms, contentdesc)
   ret = if terms.is_a?(Array) then terms.map { |x| x['@id'] }
-          elsif terms['@id']
+        elsif terms['@id']
           [terms['@id']]
-          else nil
         end
-  #@err.puts "#{@f}: scot mappings: #{contentdesc} SUCCESS" if @mappings[contentdesc] && @mappings[contentdesc] == ret
-  @mappings[contentdesc] == ret and return
-  error_report = terms.is_a?(String) ? terms : ret
-  error_report.empty? and error_report = nil
-  @err.puts "#{@f}: scot mappings: #{contentdesc} is meant to have ScOT terms #{@mappings[contentdesc] || "EMPTY"}, it has #{error_report || "EMPTY"}"
+  # @err.puts "#{@f}: scot mappings: #{contentdesc} SUCCESS" if @mappings[contentdesc] && @mappings[contentdesc] == ret
+  if @mappings[contentdesc] == ret
+    ret.uniq.size < ret.size and
+      @err.puts "#{@f}: scot mappings: duplicate values: #{ret}"
+  else # discrepancies between prescribed mappings and generated mappings
+    error_report = terms.is_a?(String) ? terms : ret
+    error_report.empty? and error_report = nil
+    @err.puts "#{@f}: scot mappings: #{contentdesc} is meant to have ScOT terms #{@mappings[contentdesc] || 'EMPTY'}, it has #{error_report || 'EMPTY'}"
+  end
 end
 
 def year_level(json)
@@ -386,8 +393,8 @@ def extract_yr_levels(json)
   when Array
     json.map { |j| extract_yr_levels(j) }.flatten
   when Hash
-    [id(json).sub(%r{^.+/}, '').sub("Foundation Year", "0").sub(/^Year\s+/, "")]
-  else [json.sub(%r{^.+/}, '').sub("Foundation Year", "0").sub(/^Year\s+/, "")]
+    [id(json).sub(%r{^.+/}, '').sub('Foundation Year', '0').sub(/^Year\s+/, '')]
+  else [json.sub(%r{^.+/}, '').sub('Foundation Year', '0').sub(/^Year\s+/, '')]
   end
 end
 
@@ -404,8 +411,8 @@ def validate_file(json)
   namespaced_keys(json, nil)
   link_types(json)
   if @scotids && @mappings
-  scot(json)
-  scot_mappings(json)
+    scot(json)
+    scot_mappings(json)
   end
   match_predicates_json_ld(json)
   year_level(json)
@@ -418,7 +425,7 @@ end
 def read_scot
   scot = JSON.parse(File.read(SCOT_FILE))
   @scotids = scot_id_parse(scot, {})
-rescue
+rescue StandardError
 end
 
 def read_scot_mapping
@@ -427,8 +434,8 @@ def read_scot_mapping
   f = CSV.parse(f, headers: true) or return
   @mappings = {}
   f.each do |k|
-    @mappings[k["mrac"]] ||= []
-    @mappings[k["mrac"]] << "http://vocabulary.curriculum.edu.au/scot/#{k["scot"]}"
+    @mappings[k['mrac']] ||= []
+    @mappings[k['mrac']] << "http://vocabulary.curriculum.edu.au/scot/#{k['scot']}"
   end
 end
 

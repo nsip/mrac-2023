@@ -42,6 +42,7 @@ func findIdLinkage(js string, mFamilyTree map[string][]string) (mIdLink2P, mIdLi
 	for _, children := range mFamilyTree {
 		for _, child := range children {
 			if strings.HasSuffix(child, ".id") {
+				fmt.Println(child)
 				id := gjson.Get(js, child).String()
 				val := gjson.Get(js, jt.NewUncle(child, "id"))
 				if !val.Exists() {
@@ -49,7 +50,8 @@ func findIdLinkage(js string, mFamilyTree map[string][]string) (mIdLink2P, mIdLi
 					log.Printf("js: %+v\n", js)
 					log.Printf("NewUncle: %s\n", jt.NewUncle(child, "id"))
 				}
-				pid := gjson.Get(js, jt.NewUncle(child, "id")).String()
+				// pid := gjson.Get(js, jt.NewUncle(child, "id")).String()
+				pid := val.String()
 				mIdLink2P[id] = append(mIdLink2P[id], pid)
 				mIdLink2C[pid] = append(mIdLink2C[pid], id)
 			}
@@ -69,9 +71,12 @@ func cvt2jsonld(asnPath string) {
 
 	_, mFamilyTree := jt.FamilyTree(js)
 	// fmt.Println(len(mLvlSiblings))
+
+	fmt.Printf("\tID linkages...\n")
 	mIdLink2P, _ := findIdLinkage(js, mFamilyTree)
 	// fmt.Println(len(mIdLink2P), len(mIdLink2C))
 
+	fmt.Printf("\tPrefixes...\n")
 	for oldPref, newPref := range mPrefRepl {
 		js = strings.ReplaceAll(js, "\""+oldPref, "\""+newPref)
 	}
@@ -85,6 +90,7 @@ func cvt2jsonld(asnPath string) {
 		return ""
 	})
 
+	fmt.Printf("\tIds...\n")
 	rId := regexp.MustCompile(`"@id":\s*"http:[^"]+",?`)
 	js = rId.ReplaceAllStringFunc(js, func(s string) (ret string) {
 
@@ -110,6 +116,7 @@ func cvt2jsonld(asnPath string) {
 		return
 	})
 
+	fmt.Printf("\tDates...\n")
 	rModified := regexp.MustCompile(`"dc:modified":\s*\{[^{}]+\},?`)
 	js = rModified.ReplaceAllStringFunc(js, func(s string) string {
 		suffix := ""
@@ -121,6 +128,7 @@ func cvt2jsonld(asnPath string) {
 		return fmt.Sprintf(`"dc:modified": { "@value": "%s", "@type": "xsd:dateTime" }%s`, str, suffix)
 	})
 
+	fmt.Printf("\tLanguages...\n")
 	rLangLit := regexp.MustCompile(`\{[\s\n]*"language":\s*"[^"]+",?[\s\n]*"literal":\s*".+"[\s\n]*\},?`)
 	js = rLangLit.ReplaceAllStringFunc(js, func(s string) string {
 		// fmt.Println(s)
@@ -141,16 +149,19 @@ func cvt2jsonld(asnPath string) {
 		}
 	})
 
+	fmt.Printf("\tURI...\n")
 	rUri := regexp.MustCompile(`"uri":`)
 	js = rUri.ReplaceAllStringFunc(js, func(s string) string {
 		return `"@id":`
 	})
 
+	fmt.Printf("\tPref Labels...\n")
 	rPrefLabel := regexp.MustCompile(`"prefLabel":`)
 	js = rPrefLabel.ReplaceAllStringFunc(js, func(s string) string {
 		return `"skos:prefLabel":`
 	})
 
+	fmt.Printf("\tEducation Levels...\n")
 	rYrLvl := regexp.MustCompile(`"dc:educationLevel":\s*\[[^\[\]]+\],?`)
 	js = rYrLvl.ReplaceAllStringFunc(js, func(s string) string {
 
@@ -176,6 +187,7 @@ func cvt2jsonld(asnPath string) {
 		return ret + s
 	})
 
+	fmt.Printf("\tOutputting...\n")
 	outDir := "../data-out/asn-json-ld"
 	fd.MustCreateDir(outDir)
 	jsonldPath := filepath.Join(outDir, filepath.Base(asnPath))
