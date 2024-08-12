@@ -42,7 +42,6 @@ func findIdLinkage(js string, mFamilyTree map[string][]string) (mIdLink2P, mIdLi
 	for _, children := range mFamilyTree {
 		for _, child := range children {
 			if strings.HasSuffix(child, ".id") {
-				fmt.Println(child)
 				id := gjson.Get(js, child).String()
 				val := gjson.Get(js, jt.NewUncle(child, "id"))
 				if !val.Exists() {
