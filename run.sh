@@ -62,4 +62,5 @@ cp data/pp_project_schoolsonlinethesaurus.jsonld release/asn-json-ld/scot.jsonld
 cp data/mapping.csv release/mapping.csv
 cd release
 ruby validate.rb
-rm release/mapping.csv scot.jsonld
+cd ..
+rm release/mapping.csv release/scot.jsonld
