@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"time"
 
@@ -163,6 +164,24 @@ func proc_kv(I int, k string, v any, lines []string, paths []string) (bool, stri
 	return true, fmt.Sprintf(`"%v": %v`, k, v), false
 }
 
+// Bad markup in AUSLAN from ACARA
+// retain <p class="ausltrans-newline">, but convert <p class="ausltrans"> to <span>
+func auslan_fix(v string) string {
+	if strings.Contains(v, "ausltrans") {
+		orig := v
+		re2 := regexp.MustCompile(`(</p>)?([ ])?<p class=\\"ausltrans\\">([^<]+)</p>([^<]*)(<p>)?`)
+		v = re2.ReplaceAllString(v, "${2}<span class=\\\"ausltrans\\\">${3}</span>${4}")
+		if strings.HasSuffix(v, "</span>") {
+			v = v + "</p>"
+		}
+		if v != orig {
+			log.Println(orig)
+			log.Println(v)
+		}
+	}
+	return v
+}
+
 func proc_kv_str(I int, k string, v string, lines []string, paths []string) (bool, string, bool) {
 
 	path := paths[I]
@@ -181,6 +200,8 @@ func proc_kv_str(I int, k string, v string, lines []string, paths []string) (boo
 
 	if k == "title" {
 
+		v = auslan_fix(v)
+
 		// with 'text' sibling
 		sibling := jt.NewSibling(path, "text")
 		if In(sibling, wholePaths...) {
@@ -192,6 +213,7 @@ func proc_kv_str(I int, k string, v string, lines []string, paths []string) (boo
 	}
 
 	if k == "text" {
+		v = auslan_fix(v)
 		return true, fmt.Sprintf(`"dcterms_description": { "language": "en-au", "literal": "%s" }, "text": "%s"`, v, v), false
 	}
 
