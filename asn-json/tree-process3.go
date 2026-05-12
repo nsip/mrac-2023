@@ -115,7 +115,8 @@ func proc(
 	// Bad markup in AUSLAN from ACARA
 	re2 := regexp.MustCompile(`<span([^<]+)</p>`)
 	if strings.Contains(value, "\"ausltrans\"") {
-		value = strings.ReplaceAll("</p><p class=\"ausltrans\">", "<span class=\"ausltrans\">").ReplaceAll("</p><p>", "</span>")
+		value = strings.ReplaceAll(value, "</p><p class=\"ausltrans\">", "<span class=\"ausltrans\">")
+		value = strings.ReplaceAll(value, "</p><p>", "</span>")
 		value = re2.ReplaceAllString(value, "<span${1}</span></p>")
 	}
 
