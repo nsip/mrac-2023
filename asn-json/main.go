@@ -8,10 +8,10 @@ import (
 	"strings"
 	"time"
 
-	fd "github.com/digisan/gotk/file-dir"
-	"github.com/digisan/gotk/track"
-	jt "github.com/digisan/json-tool"
-	lk "github.com/digisan/logkit"
+	fd "github.com/nsip/gotk/file-dir"
+	"github.com/nsip/gotk/track"
+	jt "github.com/nsip/json-tool"
+	lk "github.com/nsip/logkit"
 	"github.com/nsip/mrac-2023/node2"
 )
 

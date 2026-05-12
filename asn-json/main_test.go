@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/digisan/gotk/strs"
+	"github.com/nsip/gotk/strs"
 )
 
 func TestMain(t *testing.T) {

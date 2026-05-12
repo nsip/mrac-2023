@@ -6,9 +6,9 @@ import (
 	"regexp"
 	"strings"
 
-	. "github.com/digisan/go-generics"
-	fd "github.com/digisan/gotk/file-dir"
-	jt "github.com/digisan/json-tool"
+	. "github.com/nsip/go-generics"
+	fd "github.com/nsip/gotk/file-dir"
+	jt "github.com/nsip/json-tool"
 	"github.com/nsip/mrac-2023/asn-json/tool"
 	"github.com/tidwall/gjson"
 )

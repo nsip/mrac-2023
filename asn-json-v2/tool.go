@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	. "github.com/digisan/go-generics"
-	fd "github.com/digisan/gotk/file-dir"
-	lk "github.com/digisan/logkit"
+	. "github.com/nsip/go-generics"
+	fd "github.com/nsip/gotk/file-dir"
+	lk "github.com/nsip/logkit"
 	"github.com/nsip/mrac-2023/node2"
 )
 

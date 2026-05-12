@@ -9,11 +9,11 @@ import (
 	"strings"
 	"time"
 
-	. "github.com/digisan/go-generics"
-	"github.com/digisan/gotk/strs"
-	"github.com/digisan/gotk/track"
-	jt "github.com/digisan/json-tool"
-	jts "github.com/digisan/json-tool/scan"
+	. "github.com/nsip/go-generics"
+	"github.com/nsip/gotk/strs"
+	"github.com/nsip/gotk/track"
+	jt "github.com/nsip/json-tool"
+	jts "github.com/nsip/json-tool/scan"
 	"github.com/nsip/mrac-2023/node2"
 	"github.com/tidwall/gjson"
 )

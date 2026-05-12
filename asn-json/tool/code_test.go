@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	lk "github.com/digisan/logkit"
+	lk "github.com/nsip/logkit"
 	"github.com/nsip/mrac-2023/node2"
 )
 

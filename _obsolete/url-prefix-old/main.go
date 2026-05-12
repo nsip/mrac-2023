@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	fd "github.com/digisan/gotk/file-dir"
+	fd "github.com/nsip/gotk/file-dir"
 	"github.com/tidwall/gjson"
 )
 

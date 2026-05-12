@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	ct "github.com/digisan/csv-tool"
-	fd "github.com/digisan/gotk/file-dir"
-	lk "github.com/digisan/logkit"
+	ct "github.com/nsip/csv-tool"
+	fd "github.com/nsip/gotk/file-dir"
+	lk "github.com/nsip/logkit"
 )
 
 // make scot txt, "mrac\turl"

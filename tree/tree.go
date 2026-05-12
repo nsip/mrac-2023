@@ -5,11 +5,11 @@ import (
 	"os"
 	"strings"
 
-	. "github.com/digisan/go-generics"
-	dt "github.com/digisan/gotk/data-type"
-	fd "github.com/digisan/gotk/file-dir"
-	"github.com/digisan/gotk/strs"
-	lk "github.com/digisan/logkit"
+	. "github.com/nsip/go-generics"
+	dt "github.com/nsip/gotk/data-type"
+	fd "github.com/nsip/gotk/file-dir"
+	"github.com/nsip/gotk/strs"
+	lk "github.com/nsip/logkit"
 	. "github.com/nsip/mrac-2023/tree/sub"
 	u "github.com/nsip/mrac-2023/util"
 )
