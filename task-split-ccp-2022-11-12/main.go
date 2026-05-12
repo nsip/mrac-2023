@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	fd "github.com/digisan/gotk/file-dir"
-	"github.com/digisan/gotk/strs"
-	lk "github.com/digisan/logkit"
+	fd "github.com/nsip/gotk/file-dir"
+	"github.com/nsip/gotk/strs"
+	lk "github.com/nsip/logkit"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )

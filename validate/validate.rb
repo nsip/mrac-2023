@@ -253,7 +253,7 @@ def scot_mappings(json)
       scot_mappings1(s, json['asn:statementNotation'])
     elsif @mappings[json['asn:statementNotation']]
       scot_mappings1([], json['asn:statementNotation'])
-    elsif json['asn:statementLabel'] == "Content Description"
+    elsif json['asn:statementLabel'] == 'Content Description'
       @err.puts "#{@f}: scot mappings: no values given for #{json['asn:statementNotation']} by ACARA"
     end
     json.each do |_k, m|
@@ -436,6 +436,9 @@ def read_scot_mapping
   f.each do |k|
     @mappings[k['mrac']] ||= []
     @mappings[k['mrac']] << "http://vocabulary.curriculum.edu.au/scot/#{k['scot']}"
+  end
+  @mappings.each do |k, _v|
+    @mappings[k] = @mappings[k].uniq
   end
 end
 

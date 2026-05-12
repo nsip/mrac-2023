@@ -10,8 +10,8 @@ import (
 	"regexp"
 	"strings"
 
-	jt "github.com/digisan/json-tool"
-	lk "github.com/digisan/logkit"
+	jt "github.com/nsip/json-tool"
+	lk "github.com/nsip/logkit"
 	"github.com/nsip/mrac-2023/asn-json/tool"
 	"github.com/tidwall/gjson"
 )

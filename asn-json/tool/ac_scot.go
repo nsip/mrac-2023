@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"strings"
 
-	dt "github.com/digisan/gotk/data-type"
-	fd "github.com/digisan/gotk/file-dir"
-	"github.com/digisan/gotk/strs"
-	jt "github.com/digisan/json-tool"
-	lk "github.com/digisan/logkit"
+	dt "github.com/nsip/gotk/data-type"
+	fd "github.com/nsip/gotk/file-dir"
+	"github.com/nsip/gotk/strs"
+	jt "github.com/nsip/json-tool"
+	lk "github.com/nsip/logkit"
 )
 
 func getAcScotMap(acscotPath string) map[string][]string {

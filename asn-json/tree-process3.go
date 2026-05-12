@@ -6,9 +6,9 @@ import (
 	"regexp"
 	"strings"
 
-	. "github.com/digisan/go-generics"
-	fd "github.com/digisan/gotk/file-dir"
-	jt "github.com/digisan/json-tool"
+	. "github.com/nsip/go-generics"
+	fd "github.com/nsip/gotk/file-dir"
+	jt "github.com/nsip/json-tool"
 	"github.com/nsip/mrac-2023/asn-json/tool"
 	"github.com/tidwall/gjson"
 )
@@ -111,6 +111,16 @@ func proc(
 	// if name == "doc.typeName" {
 	// 	fmt.Println(name, s)
 	// }
+
+	// Bad markup in AUSLAN from ACARA
+	re2 := regexp.MustCompile(`<span([^<]+)</p>`)
+	if strings.Contains(value, "\"ausltrans\"") {
+		value = strings.ReplaceAll(value, "</p><p class=\"ausltrans\">", "<span class=\"ausltrans\">")
+		value = strings.ReplaceAll(value, "</p><p>", "</span>")
+		value = re2.ReplaceAllString(value, "<span${1}</span></p>")
+	}
+
+	//"<p>using different nouns in clauses, including those that are shown with a pointing sign, such as </p><p class=\"ausltrans\">GIRL READ</p><p> versus </p><p class=\"ausltrans\">PRO3 READ</p><p>, or </p><p class=\"ausltrans\">VISIT FRIEND</p><p> versus </p><p class=\"ausltrans\">VISIT PRO3</p>"
 
 	switch name {
 	case "uuid":

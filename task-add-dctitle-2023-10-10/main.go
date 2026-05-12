@@ -6,9 +6,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/digisan/gotk/strs"
-	jt "github.com/digisan/json-tool"
-	lk "github.com/digisan/logkit"
+	"github.com/nsip/gotk/strs"
+	jt "github.com/nsip/json-tool"
+	lk "github.com/nsip/logkit"
 )
 
 func insertDescriptionIfHasTitle(js string) string {

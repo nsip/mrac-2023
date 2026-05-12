@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/digisan/gotk/strs"
-	lk "github.com/digisan/logkit"
+	"github.com/nsip/gotk/strs"
+	lk "github.com/nsip/logkit"
 	u "github.com/nsip/mrac-2023/util"
 )
 

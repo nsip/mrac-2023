@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	. "github.com/digisan/go-generics"
+	. "github.com/nsip/go-generics"
 )
 
 func TestFmtJSON(t *testing.T) {

@@ -7,11 +7,11 @@ import (
 	"regexp"
 	"strings"
 
-	dt "github.com/digisan/gotk/data-type"
-	"github.com/digisan/gotk/strs"
+	dt "github.com/nsip/gotk/data-type"
+	"github.com/nsip/gotk/strs"
 
-	// jt "github.com/digisan/json-tool"
-	lk "github.com/digisan/logkit"
+	// jt "github.com/nsip/json-tool"
+	lk "github.com/nsip/logkit"
 	u "github.com/nsip/mrac-2023/util"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"

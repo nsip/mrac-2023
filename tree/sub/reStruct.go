@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strings"
 
-	. "github.com/digisan/go-generics"
-	lk "github.com/digisan/logkit"
+	. "github.com/nsip/go-generics"
+	lk "github.com/nsip/logkit"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )

@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strings"
 
-	dt "github.com/digisan/gotk/data-type"
-	// jt "github.com/digisan/json-tool"
-	lk "github.com/digisan/logkit"
+	dt "github.com/nsip/gotk/data-type"
+	// jt "github.com/nsip/json-tool"
+	lk "github.com/nsip/logkit"
 	u "github.com/nsip/mrac-2023/util"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"

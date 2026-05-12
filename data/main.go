@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/digisan/gotk/strs"
-	jt "github.com/digisan/json-tool"
+	"github.com/nsip/gotk/strs"
+	jt "github.com/nsip/json-tool"
 )
 
 func main() {

@@ -9,10 +9,10 @@ import (
 	"sort"
 	"strings"
 
-	fd "github.com/digisan/gotk/file-dir"
-	"github.com/digisan/gotk/strs"
-	jt "github.com/digisan/json-tool"
-	lk "github.com/digisan/logkit"
+	fd "github.com/nsip/gotk/file-dir"
+	"github.com/nsip/gotk/strs"
+	jt "github.com/nsip/json-tool"
+	lk "github.com/nsip/logkit"
 	"github.com/nsip/mrac-2023/asn-json/tool"
 	"github.com/tidwall/gjson"
 )
