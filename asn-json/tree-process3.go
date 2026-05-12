@@ -112,6 +112,15 @@ func proc(
 	// 	fmt.Println(name, s)
 	// }
 
+	// Bad markup in AUSLAN from ACARA
+	re2 := regexp.MustCompile(`<span([^<]+)</p>`)
+	if strings.Contains(value, "\"ausltrans\"") {
+		value = strings.ReplaceAll("</p><p class=\"ausltrans\">", "<span class=\"ausltrans\">").ReplaceAll("</p><p>", "</span>")
+		value = re2.ReplaceAllString(value, "<span${1}</span></p>")
+	}
+
+	//"<p>using different nouns in clauses, including those that are shown with a pointing sign, such as </p><p class=\"ausltrans\">GIRL READ</p><p> versus </p><p class=\"ausltrans\">PRO3 READ</p><p>, or </p><p class=\"ausltrans\">VISIT FRIEND</p><p> versus </p><p class=\"ausltrans\">VISIT PRO3</p>"
+
 	switch name {
 	case "uuid":
 		return true, fSf(`"id": "%s%s"`, mIdUrl[value], value) // mIdUrl[value] already append with '/'
